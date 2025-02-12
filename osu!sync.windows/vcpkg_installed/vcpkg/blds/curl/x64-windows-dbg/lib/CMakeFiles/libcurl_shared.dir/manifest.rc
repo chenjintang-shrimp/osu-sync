@@ -1,2 +1,0 @@
-#pragma code_page(65001)
-2 /* CREATEPROCESS_MANIFEST_RESOURCE_ID */ 24 /* RT_MANIFEST */ "C:/Users/jimmy/source/repos/osu!sync.cpp/osu!sync.windows/vcpkg_installed/vcpkg/blds/curl/x64-windows-dbg/lib/CMakeFiles/libcurl_shared.dir/embed.manifest"

@@ -1,4 +1,0 @@
-C:/Users/jimmy/source/repos/osu!sync.cpp/osu!sync.windows/vcpkg_installed/vcpkg/pkgs/zlib_x64-windows/lib/zlib.lib
-C:/Users/jimmy/source/repos/osu!sync.cpp/osu!sync.windows/vcpkg_installed/vcpkg/pkgs/zlib_x64-windows/bin/zlib1.dll
-C:/Users/jimmy/source/repos/osu!sync.cpp/osu!sync.windows/vcpkg_installed/vcpkg/pkgs/zlib_x64-windows/include/zconf.h
-C:/Users/jimmy/source/repos/osu!sync.cpp/osu!sync.windows/vcpkg_installed/vcpkg/pkgs/zlib_x64-windows/include/zlib.h

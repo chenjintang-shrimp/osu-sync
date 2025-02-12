@@ -1,0 +1,8 @@
+{
+  "name": "osu-sync-core",
+  "version": "0.0.1",
+    "dependencies": [
+        "curl"
+    ],
+  "builtin-baseline": "33e9c99208736b713cabe4490e15235f62f893d4"
+}
