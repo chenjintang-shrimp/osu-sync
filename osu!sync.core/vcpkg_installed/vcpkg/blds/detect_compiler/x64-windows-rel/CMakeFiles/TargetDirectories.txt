@@ -1,0 +1,2 @@
+C:/Users/jimmy/source/repos/osu!sync.cpp/osu!sync.core/vcpkg_installed/vcpkg/blds/detect_compiler/x64-windows-rel/CMakeFiles/edit_cache.dir
+C:/Users/jimmy/source/repos/osu!sync.cpp/osu!sync.core/vcpkg_installed/vcpkg/blds/detect_compiler/x64-windows-rel/CMakeFiles/rebuild_cache.dir

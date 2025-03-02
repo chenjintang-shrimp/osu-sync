@@ -21,6 +21,12 @@
     <ClCompile Include="fsutils.windows.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="network.utils.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stableExporter.h">
@@ -30,6 +36,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="network.utils.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="3rdpartyInclude\httplib.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

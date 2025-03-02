@@ -7,6 +7,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libUnitTest", "libUnitText\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "osu!sync.core", "osu!sync.core\osu!sync.windows.vcxproj", "{6657D903-0642-42AC-B1BD-1E903944AF44}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "解决方案项", "解决方案项", "{8732A2A1-DCA3-4AC7-A04A-4EB218DC73FC}"
+	ProjectSection(SolutionItems) = preProject
+		servercode.cpp = servercode.cpp
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64

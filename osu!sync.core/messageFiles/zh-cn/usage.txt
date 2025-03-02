@@ -1,0 +1,27 @@
+osu!sync - osu!谱面同步工具
+用法: osu!sync.core.exe [/L [version]] [*/S [songsFolderPath]] [/E [FileName]] [*/U [username]]
+                        [/P [lineNumber]] [/D [lineNumber]] [*/O <options>]
+
+选项前面带*号的为必要选项。
+
+/L (--lazer)      指定本osu版本为osu!(lazer)。如不指定，则默认为osu!(stable)
+version           lazer版本号，如2025.221.0
+
+/S (--songs)      对于osu!(stable)：指定songs文件夹的路径；
+                  对于osu!(lazer)：指定client.realm文件的路径。
+songsFolderPath   songs文件夹（对于stable）或client.realm文件（对于lazer）的路径。
+
+/E (--export)     将谱面清单导出为一个 .json 文件
+FileName          导出谱面清单文件的文件路径。
+
+/U (--username)   指定你的存档名字。建议跟你的osu用户名相同
+username          你的存档名字
+
+/P (--post)       上传存档
+lineNumber        线路编号，一个整数。
+                  线路编号对应实际线路域名请查看readme。
+
+/D (--download)   将位于云端的存档下载并同步谱面
+lineNumber        线路编号，一个整数。
+                  线路编号对应实际线路域名请查看readme。
+                  

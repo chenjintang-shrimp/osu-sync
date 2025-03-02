@@ -41,7 +41,7 @@
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
@@ -121,7 +121,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>.\3rdpartyLib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>Userenv.lib;Dbghelp.lib;iphlpapi.lib;ws2_32.lib;libuv.lib;uv.lib;cpprealm-dbg.lib;realm-dbg.lib;realm-object-store-dbg.lib;realm-parser-dbg.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -142,9 +142,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="fsutils.windows.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="network.utils.cpp" />
     <ClCompile Include="stableExporter.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="3rdpartyInclude\httplib.h" />
     <ClInclude Include="fsutils.windows.h" />
     <ClInclude Include="network.utils.h" />
     <ClInclude Include="stableExporter.h" />
