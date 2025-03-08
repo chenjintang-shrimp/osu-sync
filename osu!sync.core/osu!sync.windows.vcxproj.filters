@@ -41,6 +41,9 @@
     <ClInclude Include="3rdpartyInclude\httplib.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="configs.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="vcpkg.json" />

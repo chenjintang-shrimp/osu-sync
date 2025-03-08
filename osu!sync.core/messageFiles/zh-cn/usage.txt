@@ -1,27 +1,18 @@
-osu!sync - osu!è°±é¢åŒæ­¥å·¥å…·
-ç”¨æ³•: osu!sync.core.exe [/L [version]] [*/S [songsFolderPath]] [/E [FileName]] [*/U [username]]
-                        [/P [lineNumber]] [/D [lineNumber]] [*/O <options>]
+ÓÃ·¨£º
+osu!sync.exe [options]
 
-é€‰é¡¹å‰é¢å¸¦*å·çš„ä¸ºå¿…è¦é€‰é¡¹ã€‚
+Ñ¡Ïî£º
+  --lazer                    Ö¸¶¨·¢ĞĞ°æÎªlazer£¨¿ÉÑ¡£©
+  --songsFile [filename]     Ö¸¶¨¸èÇúÎÄ¼şÎ»ÖÃ£¨±ØÑ¡£©
+        filename             ¶ÔÓÚlazer,ÇëÖ¸¶¨cilent.realmÎÄ¼şµÄÂ·¾¶£¬¶ø¶ÔÓÚstable£¬ÇëÖ¸¶¨songsÎÄ¼ş¼ĞµÄÂ·¾¶¡£
+  --config-file [configfile] Ö¸¶¨ÅäÖÃÎÄ¼ş¡£Èç¹ûÖ¸¶¨ÁËÅäÖÃÎÄ¼ş£¬Ôò²»Ó¦¸ÃÓĞÆäËûµÄÑ¡Ïî¡£
+  --export [listfilename]    µ¥¶Àµ¼³öÇúÄ¿ÁĞ±í¡£Èç¹ûÓĞ´ËÑ¡Ïî£¬ÔòÓ¦Ö»ÓĞ--lazer»ò--songsFile¡£
+  --upload [linename]        ºó½ÓÏßÂ·£¬²»Ó¦¸ÃÓë --downloadÍ¬Ê±´æÔÚ¡£
+  --download [linename]      ºó½ÓÏßÂ·£¬²»Óë --uploadÍ¬Ê±´æÔÚ¡£
+  --username [osu_username]  ±ØÑ¡£¬Ö¸¶¨ÓÃ»§Ãû£¬ÍÆ¼öÓëOsuÓÃ»§ÃûÏàÍ¬¡£
 
-/L (--lazer)      æŒ‡å®šæœ¬osuç‰ˆæœ¬ä¸ºosu!(lazer)ã€‚å¦‚ä¸æŒ‡å®šï¼Œåˆ™é»˜è®¤ä¸ºosu!(stable)
-version           lazerç‰ˆæœ¬å·ï¼Œå¦‚2025.221.0
-
-/S (--songs)      å¯¹äºosu!(stable)ï¼šæŒ‡å®šsongsæ–‡ä»¶å¤¹çš„è·¯å¾„ï¼›
-                  å¯¹äºosu!(lazer)ï¼šæŒ‡å®šclient.realmæ–‡ä»¶çš„è·¯å¾„ã€‚
-songsFolderPath   songsæ–‡ä»¶å¤¹ï¼ˆå¯¹äºstableï¼‰æˆ–client.realmæ–‡ä»¶ï¼ˆå¯¹äºlazerï¼‰çš„è·¯å¾„ã€‚
-
-/E (--export)     å°†è°±é¢æ¸…å•å¯¼å‡ºä¸ºä¸€ä¸ª .json æ–‡ä»¶
-FileName          å¯¼å‡ºè°±é¢æ¸…å•æ–‡ä»¶çš„æ–‡ä»¶è·¯å¾„ã€‚
-
-/U (--username)   æŒ‡å®šä½ çš„å­˜æ¡£åå­—ã€‚å»ºè®®è·Ÿä½ çš„osuç”¨æˆ·åç›¸åŒ
-username          ä½ çš„å­˜æ¡£åå­—
-
-/P (--post)       ä¸Šä¼ å­˜æ¡£
-lineNumber        çº¿è·¯ç¼–å·ï¼Œä¸€ä¸ªæ•´æ•°ã€‚
-                  çº¿è·¯ç¼–å·å¯¹åº”å®é™…çº¿è·¯åŸŸåè¯·æŸ¥çœ‹readmeã€‚
-
-/D (--download)   å°†ä½äºäº‘ç«¯çš„å­˜æ¡£ä¸‹è½½å¹¶åŒæ­¥è°±é¢
-lineNumber        çº¿è·¯ç¼–å·ï¼Œä¸€ä¸ªæ•´æ•°ã€‚
-                  çº¿è·¯ç¼–å·å¯¹åº”å®é™…çº¿è·¯åŸŸåè¯·æŸ¥çœ‹readmeã€‚
-                  
+Ê¾Àı£º
+  osu!sync.exe --lazer --songsFile C:\users\zhangsan\appdata\cilent.realm --username zhangsan --upload test.line1.cn
+  osu!sync.exe --songsFile C:\users\zhangsan\osu!\Songs --username zhangsan --download test.line1.cn
+  osu!sync.exe --lazer --songsFile C:\users\zhangsan\appdata\cilent.realm --username zhangsan --export list.json
+  osu!sync.exe --config-file config.json

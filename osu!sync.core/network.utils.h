@@ -6,4 +6,4 @@
 
 namespace fs = std::filesystem;
 
-void uploadData(fs::path filename, std::string username, std::string remoteURL);
+int uploadData(fs::path filename, std::string username, std::string remoteURL);
