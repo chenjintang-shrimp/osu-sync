@@ -7,9 +7,11 @@ osu!sync.exe [options]
         filename             对于lazer,请指定cilent.realm文件的路径，而对于stable，请指定songs文件夹的路径。
   --config-file [configfile] 指定配置文件。如果指定了配置文件，则不应该有其他的选项。
   --export [listfilename]    单独导出曲目列表。如果有此选项，则应只有--lazer或--songsFile。
-  --upload [linename]        后接线路，不应该与 --download同时存在。
-  --download [linename]      后接线路，不与 --upload同时存在。
+  --import [listfilename]    单独导入曲目列表。如果有此选项，则应只有--lazer或--songsFile。
+  --upload [linename]        从服务器拉取存档并导入，后接线路，不与 --download同时存在。
+  --download [linename]      将存档上传至服务器，后接线路，不与 --upload同时存在。
   --username [osu_username]  必选，指定用户名，推荐与Osu用户名相同。
+  --language [language-code] 指定语言代码（可在messageFiles/languageLists.json中找到），默认为zh-cn(CN)
 
 示例：
   osu!sync.exe --lazer --songsFile C:\users\zhangsan\appdata\cilent.realm --username zhangsan --upload test.line1.cn
