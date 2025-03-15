@@ -12,6 +12,7 @@ int main(int argc,char* argv[])
 {
 	ifstream help(".\\messageFiles\\zh-cn\\usage.txt", ios::binary);
 	string helpContent((istreambuf_iterator<char>(help)), istreambuf_iterator<char>());
+	system("chcp 65001");
 	try
 	{
 		uint32_t paramFlags;
