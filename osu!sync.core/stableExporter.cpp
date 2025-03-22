@@ -38,23 +38,7 @@ vector<beatmapMetaData> getAllBeatmapData(vector<string> beatmapNames)
 	return data;
 }
 
-void to_json(json& j, beatmapMetaData bmd)
-{
-	j = json{ {"onlineId",bmd.first},{"fullName",bmd.second} };
-}
 
-void writeBeatmapDataToFile(vector<beatmapMetaData> data, fs::path filePath)
-{
-	json tgt;
-	for (auto kv:data)
-	{
-		json temp;
-		to_json(temp, kv);
-		tgt.push_back(temp);
-	}
-	std::ofstream file(filePath,std::ios::out);
-	file << tgt.dump(4);
-	file.close();
-	return;
-}
+
+
 

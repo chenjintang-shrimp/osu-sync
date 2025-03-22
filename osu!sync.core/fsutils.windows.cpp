@@ -1,4 +1,8 @@
 #include "fsutils.windows.h"
+#include<fstream>
+#include"stableExporter.h"
+#include"nlohmann/json.hpp"
+using json = nlohmann::json;
 using namespace std;
 namespace fs = std::filesystem;
 
@@ -13,4 +17,24 @@ vector<string> getBeatmapFolderNames(fs::path& songsFolderPath)
 			beatmapFolderNames.push_back(kv.path().filename().string());
 	}
 	return beatmapFolderNames;
+}
+
+void to_json(json& j, beatmapMetaData bmd)
+{
+	j = json{ {"onlineId",bmd.first},{"fullName",bmd.second} };
+}
+
+void writeBeatmapDataToFile(vector<beatmapMetaData> data, fs::path filePath)
+{
+	json tgt;
+	for (auto kv : data)
+	{
+		json temp;
+		to_json(temp, kv);
+		tgt.push_back(temp);
+	}
+	std::ofstream file(filePath, std::ios::out);
+	file << tgt.dump(4);
+	file.close();
+	return;
 }
