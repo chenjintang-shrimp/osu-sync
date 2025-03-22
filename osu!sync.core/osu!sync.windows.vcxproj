@@ -145,10 +145,12 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="network.utils.cpp" />
     <ClCompile Include="stableExporter.cpp" />
+    <ClCompile Include="源.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="3rdpartyInclude\httplib.h" />
     <ClInclude Include="configs.h" />
+    <ClInclude Include="coreExpections.h" />
     <ClInclude Include="fsutils.windows.h" />
     <ClInclude Include="network.utils.h" />
     <ClInclude Include="stableExporter.h" />
