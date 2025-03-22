@@ -79,7 +79,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <SourcesToCopyRemotelyOverride>@(SourcesToCopyRemotely);@(DataFilesToCopyRemotely);.\3rdparty\httplib.h</SourcesToCopyRemotelyOverride>
-    <WSLPath>Ubuntu</WSLPath>
+    <WSLPath>default</WSLPath>
   </PropertyGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />

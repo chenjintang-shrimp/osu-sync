@@ -43,6 +43,7 @@ int main(int argc,char* argv[])
 {
 
 	httplib::Server svr;
+	
 	svr.Post("/upload", [](const httplib::Request& req, httplib::Response& res)
 		{
 			if (!req.has_file("file"))
@@ -95,4 +96,6 @@ int main(int argc,char* argv[])
 			res.set_content(success_msg, "text/plain");
 			write_log("./logs/log.txt",success_msg);
 		});
+	cout << "Server started." << endl;
+	svr.listen("0.0.0.0", 8080);
 }

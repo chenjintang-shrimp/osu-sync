@@ -145,7 +145,6 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="network.utils.cpp" />
     <ClCompile Include="stableExporter.cpp" />
-    <ClCompile Include="源.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="3rdpartyInclude\httplib.h" />
