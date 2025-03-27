@@ -5,16 +5,32 @@ using System.Linq;
 using System.Reflection;
 using osu.Shared;
 using osu_database_reader;
-using System.Text.Json;
+using System.Text.Json.Serialization;
 using osu_database_reader.BinaryFiles;
 using System.Collections.Specialized;
 
+public class beatmapSet
+{
+    public string beatMapSetName;
+    public string beatMapSetId;
+    public beatmapSet(string name,string id)
+    {
+        beatMapSetName = name;
+        beatMapSetId = id;
+    }
+}
 class Program
 {
     static void Main(string[] args)
     {
-        string stableDbFilePath=System.Console.ReadLine();
-        var db=OsuDb.Read(stableDbFilePath);
+        string stableDbFilePath = Console.ReadLine();
+        string exportJsonPat = Console.ReadLine();
+        if (string.IsNullOrEmpty(stableDbFilePath))
+        {
+            Console.WriteLine("Invalid file path.");
+            return;
+        }
+        var db = OsuDb.Read(stableDbFilePath);
         
         System.Console.WriteLine("osu version:"+db.OsuVersion);
         System.Console.WriteLine("account name:" + db.AccountName);
@@ -28,12 +44,7 @@ class Program
             if(beatMapindex != 0&&beatmap.BeatmapSetId!=beatmapIds[beatMapindex-1])
                 beatmapIds[beatMapindex++]=beatmap.BeatmapSetId;
         }
-        foreach (var id in beatmapIds)
-        {
-            if (id != 0)
-            {
-                System.Console.WriteLine(id);
-            }
-        }
+        beatmapIds=beatmapIds.Distinct<int>().ToArray();
+        
     }
 }
