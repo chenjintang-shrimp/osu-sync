@@ -62,3 +62,13 @@ Multi-Arch: same
 Description: SSPI support
 Status: install ok installed
 
+Package: zlib-ng
+Version: 2.2.3
+Port-Version: 1
+Depends: vcpkg-cmake:x64-windows, vcpkg-cmake-config:x64-windows
+Architecture: x64-windows-static
+Multi-Arch: same
+Abi: aec6739b761503f0fed544083324cb507181cdb8e85830536faf395ad188c3ce
+Description: zlib replacement with optimizations for 'next generation' systems
+Status: install ok installed
+

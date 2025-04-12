@@ -1,0 +1,110 @@
+{
+  "$schema": "https://raw.githubusercontent.com/spdx/spdx-spec/v2.2.1/schemas/spdx-schema.json",
+  "spdxVersion": "SPDX-2.2",
+  "dataLicense": "CC0-1.0",
+  "SPDXID": "SPDXRef-DOCUMENT",
+  "documentNamespace": "https://spdx.org/spdxdocs/zlib-ng-x64-windows-static-2.2.3#1-5c7c91a1-fba4-4e19-8313-3a93a32e0abc",
+  "name": "zlib-ng:x64-windows-static@2.2.3#1 aec6739b761503f0fed544083324cb507181cdb8e85830536faf395ad188c3ce",
+  "creationInfo": {
+    "creators": [
+      "Tool: vcpkg-2025-01-29-a75ad067f470c19f030361064e32a2585392bee2"
+    ],
+    "created": "2025-04-12T01:48:29Z"
+  },
+  "relationships": [
+    {
+      "spdxElementId": "SPDXRef-port",
+      "relationshipType": "GENERATES",
+      "relatedSpdxElement": "SPDXRef-binary"
+    },
+    {
+      "spdxElementId": "SPDXRef-port",
+      "relationshipType": "CONTAINS",
+      "relatedSpdxElement": "SPDXRef-file-0"
+    },
+    {
+      "spdxElementId": "SPDXRef-port",
+      "relationshipType": "CONTAINS",
+      "relatedSpdxElement": "SPDXRef-file-1"
+    },
+    {
+      "spdxElementId": "SPDXRef-binary",
+      "relationshipType": "GENERATED_FROM",
+      "relatedSpdxElement": "SPDXRef-port"
+    },
+    {
+      "spdxElementId": "SPDXRef-file-0",
+      "relationshipType": "CONTAINED_BY",
+      "relatedSpdxElement": "SPDXRef-port"
+    },
+    {
+      "spdxElementId": "SPDXRef-file-1",
+      "relationshipType": "CONTAINED_BY",
+      "relatedSpdxElement": "SPDXRef-port"
+    }
+  ],
+  "packages": [
+    {
+      "name": "zlib-ng",
+      "SPDXID": "SPDXRef-port",
+      "versionInfo": "2.2.3#1",
+      "downloadLocation": "git+https://github.com/Microsoft/vcpkg@8282d357a50be706405e9aed44a79a333a8e8af1",
+      "homepage": "https://github.com/zlib-ng/zlib-ng",
+      "licenseConcluded": "Zlib",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "description": "zlib replacement with optimizations for 'next generation' systems",
+      "comment": "This is the port (recipe) consumed by vcpkg."
+    },
+    {
+      "name": "zlib-ng:x64-windows-static",
+      "SPDXID": "SPDXRef-binary",
+      "versionInfo": "aec6739b761503f0fed544083324cb507181cdb8e85830536faf395ad188c3ce",
+      "downloadLocation": "NONE",
+      "licenseConcluded": "Zlib",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "comment": "This is a binary package built by vcpkg."
+    },
+    {
+      "SPDXID": "SPDXRef-resource-0",
+      "name": "zlib-ng/zlib-ng",
+      "downloadLocation": "git+https://github.com/zlib-ng/zlib-ng@2.2.3",
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "checksums": [
+        {
+          "algorithm": "SHA512",
+          "checksumValue": "e71e8972ec2c4dec9eaa2c8f550185f13d0f5c411c38061d1aaf78ca8e522fa3d53f005296e574af7f152e7da3a78adf97ae4bb638b7fd277ef57bba26370b7d"
+        }
+      ]
+    }
+  ],
+  "files": [
+    {
+      "fileName": "./C:/vcpkg/buildtrees/versioning_/versions/zlib-ng/8282d357a50be706405e9aed44a79a333a8e8af1/portfile.cmake",
+      "SPDXID": "SPDXRef-file-0",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "cc8bbbfdb6220c0b8a260c6e513364bae271d79301fdbdd0e5f51ac4793d3f9e"
+        }
+      ],
+      "licenseConcluded": "NOASSERTION",
+      "copyrightText": "NOASSERTION"
+    },
+    {
+      "fileName": "./C:/vcpkg/buildtrees/versioning_/versions/zlib-ng/8282d357a50be706405e9aed44a79a333a8e8af1/vcpkg.json",
+      "SPDXID": "SPDXRef-file-1",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "1bb3a06368229c459dd3dfd48b43014287b2c378bb24c70a35f648fec75b7663"
+        }
+      ],
+      "licenseConcluded": "NOASSERTION",
+      "copyrightText": "NOASSERTION"
+    }
+  ]
+}
