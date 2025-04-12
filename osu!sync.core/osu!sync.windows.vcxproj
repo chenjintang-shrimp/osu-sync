@@ -145,6 +145,8 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="network.utils.cpp" />
     <ClCompile Include="stableExporter.cpp" />
+    <ClCompile Include="stableImporter.cpp" />
+    <ClCompile Include="beatmapDownloader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="3rdpartyInclude\httplib.h" />

@@ -1,4 +1,5 @@
 #pragma once
+#include"stableExporter.h"
 #include<iostream>
 #include<filesystem>
 #include<vector>

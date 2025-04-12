@@ -1,0 +1,2 @@
+#pragma code_page(65001)
+2 /* CREATEPROCESS_MANIFEST_RESOURCE_ID */ 24 /* RT_MANIFEST */ "C:/Users/jimmy/source/repos/osu!sync.cpp/osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/x64-windows-dbg/CMakeFiles/zlib.dir/embed.manifest"

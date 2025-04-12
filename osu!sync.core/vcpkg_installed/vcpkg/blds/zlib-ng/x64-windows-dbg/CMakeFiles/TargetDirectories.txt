@@ -1,0 +1,8 @@
+C:/Users/jimmy/source/repos/osu!sync.cpp/osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/x64-windows-dbg/CMakeFiles/zlib.dir
+C:/Users/jimmy/source/repos/osu!sync.cpp/osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/x64-windows-dbg/CMakeFiles/package.dir
+C:/Users/jimmy/source/repos/osu!sync.cpp/osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/x64-windows-dbg/CMakeFiles/package_source.dir
+C:/Users/jimmy/source/repos/osu!sync.cpp/osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/x64-windows-dbg/CMakeFiles/edit_cache.dir
+C:/Users/jimmy/source/repos/osu!sync.cpp/osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/x64-windows-dbg/CMakeFiles/rebuild_cache.dir
+C:/Users/jimmy/source/repos/osu!sync.cpp/osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/x64-windows-dbg/CMakeFiles/list_install_components.dir
+C:/Users/jimmy/source/repos/osu!sync.cpp/osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/x64-windows-dbg/CMakeFiles/install.dir
+C:/Users/jimmy/source/repos/osu!sync.cpp/osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/x64-windows-dbg/CMakeFiles/install/local.dir

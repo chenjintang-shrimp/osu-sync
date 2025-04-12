@@ -8,7 +8,7 @@ int uploadData(fs::path filename, std::string username, std::string remoteURL)
 
     // 本地待上传文件路径（Windows格式）
     // 客户端提供的相对路径
-    std::string relativePath = username+"/"+filename.string();
+    std::string relativePath = username + "/" + filename.generic_string(); // 使用通用格式路径
 
     std::ifstream ifs(filename, std::ios::binary);
     if (!ifs) {
@@ -21,9 +21,10 @@ int uploadData(fs::path filename, std::string username, std::string remoteURL)
     ifs.close();
 
     // 构造 multipart/form-data 数据
+    cout << relativePath << endl;
     httplib::MultipartFormDataItems items = {
-        { "filepath", relativePath, "", "text/plain" },
-        { "file", fileData, "file.txt", "application/octet-stream" }
+        { "filepath", relativePath, "", "text/plain; charset=utf-8" },
+        { "file", fileData, filename.generic_string(), "application/octet-stream"}
     };
 
     auto res = cli.Post("/upload", items);

@@ -1,0 +1,9 @@
+Package: zlib-ng
+Version: 2.2.3
+Port-Version: 1
+Depends: vcpkg-cmake, vcpkg-cmake-config
+Architecture: x64-windows
+Multi-Arch: same
+Abi: 544eaf965ba3b6f6af15d3e9568e25b60afd1af49077368413cef5a4fafb3a8a
+Description: zlib replacement with optimizations for 'next generation' systems
+Status: install ok installed
