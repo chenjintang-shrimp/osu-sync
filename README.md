@@ -16,3 +16,4 @@ WIP
 - [cpp-realm by @realm](https://github.com/realm/realm-cpp)
 - [json by @nlohmann](https://github.com/nlohmann/json)
 - [cpp-httplib by @yhirose](https://github.com/yhirose/cpp-httplib)
+- [zlib-ng by @zlib-ng](https://github.com/zlib-ng/zlib-ng)
