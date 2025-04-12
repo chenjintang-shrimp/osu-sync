@@ -18,7 +18,7 @@ int main(int argc,char* argv[])
 		osuFolderPath = argv[1], username = argv[2],options=argv[3],serverURL=argv[4];
 		if (options == "download")
 		{
-			//TODO
+			downloadBeatmapFromList(username + "_stableBeatmaps.json");
 		}
 		else if (options == "upload")
 		{
