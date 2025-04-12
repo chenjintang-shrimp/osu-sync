@@ -9,7 +9,7 @@
 namespace fs = std::filesystem;
 using namespace std;
 
-const fs::path baseUploadDir = "xuploads";
+const fs::path baseUploadDir = "uploads";
 
 void write_log(fs::path logFile, string msg)
 {
@@ -66,7 +66,7 @@ int main(int argc,char* argv[])
 			{
 				res.status = 400;
 				res.set_content("非法文件路径", "text/plain");
-				write_log("./logs/log.txt", errMsg);
+				cerr << errMsg << endl;
 			}
 			fs::path tgtPath = baseUploadDir / savePath;
 			try
