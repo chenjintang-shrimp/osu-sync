@@ -46,7 +46,13 @@ void from_json(const json& j, beatmapMetaData bmd)
     j.at("fullName").get_to(bmd.second);
 }
 
-vector<string> downloadBeatmapFromList(fs::path pathToBeatmapList)
+string getSayobotMirrorURL(string beatmapId)
+{
+    string ret = "/beatmaps/" + ((beatmapId.size() <= 4) ? "0" : beatmapId.substr(0, 4)) + "/" + beatmapId.substr(beatmapId.size() - 4) + "/full?filename=" + beatmapId;
+    return ret;
+}
+
+vector<string> downloadBeatmapFromList(fs::path pathToBeatmapList,fs::path downloadDir)
 {
     vector<string> bmIdlist;
     ifstream bmList(pathToBeatmapList);
@@ -58,6 +64,22 @@ vector<string> downloadBeatmapFromList(fs::path pathToBeatmapList)
     json jList = json::parse(bmList);
     for (auto kv : jList)
     {
-        cout << kv["onlineId"] << endl;
+        httplib::Client cli("http://b10.sayobot.cn", 25225);
+        if (kv["onlineId"] == "-1")
+            continue;
+        string curOnlineId = kv["onlineId"];
+        curOnlineId = curOnlineId.substr();
+        curOnlineId = curOnlineId.substr(0, curOnlineId.size() - 1);
+        cout << curOnlineId << endl;
+        /*auto res = cli.Get(getSayobotMirrorURL(kv["onlineId"]));
+        bmIdlist.push_back(kv["onlineId"] + ".osz");
+        if (res && res->status == 200)
+        {
+            ofstream oszFile(kv["onlineId"] + ".osz", ios::binary);
+            oszFile << res->body;
+            oszFile.close();
+            cout << "ÒÑÏÂÔØÆ×Ãæ" << kv["onlineId"] << endl;
+        }*/
     }
+    return bmIdlist;
 }

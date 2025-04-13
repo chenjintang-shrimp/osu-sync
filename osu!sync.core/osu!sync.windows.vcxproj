@@ -150,7 +150,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="3rdpartyInclude\httplib.h" />
-    <ClInclude Include="coreExpections.h" />
     <ClInclude Include="fsutils.windows.h" />
     <ClInclude Include="network.utils.h" />
     <ClInclude Include="stableExporter.h" />

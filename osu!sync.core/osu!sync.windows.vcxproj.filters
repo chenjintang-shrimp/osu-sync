@@ -47,9 +47,6 @@
     <ClInclude Include="3rdpartyInclude\httplib.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="coreExpections.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="stableImporter.h">
       <Filter>头文件</Filter>
     </ClInclude>
