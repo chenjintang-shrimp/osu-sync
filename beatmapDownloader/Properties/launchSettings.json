@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "beatmapDownloader": {
+      "commandName": "Project",
+      "commandLineArgs": "1011011 1011011.osz"
+    }
+  }
+}

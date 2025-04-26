@@ -1,9 +1,11 @@
 #include<iostream>
 #include<algorithm>
+#include"resource.h"
 #include<filesystem>
 #include"fsutils.windows.h"
 #include"network.utils.h"
 #include"stableExporter.h"
+#include<Windows.h>
 using namespace std;
 namespace fs = std::filesystem;
 
@@ -11,6 +13,9 @@ namespace fs = std::filesystem;
 
 int main(int argc,char* argv[])
 {
+//#include <Windows.h>
+	HICON hIcon = LoadIcon(GetModuleHandle(NULL), MAKEINTRESOURCE(IDI_ICON2));
+	//LoadIcon(hInstance, MAKEINTRESOURCE(IDI_ICON1));
 	if (argc == 5)
 	{
 		fs::path osuFolderPath;
