@@ -1,11 +1,8 @@
 #include<iostream>
 #include<algorithm>
-#include"resource.h"
 #include<filesystem>
-#include"fsutils.windows.h"
-#include"network.utils.h"
-#include"stableExporter.h"
-#include<Windows.h>
+#include"uploadArchive.h"
+
 using namespace std;
 namespace fs = std::filesystem;
 
@@ -13,35 +10,19 @@ namespace fs = std::filesystem;
 
 int main(int argc,char* argv[])
 {
-//#include <Windows.h>
-	HICON hIcon = LoadIcon(GetModuleHandle(NULL), MAKEINTRESOURCE(IDI_ICON2));
-	//LoadIcon(hInstance, MAKEINTRESOURCE(IDI_ICON1));
-	if (argc == 5)
+	if (argc > 1)
 	{
-		fs::path osuFolderPath;
-		string options,serverURL,username;
-		osuFolderPath = argv[1], username = argv[2],options=argv[3],serverURL=argv[4];
-		if (options == "download")
+		string firstArg = argv[1];
+		if (firstArg == "--version")
+			cout << "osu!sync core, version b-20250501" << endl;
+		else if (firstArg == "--help")
+			cout << "用法：osu!sync.core.exe [参数]" << endl;
+		else if (firstArg == "--upload")
 		{
-			downloadBeatmapFromList(username + "_stableBeatmaps.json",".\\tempdownload");
+			string username = argv[2];
+			string archiveFileName = argv[3];
+			string serverURL = argv[4];
+			uploadData(archiveFileName, username, serverURL);
 		}
-		else if (options == "upload")
-		{
-			uploadData(username + "_stableBeatmaps.json", username, serverURL);
-		}
-		else if (options == "import")
-		{
-
-		}
-		else if (options == "export")
-		{
-			writeBeatmapDataToFile(getAllBeatmapData(getBeatmapFolderNames(osuFolderPath /= "songs")),username+"_stableBeatmaps.json");
-		}
-	}
-	else
-	{
-		cout << "用法：" << endl
-			<< "osu!sync.core.exe [osu-folder] [username] [download|upload|export|import] [serverURL]" << endl;
-		return -1;
 	}
 }

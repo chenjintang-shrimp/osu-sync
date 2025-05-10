@@ -27,10 +27,10 @@
     <ClCompile Include="main.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="stableImporter.cpp">
+    <ClCompile Include="beatmapDownloader.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="beatmapDownloader.cpp">
+    <ClCompile Include="uploadArchive.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
@@ -47,24 +47,14 @@
     <ClInclude Include="3rdpartyInclude\httplib.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="stableImporter.h">
+    <ClInclude Include="uploadArchive.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="resource.h">
+    <ClInclude Include="globalUsed.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="vcpkg.json" />
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="osu!sync.core.rc">
-      <Filter>资源文件</Filter>
-    </ResourceCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="..\..\..\..\Desktop\syncicon\finalicon.ico">
-      <Filter>资源文件</Filter>
-    </Image>
   </ItemGroup>
 </Project>

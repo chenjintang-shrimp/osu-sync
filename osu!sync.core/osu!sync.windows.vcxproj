@@ -145,25 +145,19 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="network.utils.cpp" />
     <ClCompile Include="stableExporter.cpp" />
-    <ClCompile Include="stableImporter.cpp" />
     <ClCompile Include="beatmapDownloader.cpp" />
+    <ClCompile Include="uploadArchive.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="3rdpartyInclude\httplib.h" />
     <ClInclude Include="fsutils.windows.h" />
     <ClInclude Include="network.utils.h" />
-    <ClInclude Include="resource.h" />
     <ClInclude Include="stableExporter.h" />
-    <ClInclude Include="stableImporter.h" />
+    <ClInclude Include="uploadArchive.h" />
+    <ClInclude Include="globalUsed.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="vcpkg.json" />
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="osu!sync.core.rc" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="..\..\..\..\Desktop\syncicon\finalicon.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
