@@ -4,11 +4,12 @@
 #include<chrono>
 #include<iomanip>
 #include<filesystem>
+#include<locale>
 #include"3rdparty/httplib.h"
 namespace fs = std::filesystem;
 using namespace std;
 
-const fs::path baseUploadDir = "/home/uploads";
+const fs::path baseUploadDir = "uploads";
 
 void write_log(fs::path logFile, string msg)
 {
@@ -43,7 +44,8 @@ int main(int argc,char* argv[])
 {
 
 	httplib::Server svr;
-	
+	std::locale::global(std::locale(""));
+	std::cout.imbue(std::locale("C.UTF-8"));
 	svr.Post("/upload", [](const httplib::Request& req, httplib::Response& res)
 		{
 			if (!req.has_file("file"))
@@ -64,7 +66,7 @@ int main(int argc,char* argv[])
 			{
 				res.status = 400;
 				res.set_content("非法文件路径", "text/plain");
-				write_log("./logs/log.txt", errMsg);
+				cerr << errMsg << endl;
 			}
 			fs::path tgtPath = baseUploadDir / savePath;
 			try
@@ -75,8 +77,7 @@ int main(int argc,char* argv[])
 			{
 				res.status = 500;
 				string errorMsg = "目录" + string(e.what()) + "创建失败";
-				res.set_content(errorMsg, "text/plain");
-				write_log("./logs/log.txt", errorMsg);
+				std::cerr << errorMsg << endl;
 				return;
 			}
 
@@ -86,15 +87,17 @@ int main(int argc,char* argv[])
 				res.status = 500;
 				std::string error_msg = "打开文件写入失败: " + tgtPath.string();
 				res.set_content(error_msg, "text/plain");
-				write_log("./logs/log.txt",error_msg);
+				cerr << error_msg << endl;
 				return;
 			}
 			ofs.write(file.content.data(), file.content.size());
 			ofs.close();
 
 			std::string success_msg = "文件上传成功: " + tgtPath.string();
-			res.set_content(success_msg, "text/plain");
-			write_log("./logs/log.txt",success_msg);
+			res.set_content("文件上传成功: " + tgtPath.string(), "text/plain; charset=utf-8");
+			auto now = chrono::system_clock::to_time_t(chrono::system_clock::now());
+
+			cout << put_time(std::localtime(&now), "%Y-%m-%d %H:%M:%S") << " " << success_msg << endl;
 		});
 	cout << "Server started." << endl;
 	svr.listen("0.0.0.0", 8080);

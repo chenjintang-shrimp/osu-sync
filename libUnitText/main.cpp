@@ -8,12 +8,5 @@ using namespace std;
 
 int main()
 {
-	string pathStr;
-	cin >> pathStr;
-	fs::path songsPath = pathStr;
-	vector<beatmapMetaData> bmd;
-	bmd = getAllBeatmapData(getBeatmapFolderNames(songsPath));
-	writeBeatmapDataToFile(bmd,".\\test.json");
-	uploadData(".\\test.json", "test", "120.26.51.57:21");
-	return 0;
+	system("..\\x64\\Debug\\osu!sync.core.exe E:\\osustb chenjintang upload 127.0.0.1:8080");
 }

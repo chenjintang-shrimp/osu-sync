@@ -29,11 +29,22 @@ vector<beatmapMetaData> getAllBeatmapData(vector<string> beatmapNames)
 	{
 		beatmapMetaData temp;
 		int blankOffset = kv.find_first_of(" ");
-		temp.first = kv.substr(0, blankOffset-1);
+		temp.first = kv.substr(0, blankOffset);
 		if (!isDigit(temp.first))
 			temp.first = "-1";//±ê¼ÇË½Æ×
 		temp.second = kv.substr(blankOffset + 1, kv.size());
 		data.push_back(temp);
+	}
+	vector<beatmapMetaData> tmpData = data;
+	data.clear();
+	data.push_back(tmpData[0]);
+	for (auto kv : tmpData)
+	{
+		if (data.size() > 0)
+		{
+			if (kv.first != (data.end()-1)->first)
+				data.push_back(kv);
+		}
 	}
 	return data;
 }
