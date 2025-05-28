@@ -70,18 +70,12 @@ bool BeatmapImporter::downloadBeatmap(BeatmapInfo& beatmap) {
         // 构建保存路径
         fs::path beatmapPath = savePath_ / (beatmap.id + ".osz");
         
-        // 根据当前镜像生成下载URL
+        // 使用NetworkUtils生成下载URL
         std::string url;
-        if (currentMirror_ == "sayobot") {
-            url = "https://txy1.sayobot.cn/download/beatmap/" + beatmap.id;
-        } else if (currentMirror_ == "catboy") {
-            url = "https://catboy.best/d/" + beatmap.id;
-        } else if (currentMirror_ == "chimu") {
-            url = "https://api.chimu.moe/v1/download/" + beatmap.id;
-        } else if (currentMirror_ == "nerinyan") {
-            url = "https://api.nerinyan.moe/d/" + beatmap.id + "?noskip=1";
-        } else {
-            throw std::runtime_error("未知的镜像站: " + currentMirror_);
+        try {
+            url = NetworkUtils::getMirrorURL(beatmap.id, currentMirror_);
+        } catch (const std::exception& e) {
+            throw std::runtime_error("生成下载URL失败: " + std::string(e.what()));
         }
         
         // 使用新的网络工具下载文件
