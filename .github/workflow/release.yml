@@ -1,0 +1,95 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*' # 触发所有以v开头的tag
+
+jobs:
+  build:
+    name: Create Release
+    runs-on: windows-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # 获取完整历史记录以便生成更新日志
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '7.0.x'
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+
+      - name: Install conventional-changelog
+        run: |
+          npm install -g conventional-changelog-cli
+          npm install -g conventional-changelog-conventionalcommits
+
+      - name: Generate changelog
+        id: changelog
+        shell: bash
+        run: |
+          # 获取最近的两个tag
+          CURRENT_TAG=${GITHUB_REF#refs/tags/}
+          PREVIOUS_TAG=$(git describe --tags --abbrev=0 ${CURRENT_TAG}^ 2>/dev/null || echo "")
+          
+          # 配置conventional-changelog以支持中文输出
+          CONFIG='{"types":[{"type":"feat","section":"✨ 新功能"},{"type":"fix","section":"🐛 修复"},{"type":"perf","section":"⚡ 性能优化"},{"type":"refactor","section":"♻️ 重构"},{"type":"style","hidden":true},{"type":"docs","hidden":true},{"type":"test","hidden":true},{"type":"chore","hidden":true}]}'
+          
+          if [ -z "$PREVIOUS_TAG" ]; then
+            echo "## 🎉 首次发布" > CHANGELOG.md
+            conventional-changelog -p conventionalcommits -c <(echo "$CONFIG") >> CHANGELOG.md
+          else
+            echo "## ⭐ 更新内容 ($PREVIOUS_TAG -> $CURRENT_TAG)" > CHANGELOG.md
+            conventional-changelog -p conventionalcommits -c <(echo "$CONFIG") -r 2 >> CHANGELOG.md
+          fi
+          
+          # 处理更新日志格式
+          sed -i 's/### /#### /g' CHANGELOG.md  # 降低标题级别
+          sed -i 's/BREAKING CHANGE/💥 重大变更/g' CHANGELOG.md
+          
+          # 保存更新日志内容
+          CHANGELOG_CONTENT=$(cat CHANGELOG.md)
+          echo "changelog<<EOF" >> $GITHUB_OUTPUT
+          echo "$CHANGELOG_CONTENT" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: Build project
+        run: |
+          dotnet restore
+          dotnet build -c Release
+
+      - name: Create artifacts directory
+        run: mkdir artifacts
+
+      - name: Publish beatmapDownloader
+        run: |
+          dotnet publish beatmapDownloader/beatmapDownloader.csproj \
+            -c Release \
+            -r win-x64 \
+            --self-contained true \
+            -p:PublishSingleFile=true \
+            -o artifacts/beatmapDownloader-win-x64
+
+      - name: Compress artifacts
+        shell: bash
+        run: |
+          cd artifacts
+          zip -r beatmapDownloader-win-x64.zip beatmapDownloader-win-x64/
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: artifacts/beatmapDownloader-win-x64.zip
+          body: |
+            ${{ steps.changelog.outputs.changelog }}
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
