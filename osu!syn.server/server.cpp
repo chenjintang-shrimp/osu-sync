@@ -42,7 +42,6 @@ bool Config::reload() {
     load(configPath_);
     return true;
 }
-}
 
 bool FileValidator::isSafePath(const fs::path& path, std::string& errorMessage) {
     if (path.is_absolute()) {

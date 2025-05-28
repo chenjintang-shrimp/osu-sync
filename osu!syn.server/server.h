@@ -12,6 +12,7 @@ public:
     static bool isAllowedFileType(const std::string& filename, std::string& errorMessage);
     static bool isValidFileSize(size_t fileSize, std::string& errorMessage);
     static bool validateChecksum(const std::string& content, const std::string& expectedHash, std::string& errorMessage);
+};  // 添加缺失的闭合大括号
 
 class Config {
 public:
