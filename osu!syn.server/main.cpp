@@ -1,104 +1,90 @@
-#include<iostream>
-#include<fstream>
-#include<sstream>
-#include<chrono>
-#include<iomanip>
-#include<filesystem>
-#include<locale>
-#include"3rdparty/httplib.h"
+#include <iostream>
+#include <filesystem>
+#include <locale>
+#include <stdexcept>
+#include <string>
+#include "3rdparty/httplib.h"
+#include "logger.h"
+#include "server.h"
+
 namespace fs = std::filesystem;
-using namespace std;
 
-const fs::path baseUploadDir = "uploads";
+class Server {
+public:
+    Server() {
+        // è®¾ç½®UTF-8ç¼–ç 
+        #ifdef _WIN32
+            setlocale(LC_ALL, "zh_CN.UTF-8");
+        #else
+            setlocale(LC_ALL, "en_US.UTF-8");
+            std::locale::global(std::locale("en_US.UTF-8"));
+        #endif
+        
+        // åŠ è½½é…ç½®
+        Config::load("config.json");
+        
+        // åˆå§‹åŒ–æ—¥å¿—ç³»ç»Ÿ
+        logger_ = std::make_unique<Logger>(Config::getLogDir());
+        uploadHandler_ = std::make_unique<FileUploadHandler>(Config::getUploadDir());
+        
+        setupRoutes();
+        setupErrorHandlers();
+    }
+    
+    void run() {
+        logger_->info("æœåŠ¡å™¨å¯åŠ¨ä¸­...");
+        logger_->info("ç›‘å¬åœ°å€: " + Config::getHost() + ":" + std::to_string(Config::getPort()));
+        
+        if (!server_.listen(Config::getHost(), Config::getPort())) {
+            throw std::runtime_error("æœåŠ¡å™¨å¯åŠ¨å¤±è´¥");
+        }
+    }
 
-void write_log(fs::path logFile, string msg)
-{
-	ofstream logFileHandler(logFile, ios::app);
-	if (logFileHandler)
-	{
-		auto now = chrono::system_clock::to_time_t(chrono::system_clock::now());
-		logFileHandler << put_time(std::localtime(&now), "%Y-%m-%d %H:%M:%S") << " "
-			<< msg << endl;
-	}
-}
+private:
+    void setupRoutes() {
+        // æ–‡ä»¶ä¸Šä¼ è·¯ç”±
+        server_.Post("/upload", [this](const httplib::Request& req, httplib::Response& res) {
+            logger_->info("æ”¶åˆ°ä¸Šä¼ è¯·æ±‚");
+            uploadHandler_->handleUpload(req, res);
+            logger_->info("å¤„ç†ä¸Šä¼ è¯·æ±‚å®Œæˆ: " + std::to_string(res.status));
+        });
 
-bool isSafePath(fs::path path, string& errBuf)
-{
-	if (path.is_absolute())
-	{
-		errBuf = "³¢ÊÔÒÔ¾ø¶ÔÂ·¾¶·ÃÎÊÎÄ¼ş£¬ÒÑ½ûÖ¹";
-		return false;
-	}
-	for (auto& compoment : path)
-	{
-		if (compoment == "..")
-		{
-			errBuf = "ÊÔÍ¼·ÃÎÊÉÏÒ»¼¶Ä¿Â¼£¬ÒÑ½ûÖ¹";
-			return false;
-		}
-	}
-	return true;
-}
+        // å¥åº·æ£€æŸ¥è·¯ç”±
+        server_.Get("/health", [](const httplib::Request&, httplib::Response& res) {
+            res.set_content("OK", "text/plain");
+        });
+    }
+    
+    void setupErrorHandlers() {
+        server_.set_error_handler([this](const httplib::Request&, httplib::Response& res) {
+            logger_->error("å‘ç”Ÿé”™è¯¯: " + std::to_string(res.status));
+            res.set_content("æœåŠ¡å™¨é”™è¯¯", "text/plain; charset=utf-8");
+        });
 
-int main(int argc,char* argv[])
-{
+        server_.set_exception_handler([this](const httplib::Request&, httplib::Response& res, std::exception_ptr ep) {
+            try {
+                std::rethrow_exception(ep);
+            } catch (const std::exception& e) {
+                logger_->error("å‘ç”Ÿå¼‚å¸¸: " + std::string(e.what()));
+                res.status = 500;
+                res.set_content("æœåŠ¡å™¨å†…éƒ¨é”™è¯¯", "text/plain; charset=utf-8");
+            }
+        });
+    }
 
-	httplib::Server svr;
-	std::locale::global(std::locale(""));
-	std::cout.imbue(std::locale("C.UTF-8"));
-	svr.Post("/upload", [](const httplib::Request& req, httplib::Response& res)
-		{
-			if (!req.has_file("file"))
-			{
-				res.status = 400;
-				res.set_content("ÎÄ¼şÄØ£¿ÎÒÎÊÄãÎÄ¼şÄØ£¿£¿£¿£¿", "text/plain");
-				write_log("./logs/log.txt","³öÏÖÎ´ÉÏ´«³É¹¦µÄÎÄ¼ş");
-				return;
-			}
-			auto file = req.get_file_value("file");
-			fs::path savePath;
-			if (req.has_param("filepath"))
-				savePath = req.get_param_value("filepath");
-			else
-				savePath = file.filename;
-			string errMsg;
-			if (!isSafePath(savePath, errMsg))
-			{
-				res.status = 400;
-				res.set_content("·Ç·¨ÎÄ¼şÂ·¾¶", "text/plain");
-				cerr << errMsg << endl;
-			}
-			fs::path tgtPath = baseUploadDir / savePath;
-			try
-			{
-				fs::create_directories(tgtPath.parent_path());
-			}
-			catch (const fs::filesystem_error& e)
-			{
-				res.status = 500;
-				string errorMsg = "Ä¿Â¼" + string(e.what()) + "´´½¨Ê§°Ü";
-				std::cerr << errorMsg << endl;
-				return;
-			}
+    httplib::Server server_;
+    std::unique_ptr<Logger> logger_;
+    std::unique_ptr<FileUploadHandler> uploadHandler_;
+};
 
-			ofstream ofs(tgtPath, ios::binary);
-			if (!ofs)
-			{
-				res.status = 500;
-				std::string error_msg = "´ò¿ªÎÄ¼şĞ´ÈëÊ§°Ü: " + tgtPath.string();
-				res.set_content(error_msg, "text/plain");
-				cerr << error_msg << endl;
-				return;
-			}
-			ofs.write(file.content.data(), file.content.size());
-			ofs.close();
+int main(int argc, char* argv[]) {
+    try {
+        Server server;
 
-			std::string success_msg = "ÎÄ¼şÉÏ´«³É¹¦: " + tgtPath.string();
-			res.set_content("ÎÄ¼şÉÏ´«³É¹¦: " + tgtPath.string(), "text/plain; charset=utf-8");
-			auto now = chrono::system_clock::to_time_t(chrono::system_clock::now());
-
-			cout << put_time(std::localtime(&now), "%Y-%m-%d %H:%M:%S") << " " << success_msg << endl;
-		});
-	cout << "Server started." << endl;
-	svr.listen("0.0.0.0", 8080);
+	        server.run();
+        return 0;
+    } catch (const std::exception& e) {
+        std::cerr << "ä¸¥é‡é”™è¯¯: " << e.what() << std::endl;
+        return 1;
+    }
 }
