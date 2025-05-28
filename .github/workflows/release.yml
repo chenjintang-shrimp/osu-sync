@@ -1,5 +1,9 @@
 name: Build Server on Release
 
+permissions:
+  contents: write
+  discussions: write
+
 on:
   release:
     types: [published]
