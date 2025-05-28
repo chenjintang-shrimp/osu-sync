@@ -11,7 +11,7 @@ if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
 endif()
 
 # 查找依赖
-find_package(nlohmann_json REQUIRED)
+# find_package(nlohmann_json REQUIRED)
 find_package(OpenSSL REQUIRED)
 find_package(Threads REQUIRED)
 
@@ -34,7 +34,7 @@ add_executable(${PROJECT_NAME} ${SOURCES})
 # 链接依赖库
 target_link_libraries(${PROJECT_NAME}
     PRIVATE
-    nlohmann_json::nlohmann_json
+    # nlohmann_json::nlohmann_json
     OpenSSL::SSL
     OpenSSL::Crypto
     Threads::Threads
