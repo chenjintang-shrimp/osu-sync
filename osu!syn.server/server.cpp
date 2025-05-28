@@ -1,7 +1,7 @@
 #include "server.h"
 #include "logger.h"
 #include <fstream>
-#include <nlohmann/json.hpp>
+#include "3rdparty/nlohmann/json.hpp"
 
 using json = nlohmann::json;
 

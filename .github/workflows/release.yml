@@ -1,0 +1,60 @@
+name: Build Server on Release
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0  # 获取完整的git历史记录
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+    
+    - name: Generate Changelog
+      run: |
+        npm install -g conventional-changelog-cli
+        # 获取上一个tag
+        PREV_TAG=$(git describe --tags --abbrev=0 HEAD^ 2>/dev/null || echo "")
+        if [ -z "$PREV_TAG" ]; then
+          # 如果没有上一个tag，则从第一个提交开始
+          conventional-changelog -p angular -i CHANGELOG.md -s -r 0
+        else
+          # 从上一个tag到当前tag之间的提交生成更新日志
+          conventional-changelog -p angular -i CHANGELOG.md -s -r 1
+        fi
+    
+    - name: Update Release Notes
+      uses: softprops/action-gh-release@v1
+      with:
+        body_path: CHANGELOG.md
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y build-essential
+      
+    - name: Build
+      working-directory: ${{github.workspace}}/osu!syn.server
+      run: |
+        chmod +x build.sh
+        ./build.sh
+        
+    - name: Upload Release Asset
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ github.event.release.upload_url }}
+        asset_path: ${{github.workspace}}/osu!syn.server/build/osu_sync_server
+        asset_name: osu_sync_server
+        asset_content_type: application/octet-stream

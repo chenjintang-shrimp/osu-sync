@@ -1,0 +1,7 @@
+/home/chenjintang/osu-sync/build/CMakeFiles/osu_sync_server.dir
+/home/chenjintang/osu-sync/build/CMakeFiles/edit_cache.dir
+/home/chenjintang/osu-sync/build/CMakeFiles/rebuild_cache.dir
+/home/chenjintang/osu-sync/build/CMakeFiles/list_install_components.dir
+/home/chenjintang/osu-sync/build/CMakeFiles/install.dir
+/home/chenjintang/osu-sync/build/CMakeFiles/install/local.dir
+/home/chenjintang/osu-sync/build/CMakeFiles/install/strip.dir
