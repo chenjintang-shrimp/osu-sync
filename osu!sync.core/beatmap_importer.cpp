@@ -99,6 +99,13 @@ bool BeatmapImporter::downloadBeatmap(BeatmapInfo& beatmap) {
         beatmap.localPath = beatmapPath.string();
         beatmap.downloaded = true;
         
+        // 如果设置了osu路径，自动导入
+        if (!osuPath_.empty()) {
+            if (!importToOsuFolder(beatmap)) {
+                std::cerr << "警告：铺面下载成功但导入失败" << std::endl;
+            }
+        }
+        
         return true;
         
     } catch (const std::exception& e) {
@@ -115,6 +122,48 @@ bool BeatmapImporter::validateSavePath() {
         return true;
     } catch (const std::exception& e) {
         status_.errors.push_back("创建保存目录失败: " + std::string(e.what()));
+        return false;
+    }
+}
+
+bool BeatmapImporter::importToOsuFolder(const BeatmapInfo& beatmap) {
+    try {
+        if (osuPath_.empty()) {
+            throw std::runtime_error("未设置osu!安装目录");
+        }
+
+        // 检查铺面是否已下载
+        if (!beatmap.downloaded || beatmap.localPath.empty()) {
+            throw std::runtime_error("铺面未下载或下载失败");
+        }
+
+        // 构建目标路径（osu!/Songs/）
+        fs::path songsPath = osuPath_ / "Songs";
+        if (!fs::exists(songsPath)) {
+            throw std::runtime_error("Songs文件夹不存在: " + songsPath.string());
+        }
+
+        // 获取源文件路径
+        fs::path sourcePath = beatmap.localPath;
+        if (!fs::exists(sourcePath)) {
+            throw std::runtime_error("源文件不存在: " + sourcePath.string());
+        }
+
+        // 移动文件到Songs文件夹
+        fs::path destPath = songsPath / sourcePath.filename();
+        
+        // 如果目标文件已存在，先删除
+        if (fs::exists(destPath)) {
+            fs::remove(destPath);
+        }
+
+        // 移动文件
+        fs::rename(sourcePath, destPath);
+        std::cout << "成功导入铺面: " << sourcePath.filename().string() << std::endl;
+        return true;
+
+    } catch (const std::exception& e) {
+        status_.errors.push_back("导入铺面失败: " + std::string(e.what()));
         return false;
     }
 }

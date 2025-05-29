@@ -4,6 +4,7 @@
  */
 
 #include "network.utils.h"
+#include<fstream>
 #include <cstdlib>
 #include <array>
 #include <memory>
@@ -71,13 +72,26 @@ bool NetworkUtils::downloadFile(const std::string& url,
         }
 
         // 构建下载器路径
-        fs::path downloaderPath = fs::current_path() / "beatmapDownloader";
+        fs::path downloaderPath;
+        
+        // 首先检查当前目录
+        downloaderPath = fs::current_path() / "beatmapDownloader";
         #ifdef _WIN32
         downloaderPath.replace_extension(".exe");
         #endif
         
+        // 如果当前目录找不到，尝试相对于可执行文件的路径
         if (!fs::exists(downloaderPath)) {
-            throw std::runtime_error("找不到beatmapDownloader工具: " + downloaderPath.string());
+            downloaderPath = fs::current_path().parent_path() / "beatmapDownloader";
+            #ifdef _WIN32
+            downloaderPath.replace_extension(".exe");
+            #endif
+        }
+        
+        if (!fs::exists(downloaderPath)) {
+            throw std::runtime_error("找不到beatmapDownloader工具，已尝试路径: " + 
+                fs::current_path().string() + " 和 " + 
+                fs::current_path().parent_path().string());
         }
 
         // 构建命令
@@ -107,27 +121,43 @@ bool NetworkUtils::downloadFile(const std::string& url,
 bool NetworkUtils::validateFile(const fs::path& filePath) {
     try {
         if (!fs::exists(filePath)) {
+            std::cerr << "文件不存在: " << filePath << std::endl;
             return false;
         }
 
         auto fileSize = fs::file_size(filePath);
         if (fileSize == 0) {
+            std::cerr << "文件大小为0: " << filePath << std::endl;
+            return false;
+        }
+
+        if (fileSize < 22) { // ZIP文件的最小大小
+            std::cerr << "文件太小，不是有效的ZIP文件: " << filePath << std::endl;
             return false;
         }
 
         // 检查.osz文件头（ZIP格式）
         std::ifstream file(filePath, std::ios::binary);
         if (!file) {
+            std::cerr << "无法打开文件: " << filePath << std::endl;
             return false;
         }
 
+        // 读取并验证ZIP文件头（PK\x03\x04）
         char header[4];
         if (!file.read(header, 4)) {
+            std::cerr << "无法读取文件头: " << filePath << std::endl;
             return false;
         }
 
         // 验证ZIP文件头
-        return (header[0] == 0x50 && header[1] == 0x4B);
+        if (!(header[0] == 0x50 && header[1] == 0x4B && 
+              header[2] == 0x03 && header[3] == 0x04)) {
+            std::cerr << "无效的ZIP文件头: " << filePath << std::endl;
+            return false;
+        }
+
+        return true;
 
     } catch (const std::exception&) {
         return false;
@@ -143,32 +173,48 @@ std::string NetworkUtils::getMirrorURL(const std::string& beatmapId, const std::
     }
 
     const auto& mirrorConfig = it->second;
-    std::string url = mirrorConfig.baseUrl + beatmapId;
+    std::string url;
 
     // 针对不同镜像站的特殊处理
+    std::string baseUrl = mirrorConfig.baseUrl;
     if (mirror == "sayobot") {
-        // Sayobot特殊的路径格式
-        std::string basePath = "beatmaps";
+        // Sayobot特殊的路径格式：https://txy1.sayobot.cn/download/beatmap/{set_id}/full
         if (beatmapId.length() <= 4) {
-            url = basePath + "/0/" + beatmapId;
+            url = baseUrl + beatmapId + "/full";
         } else {
-            url = basePath + "/" + beatmapId.substr(0, beatmapId.length() - 4) + 
-                  "/" + beatmapId.substr(beatmapId.length() - 4);
+            url = baseUrl + beatmapId + "/full";
         }
-        url += "/full?filename=" + beatmapId;
+        url += "?filename=" + beatmapId + ".osz";
+    } else {
+        // 其他镜像站使用直接拼接方式
+        url = baseUrl + beatmapId;
+        // 对于需要noskip参数的镜像站
+        if (mirrorConfig.requiresNoskip) {
+            url += "?noskip=1";
+        }
     }
-    // 可以在这里添加其他镜像站的特殊处理逻辑
 
     return url;
 }
 
-std::unordered_map<std::string, NetworkUtils::Mirror> NetworkUtils::getMirrors() {
+std::unordered_map<std::string, Mirror> NetworkUtils::getMirrors() {
     static std::unordered_map<std::string, Mirror> mirrors = {
         {"sayobot", {"Sayobot", "https://txy1.sayobot.cn/download/beatmap/", false}},
         {"catboy", {"Catboy", "https://catboy.best/d/", false}},
         {"chimu", {"Chimu", "https://api.chimu.moe/v1/download/", false}},
-        {"nerinyan", {"Nerinyan", "https://api.nerinyan.moe/d/", true}}
+        {"nerinyan", {"Nerinyan", "https://api.nerinyan.moe/d/", true}},
+        {"kitsu", {"Kitsu", "https://kitsu.moe/api/d/", false}}  // 添加新的镜像
     };
+    
+    // 检查环境变量是否有自定义镜像
+    const char* customMirror = std::getenv("OSU_SYNC_MIRROR");
+    if (customMirror != nullptr) {
+        std::string mirrorUrl(customMirror);
+        if (!mirrorUrl.empty()) {
+            mirrors["custom"] = {"Custom", mirrorUrl, false};
+        }
+    }
+    
     return mirrors;
 }
 

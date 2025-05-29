@@ -22,8 +22,15 @@ public:
     // 设置要使用的下载镜像
     void setMirror(const std::string& mirrorName);
 
+    // 设置osu!安装目录
+    void setOsuPath(const fs::path& osuPath) { osuPath_ = osuPath; }
+    
+    // 将下载的铺面导入到osu的Songs文件夹
+    bool importToOsuFolder(const BeatmapInfo& beatmap);
+
 private:
     fs::path savePath_;
+    fs::path osuPath_;  // osu!安装目录
     std::string currentMirror_;
     ImportStatus status_;
     

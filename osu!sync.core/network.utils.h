@@ -1,6 +1,25 @@
 /*
- * 网络工具类头文件
- * 提供beatmap下载和网络相关功能
+ * 网络工#include <filesystem>
+
+namespace fs = std::filesystem;
+
+namespace osu {
+
+class NetworkUtils;  // 前向声明
+
+// 进度回调函数类型
+using ProgressCallback = std::function<void(size_t current, size_t total)>;
+
+// 镜像站配置
+// 注意：这个结构体必须在NetworkUtils类外部定义，因为它被用作unordered_map的值类型
+struct Mirror {
+    std::string name;
+    std::string baseUrl;
+    bool requiresNoskip;
+};
+
+// 下载选项
+struct DownloadOptions {下载和网络相关功能
  */
 
 #pragma once
