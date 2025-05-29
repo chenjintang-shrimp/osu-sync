@@ -31,11 +31,11 @@ jobs:
         if [ -z "$PREV_TAG" ]; then
           # 如果没有上一个tag，则从第一个提交开始
           npx conventional-changelog-cli -p angular -i CHANGELOG.md -s -r 0 \
-            --config .github/changelog-config.js
+            --config .github/changelog.config.mjs
         else
           # 从上一个tag到当前tag之间的提交生成更新日志
           npx conventional-changelog-cli -p angular -i CHANGELOG.md -s -r 1 \
-            --config .github/changelog-config.js
+            --config .github/changelog.config.mjs
         fi
     
     - name: Update Release Notes
