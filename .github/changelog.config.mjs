@@ -5,39 +5,45 @@ export default {
     transform: (commit, context) => {
       const issues = [];
 
-      commit.type = commit.type || '';
-      commit.scope = commit.scope || '';
+      // 创建一个新的对象而不是修改原对象
+      const processedCommit = {
+        ...commit,
+        type: commit.type || '',
+        scope: commit.scope || ''
+      };
 
-      if (commit.type === 'feat') {
-        commit.type = '🚀 Features';
-      } else if (commit.type === 'fix') {
-        commit.type = '🐛 Bug Fixes';
-      } else if (commit.type === 'refactor' || commit.type === 'chore') {
-        commit.type = '🔧 Internal Changes';
-      } else if (['docs', 'style', 'perf', 'test'].includes(commit.type)) {
+      // 根据类型设置标题
+      if (processedCommit.type === 'feat') {
+        processedCommit.type = '🚀 Features';
+      } else if (processedCommit.type === 'fix') {
+        processedCommit.type = '🐛 Bug Fixes';
+      } else if (processedCommit.type === 'refactor' || processedCommit.type === 'chore') {
+        processedCommit.type = '🔧 Internal Changes';
+      } else if (['docs', 'style', 'perf', 'test'].includes(processedCommit.type)) {
         return false;
       }
 
-      if (typeof commit.hash === 'string') {
-        commit.hash = commit.hash.substring(0, 7);
+      // 缩短 commit hash
+      if (typeof processedCommit.hash === 'string') {
+        processedCommit.hash = processedCommit.hash.substring(0, 7);
       }
 
-      // Breaking Changes
-      if (commit.notes.length > 0) {
-        commit.notes.forEach(note => {
-          note.title = '💥 BREAKING CHANGES';
-        });
-        return commit;
+      // 处理破坏性变更
+      if (processedCommit.notes && processedCommit.notes.length > 0) {
+        processedCommit.notes = processedCommit.notes.map(note => ({
+          ...note,
+          title: '💥 BREAKING CHANGES'
+        }));
       }
 
-      // Issues
-      if (commit.references) {
-        commit.references.forEach(reference => {
+      // 处理引用的 Issues
+      if (processedCommit.references) {
+        processedCommit.references.forEach(reference => {
           issues.push(reference.issue);
         });
       }
 
-      return commit;
+      return processedCommit;
     }
   }
 };
