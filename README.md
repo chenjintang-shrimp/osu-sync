@@ -12,7 +12,39 @@
 详见 https://github.com/users/jimmy-sketch/projects/3
 
 ## 使用方法
-WIP
+### core:命令行工具
+
+程序提供三个主要功能：导出谱面列表、下载谱面列表和导入谱面。
+
+基本用法：
+```bash
+osu!sync <命令> [参数...]
+```
+
+#### 可用命令：
+
+1. **导出谱面列表** - 从本地 osu! 导出谱面列表到 JSON 文件：
+```bash
+osu!sync export <osu路径> <输出文件>
+```
+示例：`osu!sync export "C:/Games/osu!" beatmaps.json`
+
+2. **下载谱面列表** - 从服务器下载用户的谱面列表：
+```bash
+osu!sync download <用户名> <服务器地址>
+```
+示例：`osu!sync download player123 http://sync-server.com`
+
+3. **导入谱面** - 下载并导入谱面列表中的谱面：
+```bash
+osu!sync import <谱面列表> <保存路径> [osu路径]
+```
+示例：`osu!sync import beatmaps.json ./downloads "C:/Games/osu!"`
+
+注意：
+- `osu路径` 是 osu! 游戏的安装目录
+- `保存路径` 是下载谱面文件的临时存储目录
+- 方括号 `[]` 中的参数是可选的
 
 ## 引用项目：
 - [cpp-realm by @realm](https://github.com/realm/realm-cpp)
