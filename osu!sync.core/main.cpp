@@ -11,6 +11,8 @@ namespace fs = std::filesystem;
 using json = nlohmann::json;
 
 void printUsage() {
+	std::cout << "osu!sync - osu!谱面同步工具" << std::endl;
+	std::cout << "版本: v0.1.0 (Codename Shiroko)" << std::endl;
     std::cout << "使用方法: osu!sync <命令> [参数...]" << std::endl;
     std::cout << std::endl;
     std::cout << "可用命令:" << std::endl;
@@ -138,6 +140,14 @@ int main(int argc, char* argv[]) {
             }
             return importBeatmaps(argv[2], argv[3], argc == 5 ? argv[4] : "") ? 0 : 1;
         }
+		else if(command=="version")
+		{
+			std::cout<<"osu!sync(core) v0.1.0 (Codename Shrioko)"<<std::endl;
+			std::cout<<"Copyright 2025 chen-shrimp"<<std::endl;
+			std::cout<<"本软件基于MIT协议发布，引用/更改记得署名哦~"<<std::endl;
+			return 0;
+
+		}
         else {
             std::cerr << "错误: 未知命令 '" << command << "'" << std::endl;
             printUsage();
