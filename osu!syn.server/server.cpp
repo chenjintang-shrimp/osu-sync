@@ -60,20 +60,7 @@ bool FileValidator::isSafePath(const fs::path& path, std::string& errorMessage) 
 }
 
 bool FileValidator::isAllowedFileType(const std::string& filename, std::string& errorMessage) {
-    // 可以根据需要扩展允许的文件类型
-    static const std::vector<std::string> allowedExtensions = {
-        ".osz", ".osr", ".osu", ".zip"
-    };
-
-    fs::path path(filename);
-    auto ext = path.extension().string();
-    std::transform(ext.begin(), ext.end(), ext.begin(), ::tolower);
-
-    if (std::find(allowedExtensions.begin(), allowedExtensions.end(), ext) == allowedExtensions.end()) {
-        errorMessage = "不支持的文件类型: " + ext;
-        return false;
-    }
-
+    // 允许所有文件类型
     return true;
 }
 

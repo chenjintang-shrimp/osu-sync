@@ -17,13 +17,13 @@ int uploadData(fs::path filename, string username, string remoteURL)
 {
     httplib::Client cli(remoteURL);
 
-    // ±¾µØ´ıÉÏ´«ÎÄ¼şÂ·¾¶£¨Windows¸ñÊ½£©
-    // ¿Í»§¶ËÌá¹©µÄÏà¶ÔÂ·¾¶
-    string relativePath = username + "/" + filename.generic_string(); // Ê¹ÓÃÍ¨ÓÃ¸ñÊ½Â·¾¶
+    // æ„å»ºä¸Šä¼ æ–‡ä»¶è·¯å¾„ï¼ˆä½¿ç”¨é€šç”¨æ ¼å¼ï¼‰
+    // å®¢æˆ·ç«¯æä¾›ç›¸å¯¹è·¯å¾„
+    string relativePath = username + "/" + filename.generic_string(); // ä½¿ç”¨é€šç”¨æ ¼å¼è·¯å¾„
 
     ifstream ifs(filename, ios::binary);
     if (!ifs) {
-        cerr << "ÎŞ·¨´ò¿ªÎÄ¼ş: " << filename << endl;
+        cerr << "æ— æ³•æ‰“å¼€æ–‡ä»¶: " << filename << endl;
         return 1;
     }
     stringstream buffer;
@@ -31,7 +31,7 @@ int uploadData(fs::path filename, string username, string remoteURL)
     string fileData = buffer.str();
     ifs.close();
 
-    // ¹¹Ôì multipart/form-data Êı¾İ
+    // ï¿½ï¿½ï¿½ï¿½ multipart/form-data ï¿½ï¿½ï¿½ï¿½
     cout << relativePath << endl;
     httplib::MultipartFormDataItems items = {
         { "filepath", relativePath, "", "text/plain; charset=utf-8" },
@@ -40,11 +40,11 @@ int uploadData(fs::path filename, string username, string remoteURL)
 
     auto res = cli.Post("/upload", items);
     if (res && res->status == 200) {
-        cout << "ÏìÓ¦: " << res->body << endl;
+        cout << "å“åº”: " << res->body << endl;
     }
     else {
-        cerr << "ÉÏ´«Ê§°Ü£¬×´Ì¬Âë: "
-            << (res ? to_string(res->status) : "ÎŞÏìÓ¦") << endl;
+        cerr << "ä¸Šä¼ å¤±è´¥ï¼ŒçŠ¶æ€ç : "
+            << (res ? to_string(res->status) : "æ— å“åº”") << endl;
     }
     return 0;
 }
