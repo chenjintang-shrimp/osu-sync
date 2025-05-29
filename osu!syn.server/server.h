@@ -50,3 +50,21 @@ private:
                          const fs::path& path,
                          httplib::Response& res);
 };
+
+class FileDownloadHandler {
+public:
+    explicit FileDownloadHandler(const fs::path& baseUploadDir, std::shared_ptr<Logger> logger);
+    
+    // 处理下载请求
+    void handleDownload(const httplib::Request& req, httplib::Response& res);
+    
+private:
+    fs::path baseUploadDir_;
+    std::shared_ptr<Logger> logger_;
+    
+    // 从请求路径中提取用户名
+    std::string extractUsername(const std::string& path);
+    
+    // 验证并构建JSON文件路径
+    fs::path buildJsonPath(const std::string& username);
+};

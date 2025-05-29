@@ -26,6 +26,7 @@ public:
         // 初始化日志系统
         logger_ = std::make_shared<Logger>(Config::getLogDir());
         uploadHandler_ = std::make_unique<FileUploadHandler>(Config::getUploadDir(), logger_);
+        downloadHandler_ = std::make_unique<FileDownloadHandler>(Config::getUploadDir(), logger_);
         
         setupRoutes();
         setupErrorHandlers();
@@ -47,6 +48,13 @@ private:
             logger_->info("收到上传请求");
             uploadHandler_->handleUpload(req, res);
             logger_->info("处理上传请求完成: " + std::to_string(res.status));
+        });
+
+        // 文件下载路由
+        server_.Get(R"(/download/([^/]+)/([^/]+\.json))", [this](const httplib::Request& req, httplib::Response& res) {
+            logger_->info("收到下载请求");
+            downloadHandler_->handleDownload(req, res);
+            logger_->info("处理下载请求完成: " + std::to_string(res.status));
         });
 
         // 健康检查路由
@@ -75,6 +83,7 @@ private:
     httplib::Server server_;
     std::shared_ptr<Logger> logger_;
     std::unique_ptr<FileUploadHandler> uploadHandler_;
+    std::unique_ptr<FileDownloadHandler> downloadHandler_;
 };
 
 int main(int argc, char* argv[]) {

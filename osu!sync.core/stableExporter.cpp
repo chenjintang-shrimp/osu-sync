@@ -1,6 +1,8 @@
 #include <fstream>
 #include <algorithm>
 #include "stableExporter.h"
+#include "httplib.h"
+#include <sstream>
 
 bool BeatmapExporter::isNumber(const std::string& str) {
     return !str.empty() && 
@@ -64,6 +66,36 @@ void BeatmapExporter::saveBeatmapsToJson(const std::vector<BeatmapInfo>& beatmap
     
     // 写入JSON（使用4个空格缩进）
     outFile << j.dump(4, ' ') << std::endl;
+}
+        httplib::Client cli(serverUrl);
+        
+        // 构建下载路径
+        std::string path = "/download/" + username + "/" + username + ".json";
+        
+        // 发送GET请求
+        auto res = cli.Get(path);
+        
+        if (!res) {
+            throw std::runtime_error("无法连接到服务器");
+        }
+        
+        if (res->status != 200) {
+            throw std::runtime_error("下载失败，状态码: " + std::to_string(res->status));
+        }
+        
+        // 解析JSON响应
+        auto j = json::parse(res->body);
+        beatmaps = j.get<std::vector<BeatmapInfo>>();
+        
+        std::cout << "成功从服务器获取谱面列表，共 " << beatmaps.size() << " 个谱面" << std::endl;
+        
+    } catch (const json::exception& e) {
+        throw std::runtime_error("解析服务器响应失败: " + std::string(e.what()));
+    } catch (const std::exception& e) {
+        throw std::runtime_error("下载谱面列表失败: " + std::string(e.what()));
+    }
+    
+    return beatmaps;
 }
 
 

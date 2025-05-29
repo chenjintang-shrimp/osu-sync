@@ -176,4 +176,83 @@ bool FileUploadHandler::saveUploadedFile(const httplib::MultipartFormData& file,
     }
 }
 
+FileDownloadHandler::FileDownloadHandler(const fs::path& baseUploadDir, std::shared_ptr<Logger> logger)
+    : baseUploadDir_(baseUploadDir)
+    , logger_(logger) {}
+
+void FileDownloadHandler::handleDownload(const httplib::Request& req, httplib::Response& res) {
+    logger_->info("收到下载请求: " + req.path);
+    
+    std::string username = extractUsername(req.path);
+    if (username.empty()) {
+        res.status = 400;
+        res.set_content("无效的请求路径", "text/plain; charset=utf-8");
+        return;
+    }
+
+    fs::path jsonPath = buildJsonPath(username);
+    
+    // 检查文件是否存在
+    if (!fs::exists(jsonPath)) {
+        res.status = 404;
+        res.set_content("文件未找到", "text/plain; charset=utf-8");
+        return;
+    }
+
+    // 尝试读取文件
+    try {
+        std::ifstream file(jsonPath, std::ios::binary);
+        if (!file) {
+            throw std::runtime_error("无法打开文件");
+        }
+
+        // 读取文件内容
+        std::string content((std::istreambuf_iterator<char>(file)),
+                          std::istreambuf_iterator<char>());
+
+        // 设置响应头
+        res.set_header("Content-Type", "application/json");
+        res.set_header("Content-Disposition", "attachment; filename=\"" + username + ".json\"");
+        res.set_content(content, "application/json");
+        
+        logger_->info("文件下载成功: " + jsonPath.string());
+    }
+    catch (const std::exception& e) {
+        logger_->error("文件下载失败: " + std::string(e.what()));
+        res.status = 500;
+        res.set_content("服务器内部错误", "text/plain; charset=utf-8");
+    }
+}
+
+std::string FileDownloadHandler::extractUsername(const std::string& path) {
+    // 预期格式: /download/username/username.json
+    std::string prefix = "/download/";
+    if (path.substr(0, prefix.length()) != prefix) {
+        return "";
+    }
+
+    // 移除前缀
+    std::string remaining = path.substr(prefix.length());
+    
+    // 按 '/' 分割
+    size_t slashPos = remaining.find('/');
+    if (slashPos == std::string::npos) {
+        return "";
+    }
+
+    std::string username = remaining.substr(0, slashPos);
+    std::string expectedSuffix = username + ".json";
+    
+    // 验证剩余部分是否匹配 username.json
+    if (remaining.substr(slashPos + 1) != expectedSuffix) {
+        return "";
+    }
+
+    return username;
+}
+
+fs::path FileDownloadHandler::buildJsonPath(const std::string& username) {
+    return baseUploadDir_ / (username + ".json");
+}
+
 
