@@ -36,12 +36,21 @@ export default {
         }));
       }
 
-      // 处理引用的 Issues
-      if (processedCommit.references) {
-        processedCommit.references.forEach(reference => {
-          issues.push(reference.issue);
-        });
+      // 验证是否符合约定式提交规范
+      if (!processedCommit.type || !processedCommit.subject) {
+        return false;
       }
+
+      // 处理提交信息格式
+      if (processedCommit.subject) {
+        // 如果提交信息以 ":" 开头，移除它
+        processedCommit.subject = processedCommit.subject.replace(/^:\s*/, '');
+        // 确保第一个字母大写
+        processedCommit.subject = processedCommit.subject.charAt(0).toUpperCase() + processedCommit.subject.slice(1);
+      }
+
+      // 格式化完整的提交信息
+      processedCommit.header = `${processedCommit.subject} (${processedCommit.hash})`;
 
       return processedCommit;
     }
