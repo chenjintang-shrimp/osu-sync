@@ -24,8 +24,8 @@ public:
         Config::load("config.json");
         
         // 初始化日志系统
-        logger_ = std::make_unique<Logger>(Config::getLogDir());
-        uploadHandler_ = std::make_unique<FileUploadHandler>(Config::getUploadDir(), logger_);  // 添加 logger_ 参数
+        logger_ = std::make_shared<Logger>(Config::getLogDir());
+        uploadHandler_ = std::make_unique<FileUploadHandler>(Config::getUploadDir(), logger_);
         
         setupRoutes();
         setupErrorHandlers();
@@ -73,7 +73,7 @@ private:
     }
 
     httplib::Server server_;
-    std::unique_ptr<Logger> logger_;
+    std::shared_ptr<Logger> logger_;
     std::unique_ptr<FileUploadHandler> uploadHandler_;
 };
 
