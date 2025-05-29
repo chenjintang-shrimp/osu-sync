@@ -45,7 +45,6 @@ ImportStatus BeatmapImporter::importFromJsonString(const std::string& jsonConten
             } else {
                 status_.failedMaps++;
             }
-            updateProgress();
         }
         
     } catch (const std::exception& e) {
@@ -53,10 +52,6 @@ ImportStatus BeatmapImporter::importFromJsonString(const std::string& jsonConten
     }
     
     return status_;
-}
-
-void BeatmapImporter::setProgressCallback(ProgressCallback callback) {
-    progressCallback_ = callback;
 }
 
 void BeatmapImporter::setMirror(const std::string& mirrorName) {
@@ -70,7 +65,7 @@ bool BeatmapImporter::downloadBeatmap(BeatmapInfo& beatmap) {
         // 构建保存路径
         fs::path beatmapPath = savePath_ / (beatmap.id + ".osz");
         
-        // 使用NetworkUtils生成下载URL
+        // 生成下载URL
         std::string url;
         try {
             url = NetworkUtils::getMirrorURL(beatmap.id, currentMirror_);
@@ -78,41 +73,37 @@ bool BeatmapImporter::downloadBeatmap(BeatmapInfo& beatmap) {
             throw std::runtime_error("生成下载URL失败: " + std::string(e.what()));
         }
         
-        // 使用新的网络工具下载文件
-        size_t downloadedSize = 0;
-        bool success = NetworkUtils::downloadFile(
-            url, 
-            beatmapPath,
-            [this](size_t current, size_t total) {
-                // 更新下载进度
-                status_.currentProgress = static_cast<double>(current) / total;
-                updateProgress();
-            },
-            &downloadedSize
-        );
+        // 设置下载选项
+        DownloadOptions options;
+        options.mirror = currentMirror_;
+        
+        // 下载文件
+        bool success = NetworkUtils::downloadFile(url, beatmapPath, options);
         
         if (!success) {
+            // 清理失败的下载文件
+            if (fs::exists(beatmapPath)) {
+                fs::remove(beatmapPath);
+            }
             throw std::runtime_error("下载失败");
         }
         
-        // 验证下载的文件
-        if (!NetworkUtils::validateDownloadedFile(beatmapPath)) {
-            throw std::runtime_error("文件验证失败");
+        // 验证文件
+        if (!NetworkUtils::validateFile(beatmapPath) || fs::file_size(beatmapPath) == 0) {
+            if (fs::exists(beatmapPath)) {
+                fs::remove(beatmapPath);
+            }
+            throw std::runtime_error("下载文件验证失败");
         }
         
         beatmap.localPath = beatmapPath.string();
         beatmap.downloaded = true;
+        
         return true;
         
     } catch (const std::exception& e) {
         status_.errors.push_back("下载谱面 " + beatmap.id + " 失败: " + e.what());
         return false;
-    }
-}
-
-void BeatmapImporter::updateProgress() {
-    if (progressCallback_) {
-        progressCallback_(status_);
     }
 }
 
@@ -126,4 +117,5 @@ bool BeatmapImporter::validateSavePath() {
         status_.errors.push_back("创建保存目录失败: " + std::string(e.what()));
         return false;
     }
+}
 }
