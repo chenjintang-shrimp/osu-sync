@@ -4,12 +4,13 @@ export default {
   writerOpts: {
     transform: (commit, context) => {
       const issues = [];
-
+      
       // 创建一个新的对象而不是修改原对象
       const processedCommit = {
         ...commit,
         type: commit.type || '',
-        scope: commit.scope || ''
+        scope: commit.scope || '',
+        hash: commit.hash || ''
       };
 
       // 根据类型设置标题
@@ -47,10 +48,9 @@ export default {
         processedCommit.subject = processedCommit.subject.replace(/^:\s*/, '');
         // 确保第一个字母大写
         processedCommit.subject = processedCommit.subject.charAt(0).toUpperCase() + processedCommit.subject.slice(1);
+        // 添加提交ID
+        processedCommit.subject = `${processedCommit.subject} (${processedCommit.hash})`;
       }
-
-      // 格式化完整的提交信息
-      processedCommit.header = `${processedCommit.subject} (${processedCommit.hash})`;
 
       return processedCommit;
     }
