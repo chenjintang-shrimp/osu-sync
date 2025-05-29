@@ -29,10 +29,12 @@ jobs:
         PREV_TAG=$(git describe --tags --abbrev=0 HEAD^ 2>/dev/null || echo "")
         if [ -z "$PREV_TAG" ]; then
           # 如果没有上一个tag，则从第一个提交开始
-          conventional-changelog -p angular -i CHANGELOG.md -s -r 0
+          conventional-changelog -p angular -i CHANGELOG.md -s -r 0 \
+            --config .github/changelog-config.js
         else
           # 从上一个tag到当前tag之间的提交生成更新日志
-          conventional-changelog -p angular -i CHANGELOG.md -s -r 1
+          conventional-changelog -p angular -i CHANGELOG.md -s -r 1 \
+            --config .github/changelog-config.js
         fi
     
     - name: Update Release Notes

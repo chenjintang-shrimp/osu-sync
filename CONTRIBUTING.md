@@ -24,6 +24,11 @@
 - `chore`: 构建过程或辅助工具的变动
 - `revert`: 回滚到上一个版本
 
+对于会导致破坏性变更的提交，可以在类型后添加 "!"，例如：
+- `feat!`: 带有破坏性变更的新功能
+- `fix!`: 带有破坏性变更的修复
+这些提交会自动出现在更新日志的 BREAKING CHANGES 部分。
+
 ## 作用域
 
 可选的作用域可以是：
@@ -54,6 +59,17 @@ fix(mirror): 修复sayobot镜像站链接失效问题
 Closes #456
 ```
 
+```
+feat!(api): 重构镜像站API接口
+
+- 完全重写了镜像站接口
+- 移除了旧的URL生成方式
+- 添加了新的错误处理机制
+
+BREAKING CHANGE: 移除了旧版本的getMirrorUrl方法，请使用新的MirrorApi类代替
+Closes #789
+```
+
 ## 版本发布
 
 当你要发布新版本时：
@@ -77,5 +93,13 @@ GitHub Actions会自动：
 - 所有新功能（feat）
 - 所有修复（fix）
 - 重大变更（BREAKING CHANGE）
+- 代码重构（refactor）
+- 构建和工具链变更（chore）
 
-其他类型的提交（如docs, style等）默认不会出现在更新日志中。
+其他类型的提交（如docs, style, test等）默认不会出现在更新日志中。
+
+各类型在更新日志中的分类：
+- 🚀 Features: feat
+- 🐛 Bug Fixes: fix
+- ⚠️ BREAKING CHANGES
+- 🔧 Internal Changes: refactor, chore
