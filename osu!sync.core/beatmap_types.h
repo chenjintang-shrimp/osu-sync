@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 #include <vector>
-#include <nlohmann/json.hpp>
+#include "3rdpartyInclude/nlohmann/json.hpp"
 
 namespace osu {
 

@@ -2,7 +2,7 @@
  * 网络工具类实现文件
  * 使用beatmapDownloader命令行工具实现下载功能
  */
-
+#pragma warning(disable : 4996)
 #include "network.utils.h"
 #include<fstream>
 #include <cstdlib>
@@ -48,29 +48,10 @@ std::string NetworkUtils::executeCommand(const std::string& command) {
     return result;
 }
 
-bool NetworkUtils::downloadFile(const std::string& url, 
-                              const fs::path& savePath, 
+bool NetworkUtils::downloadFile(const std::vector<std::string>& beatmapIds,
+                              const fs::path& savePath,
                               const DownloadOptions& options) {
     try {
-        // 从URL中提取beatmap ID
-        std::string beatmapId;
-        for (const auto& mirror : getMirrors()) {
-            if (url.find(mirror.second.baseUrl) != std::string::npos) {
-                auto pos = url.find(mirror.second.baseUrl);
-                beatmapId = url.substr(pos + mirror.second.baseUrl.length());
-                // Remove any query parameters
-                auto queryPos = beatmapId.find('?');
-                if (queryPos != std::string::npos) {
-                    beatmapId = beatmapId.substr(0, queryPos);
-                }
-                break;
-            }
-        }
-        
-        if (beatmapId.empty()) {
-            throw std::runtime_error("无法从URL提取beatmap ID");
-        }
-
         // 构建下载器路径
         fs::path downloaderPath;
         
@@ -94,23 +75,45 @@ bool NetworkUtils::downloadFile(const std::string& url,
                 fs::current_path().parent_path().string());
         }
 
+        // 创建保存目录
+        if (!fs::exists(savePath)) {
+            fs::create_directories(savePath);
+        }
+
+        // 将所有ID合并成一个字符串
+        std::string combinedIds;
+        for (size_t i = 0; i < beatmapIds.size(); ++i) {
+            if (i > 0) combinedIds += ",";
+            combinedIds += beatmapIds[i];
+        }
+
         // 构建命令
         std::stringstream cmd;
-        cmd << downloaderPath.string()
-            << " -id " << beatmapId
-            << " -o " << savePath.string()
-            << " -m " << options.mirror
-            << " -t " << options.timeout;
-
-        if (options.maxRetries > 0) {
-            cmd << " -r " << options.maxRetries;
+        cmd << downloaderPath.string();
+        
+        // 添加镜像选项（如果指定）
+        if (!options.mirror.empty()) {
+            cmd << " --mirror " << options.mirror;
         }
+        
+        // 添加谱面ID、保存路径和并发数
+        cmd << " \"" << combinedIds << "\" " 
+            << "\"" << savePath.string() << "\" " 
+            << options.concurrent;
             
         // 执行下载命令
         std::string output = executeCommand(cmd.str());
         
-        // 验证下载的文件
-        return validateFile(savePath);
+        // 验证每个谱面文件
+        bool allSuccess = true;
+        for (const auto& id : beatmapIds) {
+            fs::path beatmapPath = savePath / (id + ".osz");
+            if (!validateFile(beatmapPath)) {
+                allSuccess = false;
+            }
+        }
+        
+        return allSuccess;
 
     } catch (const std::exception& e) {
         std::cerr << "下载错误: " << e.what() << std::endl;

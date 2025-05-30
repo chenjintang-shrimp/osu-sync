@@ -1,39 +1,16 @@
 /*
- * 网络工#include <filesystem>
-
-namespace fs = std::filesystem;
-
-namespace osu {
-
-class NetworkUtils;  // 前向声明
-
-// 进度回调函数类型
-using ProgressCallback = std::function<void(size_t current, size_t total)>;
-
-// 镜像站配置
-// 注意：这个结构体必须在NetworkUtils类外部定义，因为它被用作unordered_map的值类型
-struct Mirror {
-    std::string name;
-    std::string baseUrl;
-    bool requiresNoskip;
-};
-
-// 下载选项
-struct DownloadOptions {下载和网络相关功能
+ * 网络工具类
+ * 包含下载和网络相关功能
  */
 
 #pragma once
 #include <string>
-#include <functional>
-#include <filesystem>
 #include <unordered_map>
+#include <filesystem>
 
 namespace fs = std::filesystem;
 
 namespace osu {
-
-// 进度回调函数类型
-using ProgressCallback = std::function<void(size_t current, size_t total)>;
 
 // 镜像站配置
 struct Mirror {
@@ -44,33 +21,35 @@ struct Mirror {
 
 // 下载选项
 struct DownloadOptions {
-    int maxRetries = 3;             // 最大重试次数
-    int timeout = 30;               // 超时时间(秒)
-    ProgressCallback onProgress;     // 进度回调函数
-    std::string mirror = "sayobot"; // 使用的镜像站
+    std::string mirror;     // 要使用的镜像站名称
+    size_t concurrent = 25; // 并发下载数量
 };
 
 class NetworkUtils {
 public:
-    // 从URL下载文件，使用beatmapDownloader工具
-    static bool downloadFile(
-        const std::string& url,
-        const fs::path& savePath,
-        const DownloadOptions& options = DownloadOptions{}
-    );
+    // 执行系统命令并返回输出
+    static std::string executeCommand(const std::string& command);
     
-    // 获取可用的镜像站列表
-    static std::unordered_map<std::string, Mirror> getMirrors();
+    // 批量下载谱面
+    static bool downloadFile(const std::vector<std::string>& beatmapIds,
+                           const fs::path& savePath,
+                           const DownloadOptions& options = DownloadOptions());
+                           
+    // 单个谱面下载（向后兼容）
+    static bool downloadFile(const std::string& beatmapId,
+                           const fs::path& savePath,
+                           const DownloadOptions& options = DownloadOptions()) {
+        return downloadFile(std::vector<std::string>{beatmapId}, savePath, options);
+    }
     
     // 验证下载的文件
     static bool validateFile(const fs::path& filePath);
     
-    // 根据beatmap ID生成对应镜像站的下载URL
-    static std::string getMirrorURL(const std::string& beatmapId, const std::string& mirror = "sayobot");
-
-private:
-    // 执行命令行并获取输出 
-    static std::string executeCommand(const std::string& command);
+    // 获取镜像站URL
+    static std::string getMirrorURL(const std::string& beatmapId, const std::string& mirror);
+    
+    // 获取可用的镜像站列表
+    static std::unordered_map<std::string, Mirror> getMirrors();
 };
 
 } // namespace osu

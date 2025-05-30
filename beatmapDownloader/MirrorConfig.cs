@@ -3,13 +3,18 @@ namespace Downloader
     public class MirrorConfig
     {
         public static readonly Dictionary<string, Mirror> AvailableMirrors = new()
-        {
-            {
+        {            {
                 "sayobot",
                 new Mirror(
                     "Sayobot",
-                    "https://txy1.sayobot.cn/download/beatmap/",
-                    requiresNoskip: false
+                    "https://b2.sayobot.cn:25225/beatmaps/",
+                    requiresNoskip: false,
+                    urlBuilder: (id, filename) => {
+                        var part1 = (id / 10000).ToString();
+                        var part2 = (id % 10000).ToString("D4");
+                        var encodedFilename = Uri.EscapeDataString(filename ?? id.ToString());
+                        return $"{part1}/{part2}/full?filename={encodedFilename}";
+                    }
                 )
             },
             {
@@ -68,5 +73,15 @@ namespace Downloader
         }
     }
 
-    public record Mirror(string Name, string BaseUrl, bool requiresNoskip);
+    public record Mirror(string Name, string BaseUrl, bool requiresNoskip, Func<int, string?, string>? urlBuilder = null)
+    {
+        public string GetDownloadUrl(int beatmapId, string? filename = null)
+        {
+            if (urlBuilder != null)
+            {
+                return BaseUrl + urlBuilder(beatmapId, filename);
+            }
+            return BaseUrl + beatmapId;
+        }
+    }
 }

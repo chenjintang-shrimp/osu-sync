@@ -13,9 +13,21 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="第三方">
+      <UniqueIdentifier>{6c83c645-0a17-4e2b-a878-b4c5c6a2332d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="配置文件">
+      <UniqueIdentifier>{d8c3e1e9-4c47-42f5-9f3c-f9b5d5e8c908}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="stableExporter.cpp">
+    <ClCompile Include="main.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="beatmap_importer.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="collection_downloader.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="fsutils.windows.cpp">
@@ -24,18 +36,18 @@
     <ClCompile Include="network.utils.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="main.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="beatmapDownloader.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="uploadArchive.cpp">
+    <ClCompile Include="stableExporter.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="stableExporter.h">
+    <ClInclude Include="beatmap_importer.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="beatmap_types.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="collection_downloader.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="fsutils.windows.h">
@@ -44,17 +56,18 @@
     <ClInclude Include="network.utils.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="stableExporter.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
     <ClInclude Include="3rdpartyInclude\httplib.h">
-      <Filter>头文件</Filter>
+      <Filter>第三方</Filter>
     </ClInclude>
-    <ClInclude Include="uploadArchive.h">
-      <Filter>头文件</Filter>
+    <ClInclude Include="3rdpartyInclude\nlohmann\json.hpp">
+      <Filter>第三方</Filter>
     </ClInclude>
-    <ClInclude Include="globalUsed.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="vcpkg.json" />
+  </ItemGroup>  <ItemGroup>
+    <None Include="messageFiles\languagelists.json">
+      <Filter>配置文件</Filter>
+    </None>
   </ItemGroup>
 </Project>

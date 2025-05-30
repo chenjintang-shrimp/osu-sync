@@ -1,5 +1,6 @@
 ﻿using System.Collections.Specialized;
 using System.Net.Http;
+using System.Net.Http.Json;
 
 namespace Downloader
 {
@@ -8,17 +9,15 @@ namespace Downloader
         private static readonly TimeSpan Timeout = TimeSpan.FromMinutes(5);
         private static readonly int MaxRetries = 3;
         private static readonly TimeSpan RetryDelay = TimeSpan.FromSeconds(5);
-        private static readonly DownloadManager downloadManager = new(3);
-
-        static string GenerateURL(string onlineId)
+        private static readonly int DefaultConcurrent = 25;
+        static string GenerateURL(string onlineId, string? filename = null)
         {
             var mirror = MirrorConfig.CurrentMirror;
-            var url = $"{mirror.BaseUrl}{onlineId}";
-            if (mirror.requiresNoskip)
+            if (int.TryParse(onlineId, out int beatmapId))
             {
-                url += "?noskip=1";
+                return mirror.GetDownloadUrl(beatmapId, filename);
             }
-            return url;
+            return $"{mirror.BaseUrl}{onlineId}";
         }
 
         private static async Task ValidateDownloadedFile(string filePath)
@@ -85,38 +84,85 @@ namespace Downloader
             }
         }
 
-        public static async Task downloadBeatmap(string onlineId, string savePath)
+        private static async Task<string?> GetBeatmapName(string onlineId)
+        {
+            try
+            {
+                using var client = new HttpClient();
+                client.Timeout = TimeSpan.FromSeconds(10);
+                var response = await client.GetFromJsonAsync<BeatmapInfo>($"https://api.chimu.moe/v1/map/{onlineId}");
+                if (response != null)
+                {
+                    return $"{onlineId} {response.Artist} - {response.Title}";
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.LogError($"获取谱面信息时发生错误: {ex.Message}");
+            }
+            return null;
+        }
+
+        private class BeatmapInfo
+        {
+            public string Artist { get; set; } = "";
+            public string Title { get; set; } = "";
+        }        public static async Task downloadBeatmap(string onlineId, string savePath, string? beatmapName = null)
         {
             var attempt = 0;
+            Exception? lastException = null;
+            
             while (attempt < MaxRetries)
             {
                 attempt++;
                 try 
                 {
+                    var url = GenerateURL(onlineId, onlineId);
+                    Logger.LogInfo($"[{onlineId}] 尝试 {attempt}/{MaxRetries}: 正在从 {url} 下载谱面");
+                    
                     using var client = new HttpClient();
                     client.Timeout = Timeout;
-                    var url = GenerateURL(onlineId);
-                    Logger.LogInfo($"尝试 {attempt}/{MaxRetries}: 正在从 {url} 下载谱面 {onlineId}");
                     
-                    var response = await client.GetAsync(url);
-                    Logger.LogInfo($"响应状态: {response.StatusCode}");
+                    using var response = await client.GetAsync(url, HttpCompletionOption.ResponseHeadersRead);
+                    Logger.LogInfo($"[{onlineId}] 响应状态: {response.StatusCode}");
 
                     if (!response.IsSuccessStatusCode)
                     {
                         throw new HttpRequestException($"下载谱面失败: {response.StatusCode}");
                     }
 
-                    await using var stream = await response.Content.ReadAsStreamAsync();
                     var contentLength = response.Content.Headers.ContentLength;
+                    Logger.LogInfo($"[{onlineId}] 文件大小: {(contentLength.HasValue ? $"{contentLength.Value / 1024 / 1024:F2}MB" : "未知")}");
 
-                    Logger.LogInfo($"正在保存谱面到 {savePath}");
-                    await CopyToFileWithProgressAsync(stream, savePath, contentLength);
-                    
-                    Logger.LogInfo("正在验证下载的文件...");
-                    await ValidateDownloadedFile(savePath);
-                    
-                    Logger.LogInfo("下载成功完成！");
-                    return;
+                    // 使用临时文件下载
+                    var tempFile = savePath + ".tmp";
+                    try
+                    {
+                        await using var stream = await response.Content.ReadAsStreamAsync();
+                        Logger.LogInfo($"[{onlineId}] 正在下载到临时文件: {tempFile}");
+                        await CopyToFileWithProgressAsync(stream, tempFile, contentLength);
+                        
+                        Logger.LogInfo($"[{onlineId}] 正在验证下载的文件...");
+                        await ValidateDownloadedFile(tempFile);
+                        
+                        // 下载和验证成功后，移动到目标位置
+                        if (File.Exists(savePath))
+                        {
+                            File.Delete(savePath);
+                        }
+                        File.Move(tempFile, savePath);
+                        
+                        Logger.LogInfo($"[{onlineId}] 下载成功完成！");
+                        return;
+                    }
+                    catch (Exception)
+                    {
+                        if (File.Exists(tempFile))
+                        {
+                            File.Delete(tempFile);
+                        }
+                        throw;
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -140,17 +186,21 @@ namespace Downloader
         {
             try
             {
-                if (args.Length < 2 || (args[0] == "--mirror" && args.Length < 3))
+                if (args.Length < 2)
                 {
                     Logger.LogError("参数无效");
                     Console.WriteLine("用法: ");
-                    Console.WriteLine("下载谱面: beatmapDownloader <谱面ID> <保存路径>");
-                    Console.WriteLine("选择镜像: beatmapDownloader --mirror <镜像名称> [谱面ID] [保存路径]");
+                    Console.WriteLine("下载谱面: beatmapDownloader <谱面ID> <保存路径> [并发数]");
+                    Console.WriteLine("选择镜像: beatmapDownloader --mirror <镜像名称> [谱面ID] [保存路径] [并发数]");
                     Console.WriteLine("列出镜像: beatmapDownloader --list-mirrors");
+                    Console.WriteLine("\n并发数默认为25，可选择1-50之间的值");
                     return;
                 }
 
-                // 处理命令行参数
+                // 解析并发数参数
+                int concurrent = DefaultConcurrent;
+                string[] processArgs = args;
+                
                 if (args[0] == "--list-mirrors")
                 {
                     MirrorConfig.ListAvailableMirrors();
@@ -172,23 +222,64 @@ namespace Downloader
                     }
                     
                     // 移除镜像参数，继续处理下载
-                    args = args.Skip(2).ToArray();
+                    processArgs = args.Skip(2).ToArray();
                 }
 
-                var onlineId = args[0];
-                var savePath = args[1];
+                // 检查是否有并发数参数
+                if (processArgs.Length >= 3)
+                {
+                    if (int.TryParse(processArgs[2], out int parsedConcurrent))
+                    {
+                        concurrent = Math.Max(1, Math.Min(50, parsedConcurrent));
+                        if (concurrent != parsedConcurrent)
+                        {
+                            Logger.LogInfo($"并发数已调整到有效范围: {concurrent}");
+                        }
+                    }
+                    else
+                    {
+                        Logger.LogInfo($"无效的并发数参数，使用默认值: {DefaultConcurrent}");
+                    }
+                }
+
+                var onlineId = processArgs[0];
+                var savePath = processArgs[1];
+
+                // 如果保存路径是目录，则在目录下创建文件
+                if (Directory.Exists(savePath) || savePath.EndsWith("/") || savePath.EndsWith("\\"))
+                {
+                    savePath = Path.Combine(savePath, "temp"); // 临时路径，会被下面的代码修改
+                }
+                
+                // 确保保存路径的父目录存在
+                var saveDir = Path.GetDirectoryName(savePath);
+                if (!string.IsNullOrEmpty(saveDir) && !Directory.Exists(saveDir))
+                {
+                    Directory.CreateDirectory(saveDir);
+                }
+
+                // 创建下载管理器实例（使用指定的并发数）
+                var downloadManager = new DownloadManager(concurrent);
                 
                 // 支持批量下载多个谱面ID
-                var ids = onlineId.Split(',', StringSplitOptions.RemoveEmptyEntries);
-                foreach (var id in ids)
+                var ids = onlineId.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+                if (ids.Length > 1)
                 {
-                    downloadManager.QueueDownload(id.Trim(), Path.Combine(
-                        Path.GetDirectoryName(savePath) ?? "",
-                        $"{id.Trim()}{Path.GetExtension(savePath)}"));
+                    Logger.LogInfo($"检测到多个谱面ID: {ids.Length}个");
                 }
 
-                Logger.LogInfo($"开始下载 {ids.Length} 个谱面");
+                foreach (var id in ids)
+                {
+                    var outputPath = Path.Combine(
+                        Path.GetDirectoryName(savePath) ?? "",
+                        $"{id}.osz"); // 强制使用.osz扩展名
+                    
+                    downloadManager.QueueDownload(id, outputPath);
+                }
+
+                Logger.LogInfo($"开始下载 {ids.Length} 个谱面 (并发数: {concurrent})");
                 await downloadManager.ProcessQueueAsync();
+                Logger.LogInfo("所有下载任务已完成");
             }
             catch (Exception ex)
             {

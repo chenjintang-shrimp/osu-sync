@@ -13,11 +13,4 @@
     <PackageReference Include="System.Net.Http" Version="4.3.4" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Compile Include="Program.cs" />
-    <Compile Include="DownloadManager.cs" />
-    <Compile Include="Logger.cs" />
-    <Compile Include="MirrorConfig.cs" />
-  </ItemGroup>
-
 </Project>
