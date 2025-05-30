@@ -3,18 +3,11 @@
 #include <vector>
 #include <filesystem>
 #include "nlohmann/json.hpp"
+#include "beatmap_types.h"
 
 namespace fs = std::filesystem;
 using json = nlohmann::json;
-
-struct BeatmapInfo {
-    int onlineId;
-    std::string folderName;
-    std::string songName;
-
-    // JSON序列化支持
-    NLOHMANN_DEFINE_TYPE_INTRUSIVE(BeatmapInfo, onlineId, folderName, songName)
-};
+using osu::BeatmapInfo;
 
 class BeatmapExporter {
 public:

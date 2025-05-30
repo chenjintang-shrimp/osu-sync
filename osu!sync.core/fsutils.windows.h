@@ -1,10 +1,12 @@
 #pragma once
-#include"stableExporter.h"
-#include<iostream>
-#include<filesystem>
-#include<vector>
-#include<string>
-using namespace std::filesystem;
+#include "stableExporter.h"
+#include "beatmap_types.h"
+#include <filesystem>
+#include <vector>
+#include <string>
+#include <fstream>
 
-std::vector<std::string> getBeatmapFolderNames(std::filesystem::path& songsFolderPath);
-void writeBeatmapDataToFile(std::vector<beatmapMetaData> data, fs::path filePath);
+namespace fs = std::filesystem;
+
+std::vector<std::string> getBeatmapFolderNames(const fs::path& songsFolderPath);
+void writeBeatmapDataToFile(const std::vector<osu::BeatmapInfo>& data, const fs::path& filePath);

@@ -11,23 +11,22 @@ bool BeatmapExporter::isNumber(const std::string& str) {
 
 BeatmapInfo BeatmapExporter::parseFolderName(const std::string& folderName) {
     BeatmapInfo info;
-    info.folderName = folderName;
     
     // 查找第一个空格的位置
     size_t spacePos = folderName.find_first_of(" ");
     if (spacePos == std::string::npos) {
-        // 如果没有找到空格，整个文件夹名作为歌曲名
-        info.onlineId = -1;
-        info.songName = folderName;
+        // 如果没有找到空格，整个文件夹名作为歌曲标题
+        info.id = "-1";
+        info.title = folderName;
         return info;
     }
     
     // 提取可能的在线ID
     std::string possibleId = folderName.substr(0, spacePos);
-    info.onlineId = isNumber(possibleId) ? std::stoi(possibleId) : -1;
+    info.id = isNumber(possibleId) ? possibleId : "-1";
     
-    // 提取歌曲名（空格后的所有内容）
-    info.songName = folderName.substr(spacePos + 1);
+    // 提取歌曲标题（空格后的所有内容）
+    info.title = folderName.substr(spacePos + 1);
     
     return info;
 }

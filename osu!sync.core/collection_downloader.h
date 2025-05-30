@@ -13,8 +13,7 @@ namespace osu {
 class CollectionDownloader {
 public:
     // 从服务器下载谱面清单
-    static std::vector<BeatmapInfo> downloadBeatmapList(const std::string& username,
-                                                       const std::string& serverUrl);
+    static std::vector<BeatmapInfo> downloadBeatmapList(const std::string& username,const std::string& serverUrl);
 private:
     // 检查服务器响应
     static void validateServerResponse(const int status, const std::string& path);

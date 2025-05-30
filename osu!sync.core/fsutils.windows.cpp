@@ -1,40 +1,30 @@
 #include "fsutils.windows.h"
-#include<fstream>
-#include"stableExporter.h"
-#include"nlohmann/json.hpp"
-using json = nlohmann::json;
-using namespace std;
-namespace fs = std::filesystem;
+#include "beatmap_types.h"
+#include <fstream>
 
-vector<string> getBeatmapFolderNames(fs::path& songsFolderPath)
-{
-	if (!fs::exists(songsFolderPath)||!fs::is_directory(songsFolderPath))
-		return {"no data"};
-	vector<string> beatmapFolderNames;
-	for (auto& kv : fs::directory_iterator(songsFolderPath))
-	{
-		if (kv.is_directory())
-			beatmapFolderNames.push_back(kv.path().filename().string());
-	}
-	return beatmapFolderNames;
+namespace {
+
+bool isValidDirectory(const std::filesystem::path& path) {
+    return std::filesystem::exists(path) && std::filesystem::is_directory(path);
 }
 
-void to_json(json& j, beatmapMetaData bmd)
+} // anonymous namespace
+
+std::vector<std::string> getBeatmapFolderNames(const fs::path& songsFolderPath)
 {
-	j = json{ {"onlineId",bmd.first},{"fullName",bmd.second} };
+    if (!isValidDirectory(songsFolderPath))
+        return {"no data"};
+        
+    std::vector<std::string> beatmapFolderNames;
+    for (const auto& entry : fs::directory_iterator(songsFolderPath))
+    {
+        if (entry.is_directory())
+            beatmapFolderNames.push_back(entry.path().filename().string());
+    }
+    return beatmapFolderNames;
 }
 
-void writeBeatmapDataToFile(vector<beatmapMetaData> data, fs::path filePath)
+void writeBeatmapDataToFile(const std::vector<osu::BeatmapInfo>& data, const fs::path& filePath)
 {
-	json tgt;
-	for (auto kv : data)
-	{
-		json temp;
-		to_json(temp, kv);
-		tgt.push_back(temp);
-	}
-	std::ofstream file(filePath, std::ios::out);
-	file << tgt.dump(4);
-	file.close();
-	return;
+    std::ofstream(filePath) << nlohmann::json(data).dump(4);
 }
