@@ -26,9 +26,8 @@ struct DownloadOptions {
 };
 
 class NetworkUtils {
-public:
-    // 执行系统命令并返回输出
-    static std::string executeCommand(const std::string& command);
+public:    // 执行系统命令并返回输出
+    static std::string executeCommand(const std::string& command, bool showOutput = false);
     
     // 批量下载谱面
     static bool downloadFile(const std::vector<std::string>& beatmapIds,

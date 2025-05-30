@@ -17,8 +17,8 @@
 
 namespace osu {
 
-std::string NetworkUtils::executeCommand(const std::string& command) {
-    std::array<char, 128> buffer;
+std::string NetworkUtils::executeCommand(const std::string& command, bool showOutput) {
+    std::array<char, 1024> buffer;
     std::string result;
     
     #ifdef _WIN32
@@ -33,6 +33,10 @@ std::string NetworkUtils::executeCommand(const std::string& command) {
     
     while (fgets(buffer.data(), buffer.size(), pipe) != nullptr) {
         result += buffer.data();
+        if (showOutput) {
+            std::cout << buffer.data();
+            std::cout.flush(); // 确保立即显示输出
+        }
     }
     
     #ifdef _WIN32
@@ -52,27 +56,21 @@ bool NetworkUtils::downloadFile(const std::vector<std::string>& beatmapIds,
                               const fs::path& savePath,
                               const DownloadOptions& options) {
     try {
-        // 构建下载器路径
-        fs::path downloaderPath;
+        // 构建aria2c路径
+        fs::path aria2Path = "aria2c";
         
-        // 首先检查当前目录
-        downloaderPath = fs::current_path() / "beatmapDownloader";
+        // 检查aria2c是否可用
+        std::string checkCommand;
         #ifdef _WIN32
-        downloaderPath.replace_extension(".exe");
+        checkCommand = "where aria2c";
+        #else
+        checkCommand = "which aria2c";
         #endif
         
-        // 如果当前目录找不到，尝试相对于可执行文件的路径
-        if (!fs::exists(downloaderPath)) {
-            downloaderPath = fs::current_path().parent_path() / "beatmapDownloader";
-            #ifdef _WIN32
-            downloaderPath.replace_extension(".exe");
-            #endif
-        }
-        
-        if (!fs::exists(downloaderPath)) {
-            throw std::runtime_error("找不到beatmapDownloader工具，已尝试路径: " + 
-                fs::current_path().string() + " 和 " + 
-                fs::current_path().parent_path().string());
+        try {
+            executeCommand(checkCommand);
+        } catch (const std::exception&) {
+            throw std::runtime_error("未找到aria2c，请确保已安装并添加到PATH环境变量中");
         }
 
         // 创建保存目录
@@ -85,24 +83,43 @@ bool NetworkUtils::downloadFile(const std::vector<std::string>& beatmapIds,
         for (size_t i = 0; i < beatmapIds.size(); ++i) {
             if (i > 0) combinedIds += ",";
             combinedIds += beatmapIds[i];
+        }        // 创建输入文件以存储下载URL
+        fs::path inputFile = fs::temp_directory_path() / "aria2_input.txt";
+        std::ofstream urlFile(inputFile);
+        if (!urlFile) {
+            throw std::runtime_error("无法创建下载输入文件");
         }
 
-        // 构建命令
-        std::stringstream cmd;
-        cmd << downloaderPath.string();
-        
-        // 添加镜像选项（如果指定）
-        if (!options.mirror.empty()) {
-            cmd << " --mirror " << options.mirror;
+        // 为每个谱面ID生成下载URL并写入文件
+        for (const auto& id : beatmapIds) {
+            std::string url = getMirrorURL(id, options.mirror);
+            urlFile << url << "\n\tout=" << id << ".osz\n";
         }
-        
-        // 添加谱面ID、保存路径和并发数
-        cmd << " \"" << combinedIds << "\" " 
-            << "\"" << savePath.string() << "\" " 
-            << options.concurrent;
-            
-        // 执行下载命令
-        std::string output = executeCommand(cmd.str());
+        urlFile.close();
+
+        // 构建aria2c命令
+        std::stringstream cmd;
+        cmd << "aria2c"
+            << " --input-file=\"" << inputFile.string() << "\""
+            << " --dir=\"" << savePath.string() << "\""
+            << " --max-concurrent-downloads=" << options.concurrent
+            << " --max-connection-per-server=16"  // 每个服务器的最大连接数
+            << " --min-split-size=1M"            // 最小文件分片大小
+            << " --split=16"                      // 单文件最大连接数
+            << " --max-tries=3"                   // 最大重试次数
+            << " --retry-wait=3"                  // 重试等待时间
+            << " --connect-timeout=10"            // 连接超时
+            << " --allow-overwrite=true"          // 允许覆盖已存在的文件
+            << " --auto-file-renaming=false"      // 禁止自动重命名
+            << " --continue=true"                 // 支持断点续传
+            << " --console-log-level=notice"      // 日志级别
+            << " --summary-interval=1"            // 进度更新间隔
+            << " --download-result=full";         // 显示详细的下载结果        // 执行下载命令并显示输出
+        std::cout << "开始下载 " << beatmapIds.size() << " 个谱面...\n";
+        std::string output = executeCommand(cmd.str(), true);
+
+        // 下载完成后删除临时文件
+        fs::remove(inputFile);
         
         // 验证每个谱面文件
         bool allSuccess = true;
@@ -176,18 +193,14 @@ std::string NetworkUtils::getMirrorURL(const std::string& beatmapId, const std::
     }
 
     const auto& mirrorConfig = it->second;
-    std::string url;
-
-    // 针对不同镜像站的特殊处理
+    std::string url;    // 针对不同镜像站的特殊处理
     std::string baseUrl = mirrorConfig.baseUrl;
     if (mirror == "sayobot") {
-        // Sayobot特殊的路径格式：https://txy1.sayobot.cn/download/beatmap/{set_id}/full
-        if (beatmapId.length() <= 4) {
-            url = baseUrl + beatmapId + "/full";
-        } else {
-            url = baseUrl + beatmapId + "/full";
-        }
-        url += "?filename=" + beatmapId + ".osz";
+        // Sayobot特殊的路径格式：https://b2.sayobot.cn:25225/beatmaps/XXX/YYYY/full
+        long long iBid=std::stoll(beatmapId);
+        std::string firstPart=std::to_string((iBid/10000));
+        std::string secondPart=beatmapId.substr(firstPart.size());
+        url=baseUrl+firstPart+"/"+secondPart+"/full";
     } else {
         // 其他镜像站使用直接拼接方式
         url = baseUrl + beatmapId;
@@ -200,9 +213,8 @@ std::string NetworkUtils::getMirrorURL(const std::string& beatmapId, const std::
     return url;
 }
 
-std::unordered_map<std::string, Mirror> NetworkUtils::getMirrors() {
-    static std::unordered_map<std::string, Mirror> mirrors = {
-        {"sayobot", {"Sayobot", "https://txy1.sayobot.cn/download/beatmap/", false}},
+std::unordered_map<std::string, Mirror> NetworkUtils::getMirrors() {    static std::unordered_map<std::string, Mirror> mirrors = {
+        {"sayobot", {"Sayobot", "https://b2.sayobot.cn:25225/beatmaps/", false}},
         {"catboy", {"Catboy", "https://catboy.best/d/", false}},
         {"chimu", {"Chimu", "https://api.chimu.moe/v1/download/", false}},
         {"nerinyan", {"Nerinyan", "https://api.nerinyan.moe/d/", true}},
