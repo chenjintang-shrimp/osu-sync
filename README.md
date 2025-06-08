@@ -9,6 +9,7 @@
 - 🚀 支持多线程并行下载（最高 50 线程）
 - 💾 支持断点续传
 - 🔧 灵活的命令行参数
+- 甚至插件支持
 
 如果你觉得这个工具对你有帮助：
 
@@ -64,13 +65,13 @@ osu!sync.exe import beatmaps.json ./downloads --mirror sayobot
 osu!sync.exe mirrors
 ```
 
-目前支持的镜像站：
+目前支持（至少能用）的镜像站：
 
-- Sayobot (sayobot)
-- Catboy (catboy)
-- Chimu (chimu)
-- Nerinyan (nerinyan)
-- Kitsu (kitsu)
+- [x] Sayobot (sayobot)
+- [ ] Catboy (catboy)
+- [ ] Chimu (chimu)
+- [ ] Nerinyan (nerinyan)
+- [ ] Kitsu (kitsu)
 
 可以通过 `--mirror` 参数指定使用的镜像站：
 
@@ -78,7 +79,7 @@ osu!sync.exe mirrors
 osu!sync.exe import beatmaps.json ./downloads --mirror sayobot
 ```
 
-## 命令行参数
+## core的一些命令行参数
 
 ### 全局命令
 
@@ -162,3 +163,11 @@ osu!sync.exe import beatmaps.json ./downloads --mirror sayobot 16
 - [Chimu](https://chimu.moe/)
 - [Nerinyan](https://nerinyan.moe/)
 - [Kitsu](https://kitsu.moe/)
+
+## 关于开发进度
+
+我是一个中学生（至少短期内是），所以代码更新的频率会很慢而且很怪，但是总体开发进程类似：
+* 某天深夜提交大量新功能代码 (Linux机子)
+* 下周末在 Windows 上面提交一大堆 fix
+* 到节点时如果不是周末就发布 pre-release
+* 到周末之后对 pre-release 里面的问题进行修复，完成后发布 release。
