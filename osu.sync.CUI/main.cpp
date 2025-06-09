@@ -17,7 +17,7 @@ struct command
     string developer;      // 开发者名称
     string description;    // 命令描述
     fs::path baseFilePath; // 插件模块位置路径
-    vector<string> args;           // 参数
+    vector<string> args;   // 参数
 };
 
 bool operator<(const command &a, const command &b)
@@ -49,32 +49,30 @@ void printVersion()
 int main()
 {
     printVersion();
-    cout<<"开始解析 JSON 插件清单...\n";
-    map<string,command> cmdMap;
+    cout << "开始解析 JSON 插件清单...\n";
+    map<string, command> cmdMap;
     try
     {
         vector<command> commands;
         ifstream file("plugins.json");
-        if(!file.is_open())
+        if (!file.is_open())
         {
-            cerr<<"无法打开清单文件......"<<endl;
+            cerr << "无法打开清单文件......" << endl;
             return 1;
         }
 
         json j;
-        file>>j;
-        commands=j.get<vector<command>>();
+        file >> j;
+        commands = j.get<vector<command>>();
 
-        for(auto& kv:commands)
+        for (auto &kv : commands)
         {
-            cout<<"已发现注册第三方命令："<<kv.name<<" by "<<kv.developer<<endl;
-            cmdMap[kv.name]=kv;
+            cout << "已发现注册第三方命令：" << kv.name << " by " << kv.developer << endl;
+            cmdMap[kv.name] = kv;
         }
-
     }
-    catch(const json::exception& e)
+    catch (const json::exception &e)
     {
         std::cerr << e.what() << '\n';
     }
-    
 }
