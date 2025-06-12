@@ -47,11 +47,49 @@ int ModuleManager::loadModules(fs::path moduleDirectory)
                 }
                 catch (const json::exception &e)
                 {
-                    cerr<<"JSON解析错误:"<<e.what()<<endl;
+                    cerr << "JSON解析错误:" << e.what() << endl;
                     return 2;
                 }
             }
         }
     }
+    return 0;
+}
+
+int ModuleManager::printModuleHelp(string moduleName)
+{
+    if (!moduleMap.count(moduleName))
+    {
+        cerr << "未找到该模块。你是不是搞错了？" << endl;
+        return 3;
+    }
+    cout << moduleMap[moduleName].moduleDescription << endl;
+    return 0;
+}
+
+int ModuleManager::executeModule(string command)
+{
+    string commandName = command.substr(0, command.find_first_of(" "));
+    string commandArgs = command.substr(command.find_first_of(" ") + 1);
+    if (!this->moduleMap.count(commandName))
+    {
+        cerr << "未找到对应的命令。你是不是搞错了？" << endl;
+        return 3;
+    }
+
+    array<char, 1024> buf;
+    string result;
+    fs::path moduleFile = moduleMap[commandName].baseFilePath;
+    string finalCommand = moduleFile.generic_string() + " " + commandArgs;
+    FILE *pipe = popen(finalCommand.c_str(), "r");
+    if (!pipe)
+    {
+        throw std::runtime_error("命令执行失败");
+    }
+    
+    while (fgets(buf.data(), buf.size(), pipe) != nullptr)
+        result += buf.data();
+    cout << buf.data() << endl;
+    cout.flush();
     return 0;
 }
