@@ -42,7 +42,8 @@ int ModuleManager::loadModules(fs::path moduleDirectory)
                     json j;
                     pluginFile >> j;
                     Module curModule = j.get<Module>();
-                    this->moduleMap[curModule.moduleCommand] = curModule;
+                    this->moduleMap[curModule.moduleName] = curModule;
+                    this->commandName2ModuleNameMap[curModule.moduleCommand]=curModule.moduleName;
                     cout << "加载插件" << curModule.moduleName << endl;
                 }
                 catch (const json::exception &e)
@@ -56,14 +57,14 @@ int ModuleManager::loadModules(fs::path moduleDirectory)
     return 0;
 }
 
-int ModuleManager::printModuleHelp(string moduleName)
+int ModuleManager::printCommandHelp(string commandName)
 {
-    if (!moduleMap.count(moduleName))
+    if(!commandName2ModuleNameMap.count(commandName))
     {
-        cerr << "未找到该模块。你是不是搞错了？" << endl;
+        cerr<<"未找到该命令。你是不是搞错了？"<<endl;
         return 3;
     }
-    cout << moduleMap[moduleName].moduleDescription << endl;
+    cout<<moduleMap[commandName2ModuleNameMap[commandName]].moduleDescription<<endl;
     return 0;
 }
 
@@ -71,7 +72,7 @@ int ModuleManager::executeModule(string command)
 {
     string commandName = command.substr(0, command.find_first_of(" "));
     string commandArgs = command.substr(command.find_first_of(" ") + 1);
-    if (!this->moduleMap.count(commandName))
+    if (!this->commandName2ModuleNameMap.count(commandName))
     {
         cerr << "未找到对应的命令。你是不是搞错了？" << endl;
         return 3;
@@ -79,7 +80,7 @@ int ModuleManager::executeModule(string command)
 
     array<char, 1024> buf;
     string result;
-    fs::path moduleFile = moduleMap[commandName].baseFilePath;
+    fs::path moduleFile = moduleMap[commandName2ModuleNameMap[commandName]].baseFilePath;
     string finalCommand = moduleFile.generic_string() + " " + commandArgs;
     FILE *pipe = popen(finalCommand.c_str(), "r");
     if (!pipe)
@@ -97,7 +98,7 @@ int ModuleManager::executeModule(string command)
 void ModuleManager::listModule()
 {
     cout << "已加载的模块：" << endl;
-    for (auto kv : this->moduleMap)
-        cout << kv.first << endl;
+    for (auto kv : this->commandName2ModuleNameMap)
+        cout << kv.second << endl;
     return;
 }

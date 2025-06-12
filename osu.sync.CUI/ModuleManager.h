@@ -24,9 +24,10 @@ class ModuleManager
 {
 private:
     std::map<std::string,Module> moduleMap;
+    std::map<std::string,std::string> commandName2ModuleNameMap;
 public:
     int loadModules(fs::path moduleDirectory);
-    int printModuleHelp(std::string moduleName);
+    int printCommandHelp(std::string moduleName);
     int executeModule(std::string command);
     void listModule();
     //TODO: 未来加入启用/禁用特定模块的功能
