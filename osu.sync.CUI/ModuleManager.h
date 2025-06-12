@@ -23,7 +23,6 @@ struct Module
 class ModuleManager
 {
 private:
-    inline std::pair<std::string,std::string> spiltCommand(std::string command);
     std::map<std::string,Module> moduleMap;
 public:
     int loadModules(fs::path moduleDirectory);

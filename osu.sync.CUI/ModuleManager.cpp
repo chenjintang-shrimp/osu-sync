@@ -86,10 +86,18 @@ int ModuleManager::executeModule(string command)
     {
         throw std::runtime_error("命令执行失败");
     }
-    
+
     while (fgets(buf.data(), buf.size(), pipe) != nullptr)
         result += buf.data();
     cout << buf.data() << endl;
     cout.flush();
     return 0;
+}
+
+void ModuleManager::listModule()
+{
+    cout << "已加载的模块：" << endl;
+    for (auto kv : this->moduleMap)
+        cout << kv.first << endl;
+    return;
 }
