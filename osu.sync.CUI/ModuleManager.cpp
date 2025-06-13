@@ -1,5 +1,6 @@
 #include "ModuleManager.h"
 #include <iostream>
+#include <cstdio>
 #include <fstream>
 #include "nlohmann/json.hpp"
 using namespace std;
@@ -14,11 +15,12 @@ void from_json(const json &j, Module &m) {
     j.at("name").get_to(m.moduleName);
     j.at("commands").get_to(m.commands);
     j.at("baseFilePath").get_to(m.baseFilePath);
+    j.at("enabled").get_to(m.enabled);
 }
 
-int ModuleManager::loadModules(fs::path moduleDirectory) {
+ModuleError ModuleManager::loadModules(fs::path moduleDirectory) {
     if (!fs::exists(moduleDirectory)) {
-        return 0;
+        return ModuleError::Success;
     }
 
     for (const auto &entry : fs::directory_iterator(moduleDirectory)) {
@@ -27,67 +29,72 @@ int ModuleManager::loadModules(fs::path moduleDirectory) {
                 ifstream pluginFile(entry.path());
                 if (!pluginFile.is_open()) {
                     cerr << "无法打开插件描述文件" << entry.path() << endl;
-                    return 1;
+                    return ModuleError::FileOpenFailed;
                 }
-                
+
                 json j;
                 pluginFile >> j;
                 Module curModule = j.get<Module>();
                 this->moduleMap[curModule.moduleName] = curModule;
-                
+
                 for (const auto &cmd : curModule.commands) {
                     this->commandName2ModuleNameMap[cmd.name] = curModule.moduleName;
                 }
-                
+
                 cout << "加载插件" << curModule.moduleName << endl;
             } catch (const json::exception &e) {
                 cerr << "JSON解析错误:" << e.what() << endl;
-                return 2;
+                return ModuleError::JsonParseFailed;
             }
         }
     }
-    return 0;
+    return ModuleError::Success;
 }
 
-int ModuleManager::printCommandHelp(string commandName) {
-    if(!commandName2ModuleNameMap.count(commandName)) {
-        cerr<<"未找到该命令。你是不是搞错了？"<<endl;
-        return 3;
+ModuleError ModuleManager::printCommandHelp(string commandName) {
+    if (!commandName2ModuleNameMap.count(commandName)) {
+        cerr << "未找到该命令。你是不是搞错了？" << endl;
+        return ModuleError::CommandNotFound;
     }
-    
+
     string moduleName = commandName2ModuleNameMap[commandName];
     for (const auto &cmd : moduleMap[moduleName].commands) {
         if (cmd.name == commandName) {
             cout << cmd.description << endl;
-            return 0;
+            return ModuleError::Success;
         }
     }
-    return 4;
+    return ModuleError::CommandHelpNotFound;
 }
 
-int ModuleManager::executeModule(string command) {
+ModuleError ModuleManager::executeModule(string command) {
     string commandName = command.substr(0, command.find_first_of(" "));
     string commandArgs = command.substr(command.find_first_of(" ") + 1);
-    
+
     if (!commandName2ModuleNameMap.count(commandName)) {
         cerr << "未找到对应的命令。你是不是搞错了？" << endl;
-        return 3;
+        return ModuleError::CommandNotFound;
     }
 
     fs::path moduleFile = moduleMap[commandName2ModuleNameMap[commandName]].baseFilePath;
     string finalCommand = moduleFile.generic_string() + " " + commandArgs;
-    
-    array<char, 1024> buf;
-    string result;
-    FILE *pipe = popen(finalCommand.c_str(), "r");
-    if (!pipe) {
-        throw std::runtime_error("命令执行失败");
-    }
 
-    while (fgets(buf.data(), buf.size(), pipe) != nullptr)
-        result += buf.data();
-    cout << result << endl;
-    return 0;
+    try {
+        array<char, 1024> buf;
+        string result;
+        FILE *pipe = _popen(finalCommand.c_str(), "r");
+        if (!pipe) {
+            throw runtime_error("命令执行失败");
+        }
+
+        while (fgets(buf.data(), buf.size(), pipe) != nullptr)
+            result += buf.data();
+        cout << result << endl;
+        return ModuleError::Success;
+    } catch (const runtime_error& e) {
+        cerr << e.what() << endl;
+        return ModuleError::CommandExecutionFailed;
+    }
 }
 
 void ModuleManager::listModule() {

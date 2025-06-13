@@ -1,8 +1,9 @@
 #pragma once
-#include<string>
-#include<map>
-#include<vector>
-#include<filesystem>
+#include <string>
+#include <map>
+#include <vector>
+#include <filesystem>
+#include "ErrorCodes.h"
 
 namespace fs=std::filesystem;
 
@@ -29,9 +30,9 @@ private:
     std::map<std::string,Module> moduleMap;
     std::map<std::string,std::string> commandName2ModuleNameMap;
 public:
-    int loadModules(fs::path moduleDirectory);
-    int printCommandHelp(std::string moduleName);
-    int executeModule(std::string command);
+    ModuleError loadModules(fs::path moduleDirectory);
+    ModuleError printCommandHelp(std::string moduleName);
+    ModuleError executeModule(std::string command);
     void listModule();
     //TODO: 未来加入启用/禁用特定模块的功能
 };

@@ -365,3 +365,5 @@ FodyWeavers.xsd
 osu!syn.server/build/osu_sync_server
 .vscode/settings.json
 .vscode/settings.json
+.vscode/c_cpp_properties.json
+.vscode/settings.json
