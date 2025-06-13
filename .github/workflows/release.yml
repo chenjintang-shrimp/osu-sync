@@ -1,67 +1,39 @@
-name: Build Server on Release
-
-permissions:
-  contents: write
-  discussions: write
-
+name: Release Changelog
 on:
-  release:
-    types: [published]
+  push:
+    tags:
+      - 'v*.*.*'
 
 jobs:
-  build:
+  generate-changelog:
     runs-on: ubuntu-latest
-    
     steps:
-    - uses: actions/checkout@v3
-      with:
-        fetch-depth: 0  # 获取完整的git历史记录
-    
-    - name: Setup Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '18'
-    
-    - name: Generate Changelog
-      run: |
-        # 安装所需依赖
-        npm install conventional-changelog-cli conventional-changelog-angular
-        # 获取上一个tag
-        PREV_TAG=$(git describe --tags --abbrev=0 HEAD^ 2>/dev/null || echo "")
-        if [ -z "$PREV_TAG" ]; then
-          # 如果没有上一个tag，则从第一个提交开始
-          npx conventional-changelog-cli -p angular -i CHANGELOG.md -s -r 0 \
-            --config .github/changelog.config.mjs
-        else
-          # 从上一个tag到当前tag之间的提交生成更新日志
-          npx conventional-changelog-cli -p angular -i CHANGELOG.md -s -r 1 \
-            --config .github/changelog.config.mjs
-        fi
-    
-    - name: Update Release Notes
-      uses: softprops/action-gh-release@v1
-      with:
-        body_path: CHANGELOG.md
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      
-    - name: Install dependencies
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y build-essential
-      
-    - name: Build
-      working-directory: ${{github.workspace}}/osu!syn.server
-      run: |
-        chmod +x build.sh
-        ./build.sh
-        
-    - name: Upload Release Asset
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ github.event.release.upload_url }}
-        asset_path: ${{github.workspace}}/osu!syn.server/build/osu_sync_server
-        asset_name: osu_sync_server
-        asset_content_type: application/octet-stream
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          
+      - name: Normalize commit messages
+        run: |
+          chmod +x .github/scripts/normalize-commits.sh
+          ./.github/scripts/normalize-commits.sh ${{ github.event.before }} > normalized_commits.txt
+          
+      - name: Generate CHANGELOG
+        run: |
+          npx -y conventional-changelog-cli@4.0.0 -p angular \
+            --release-count 0 \
+            --out-file CHANGELOG.md \
+            --context "$(jq -n --rawfile commits normalized_commits.txt '{"commits": $commits}')"
+            
+      - name: Create Release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: ${{ github.ref_name }}
+          body: file://CHANGELOG.md
