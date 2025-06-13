@@ -25,6 +25,7 @@
 - `revert`: 回滚到上一个版本
 
 对于会导致破坏性变更的提交，可以在类型后添加 "!"，例如：
+
 - `feat!`: 带有破坏性变更的新功能
 - `fix!`: 带有破坏性变更的修复
 这些提交会自动出现在更新日志的 BREAKING CHANGES 部分。
@@ -41,7 +42,7 @@
 
 ## 示例
 
-```
+```txt
 feat(downloader): 添加断点续传功能
 
 - 实现文件断点续传
@@ -51,7 +52,7 @@ feat(downloader): 添加断点续传功能
 Refs: #123
 ```
 
-```
+```txt
 fix(mirror): 修复sayobot镜像站链接失效问题
 
 将下载链接更新为最新的API地址
@@ -59,7 +60,7 @@ fix(mirror): 修复sayobot镜像站链接失效问题
 Closes #456
 ```
 
-```
+```txt
 feat!(api): 重构镜像站API接口
 
 - 完全重写了镜像站接口
@@ -76,12 +77,14 @@ Closes #789
 
 1. 确保所有代码已提交
 2. 创建一个新的tag（例如 v1.0.1）：
+
    ```bash
    git tag -a v1.0.1 -m "release: v1.0.1"
    git push origin v1.0.1
    ```
 
 GitHub Actions会自动：
+
 - 构建项目
 - 生成更新日志
 - 创建发布
@@ -90,6 +93,7 @@ GitHub Actions会自动：
 ## 更新日志生成规则
 
 更新日志会自动包含以下内容：
+
 - 所有新功能（feat）
 - 所有修复（fix）
 - 重大变更（BREAKING CHANGE）
@@ -99,6 +103,7 @@ GitHub Actions会自动：
 其他类型的提交（如docs, style, test等）默认不会出现在更新日志中。
 
 各类型在更新日志中的分类：
+
 - 🚀 Features: feat
 - 🐛 Bug Fixes: fix
 - ⚠️ BREAKING CHANGES
