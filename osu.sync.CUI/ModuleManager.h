@@ -1,21 +1,24 @@
 #pragma once
 #include<string>
 #include<map>
-#include<string>
 #include<vector>
 #include<filesystem>
 
 namespace fs=std::filesystem;
 
 /*
-ModuleManager.h: 模块加载器，管理和加载模块，同时负责模块的执行
+ModuleManager.h: 模块加载器，管理和加载模块，支持一个模块注册多个命令
 */
+
+struct Command {
+    std::string name;
+    std::string description;
+};
 
 struct Module
 {
-    std::string moduleCommand;
     std::string moduleName;
-    std::string moduleDescription;
+    std::vector<Command> commands;
     fs::path baseFilePath;
     bool enabled=true;
 };
