@@ -2,7 +2,7 @@
 #include <string>
 #include <vector>
 #include <filesystem>
-#include "3rdpartyInclude/nlohmann/json.hpp"
+#include "network.utils.h"
 #include "beatmap_types.h"
 
 namespace fs = std::filesystem;
