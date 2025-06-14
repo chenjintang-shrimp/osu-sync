@@ -119,30 +119,31 @@ bool exportBeatmaps(const std::vector<std::string> &args)
 
 bool downloadCollection(const std::vector<std::string> &args)
 {    
-    if (args.size() != 2)
-    {
-        UTF8Console::error("错误: download命令需要用户名和服务器地址参数");
-        return false;
-    }
+    // if (args.size() != 2)
+    // {
+    //     UTF8Console::error("错误: download命令需要用户名和服务器地址参数");
+    //     return false;
+    // }
 
-    const auto &[username, serverUrl] = std::tie(args[0], args[1]);
+    // const auto &[username, serverUrl] = std::tie(args[0], args[1]);
 
-    try
-    {
-        UTF8Console::print("正在从服务器下载谱面列表...");
-        auto beatmaps = osu::CollectionDownloader::downloadBeatmapList(username, serverUrl);
+    // try
+    // {
+    //     UTF8Console::print("正在从服务器下载谱面列表...");
+    //     auto beatmaps = osu::CollectionDownloader::downloadBeatmapList(username, serverUrl);
 
-        std::string outputFile = username + "_collection.json";
-        saveToJson(beatmaps, outputFile);
+    //     std::string outputFile = username + "_collection.json";
+    //     saveToJson(beatmaps, outputFile);
 
-        UTF8Console::print("谱面列表已保存到: " + outputFile);
-        return true;
-    }    
-    catch (const std::exception &e)
-    {
-        UTF8Console::error("下载谱面列表时发生错误: " + std::string(e.what()));
-        return false;
-    }
+    //     UTF8Console::print("谱面列表已保存到: " + outputFile);
+    //     return true;
+    // }    
+    // catch (const std::exception &e)
+    // {
+    //     UTF8Console::error("下载谱面列表时发生错误: " + std::string(e.what()));
+    //     return false;
+    // }
+    return true;
 }
 
 bool importBeatmaps(const std::vector<std::string> &args)
