@@ -1,5 +1,5 @@
-#include "server.h"
-#include "logger.h"
+#include "server.hpp"
+#include "logger.hpp"
 #include <fstream>
 #include "3rdparty/nlohmann/json.hpp"
 

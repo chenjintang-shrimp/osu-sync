@@ -4,8 +4,8 @@
 #include <stdexcept>
 #include <string>
 #include "3rdparty/httplib.h"
-#include "logger.h"
-#include "server.h"
+#include "logger.hpp"
+#include "server.hpp"
 
 namespace fs = std::filesystem;
 

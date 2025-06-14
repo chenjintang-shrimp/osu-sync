@@ -2,7 +2,7 @@
 #include <string>
 #include <filesystem>
 #include "httplib.h"
-#include "logger.h"
+#include "logger.hpp"
 
 namespace fs = std::filesystem;
 
