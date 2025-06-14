@@ -1,9 +1,9 @@
 #include<iostream>
 #include<fstream>
 #include<filesystem>
-#include"stableExporter.h"
-#include"fsutils.windows.h"
-#include"network.utils.h"
+#include"stableExporter.hpp"
+#include"fsutils.windows.hpp"
+#include"network.utils.hpp"
 using namespace std;
 
 int main()

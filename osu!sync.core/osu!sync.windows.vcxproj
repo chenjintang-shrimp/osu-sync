@@ -142,11 +142,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="beatmap_importer.h" />
-    <ClInclude Include="beatmap_types.h" />
-    <ClInclude Include="collection_downloader.h" />
-    <ClInclude Include="fsutils.windows.h" />
-    <ClInclude Include="network.utils.h" />
-    <ClInclude Include="stableExporter.h" />
+    <ClInclude Include="beatmap_types.hpp" />
+    <ClInclude Include="beatmap_types.hpp" />
+    <ClInclude Include="fsutils.windows.hpp" />
+    <ClInclude Include="network.utils.hpp" />
+    <ClInclude Include="stableExporter.hpp" />
     <ClInclude Include="3rdpartyInclude\httplib.h" />
     <ClInclude Include="3rdpartyInclude\nlohmann\json.hpp" />
   </ItemGroup>

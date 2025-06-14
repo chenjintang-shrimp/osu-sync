@@ -6,11 +6,11 @@
 #include <functional>
 #include <locale>
 #include <codecvt>
-#include "stableExporter.h"
-#include "collection_downloader.h"
-#include "beatmap_importer.h"
+#include "stableExporter.hpp"
+#include "beatmap_types.hpp"
+#include "beatmap_importer.hpp"
 #include "3rdpartyInclude/nlohmann/json.hpp"
-#include "network.utils.h"
+#include "network.utils.hpp"
 
 namespace fs = std::filesystem;
 using json = nlohmann::json;

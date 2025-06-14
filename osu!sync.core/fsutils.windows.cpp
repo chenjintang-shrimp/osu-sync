@@ -1,5 +1,5 @@
-#include "fsutils.windows.h"
-#include "beatmap_types.h"
+#include "fsutils.windows.hpp"
+#include "beatmap_types.hpp"
 #include <fstream>
 
 namespace {

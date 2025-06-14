@@ -1,10 +1,10 @@
 #pragma once
-#include "beatmap_types.h"
+#include "beatmap_types.hpp"
 #include <filesystem>
 #include <memory>
 #include <future>
 #include <mutex>
-#include "network.utils.h"
+#include "network.utils.hpp"
 
 namespace fs = std::filesystem;
 

@@ -3,7 +3,7 @@
 #include <vector>
 #include <filesystem>
 #include "3rdpartyInclude/nlohmann/json.hpp"
-#include "beatmap_types.h"
+#include "beatmap_types.hpp"
 
 namespace fs = std::filesystem;
 using json = nlohmann::json;

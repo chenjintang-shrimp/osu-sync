@@ -1,5 +1,5 @@
-#include "collection_downloader.h"
-#include "network.utils.h"
+#include "beatmap_types.hpppp"
+#include "network.utils.hpp"
 #include <stdexcept>
 #include <iostream>
 

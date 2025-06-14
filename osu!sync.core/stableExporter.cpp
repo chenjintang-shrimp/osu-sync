@@ -1,7 +1,7 @@
 #include <fstream>
 #include <iostream>
 #include <algorithm>
-#include "stableExporter.h"
+#include "stableExporter.hpp"
 
 bool BeatmapExporter::isNumber(const std::string& str)
 {

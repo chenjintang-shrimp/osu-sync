@@ -3,7 +3,7 @@
  * 使用beatmapDownloader命令行工具实现下载功能
  */
 #pragma warning(disable : 4996)
-#include "network.utils.h"
+#include "network.utils.hpp"
 #include<fstream>
 #include <cstdlib>
 #include <array>

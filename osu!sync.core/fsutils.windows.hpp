@@ -1,6 +1,6 @@
 #pragma once
-#include "stableExporter.h"
-#include "beatmap_types.h"
+#include "stableExporter.hpp"
+#include "beatmap_types.hpp"
 #include <filesystem>
 #include <vector>
 #include <string>

@@ -44,19 +44,19 @@
     <ClInclude Include="beatmap_importer.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="beatmap_types.h">
+    <ClInclude Include="beatmap_types.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="collection_downloader.h">
+    <ClInclude Include="beatmap_types.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="fsutils.windows.h">
+    <ClInclude Include="fsutils.windows.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="network.utils.h">
+    <ClInclude Include="network.utils.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="stableExporter.h">
+    <ClInclude Include="stableExporter.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="3rdpartyInclude\httplib.h">

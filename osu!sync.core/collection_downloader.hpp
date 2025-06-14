@@ -2,8 +2,8 @@
 #include <string>
 #include <vector>
 #include <filesystem>
-#include "network.utils.h"
-#include "beatmap_types.h"
+#include "network.utils.hpp"
+#include "beatmap_types.hpp"
 
 namespace fs = std::filesystem;
 using json = nlohmann::json;
