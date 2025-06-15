@@ -37,7 +37,7 @@ public:
         std::cerr.imbue(std::locale());
     }
 
-    static void print(const std::string& text) {
+    static void println(const std::string& text) {
         std::cout << text << std::endl;
     }
 
@@ -48,26 +48,26 @@ public:
 
 void printUsage()
 {
-    UTF8Console::print("osu!sync - osu!谱面同步工具");
-    UTF8Console::print("版本: " + std::string(VERSION) + " (Codename " + CODENAME + ")");
-    UTF8Console::print("使用方法: osu!sync <命令> [参数...]");
-    UTF8Console::print("");
-    UTF8Console::print("可用命令:");
-    UTF8Console::print("  export <osu路径> <输出文件>     从osu!导出谱面列表到JSON文件");
-    UTF8Console::print("  download <用户名> <服务器地址>  从服务器下载谱面列表");    
-    UTF8Console::print("  import <谱面列表> <保存路径> [osu路径] [并发数] [--mirror <镜像站>]");
-    UTF8Console::print("                                 下载并导入谱面列表中的谱面");
-    UTF8Console::print("  mirrors                        列出所有可用的镜像站");
-    UTF8Console::print("");
-    UTF8Console::print("镜像站选项:");
-    UTF8Console::print("  --mirror <镜像站>              指定下载使用的镜像站");
-    UTF8Console::print("                                可选值: sayobot, catboy, chimu, nerinyan, kitsu");
-    UTF8Console::print("");
-    UTF8Console::print("示例:");
-    UTF8Console::print("  osu!sync export \"C:/Games/osu!\" beatmaps.json");
-    UTF8Console::print("  osu!sync download player123 http://sync-server.com");
-    UTF8Console::print("  osu!sync import beatmaps.json ./downloads \"C:/Games/osu!\" 16 --mirror sayobot");
-    UTF8Console::print("  osu!sync import beatmaps.json ./downloads --mirror chimu       # 使用默认25个并发");
+    UTF8Console::println("osu!sync - osu!谱面同步工具");
+    UTF8Console::println("版本: " + std::string(VERSION) + " (Codename " + CODENAME + ")");
+    UTF8Console::println("使用方法: osu!sync <命令> [参数...]");
+    UTF8Console::println("");
+    UTF8Console::println("可用命令:");
+    UTF8Console::println("  export <osu路径> <输出文件>     从osu!导出谱面列表到JSON文件");
+    UTF8Console::println("  download <用户名> <服务器地址>  从服务器下载谱面列表");    
+    UTF8Console::println("  import <谱面列表> <保存路径> [osu路径] [并发数] [--mirror <镜像站>]");
+    UTF8Console::println("                                 下载并导入谱面列表中的谱面");
+    UTF8Console::println("  mirrors                        列出所有可用的镜像站");
+    UTF8Console::println("");
+    UTF8Console::println("镜像站选项:");
+    UTF8Console::println("  --mirror <镜像站>              指定下载使用的镜像站");
+    UTF8Console::println("                                可选值: sayobot, catboy, chimu, nerinyan, kitsu");
+    UTF8Console::println("");
+    UTF8Console::println("示例:");
+    UTF8Console::println("  osu!sync export \"C:/Games/osu!\" beatmaps.json");
+    UTF8Console::println("  osu!sync download player123 http://sync-server.com");
+    UTF8Console::println("  osu!sync import beatmaps.json ./downloads \"C:/Games/osu!\" 16 --mirror sayobot");
+    UTF8Console::println("  osu!sync import beatmaps.json ./downloads --mirror chimu       # 使用默认25个并发");
 }
 
 // 保存JSON到文件的通用函数
@@ -102,12 +102,12 @@ bool exportBeatmaps(const std::vector<std::string> &args)
             return false;
         }
 
-        UTF8Console::print("正在从 " + songsPath.string() + " 导出谱面信息...");
+        UTF8Console::println("正在从 " + songsPath.string() + " 导出谱面信息...");
         auto beatmaps = BeatmapExporter::exportBeatmaps(songsPath);
-        UTF8Console::print("找到 " + std::to_string(beatmaps.size()) + " 个谱面");
+        UTF8Console::println("找到 " + std::to_string(beatmaps.size()) + " 个谱面");
 
         saveToJson(beatmaps, outputPath);
-        UTF8Console::print("谱面信息已保存到: " + outputPath);
+        UTF8Console::println("谱面信息已保存到: " + outputPath);
         return true;
     }
     catch (const std::exception &e)
@@ -206,7 +206,7 @@ bool importBeatmaps(const std::vector<std::string> &args)
         // 设置镜像站
         if (!mirror.empty()) {
             importer.setMirror(mirror);
-            UTF8Console::print("使用镜像站: " + mirror);
+            UTF8Console::println("使用镜像站: " + mirror);
         }
         
         // 设置osu路径
@@ -214,19 +214,19 @@ bool importBeatmaps(const std::vector<std::string> &args)
             importer.setOsuPath(osuPath);
         }
         
-        UTF8Console::print("开始导入谱面... (并发数: " + std::to_string(concurrent) + ")");
+        UTF8Console::println("开始导入谱面... (并发数: " + std::to_string(concurrent) + ")");
         auto status = importer.importFromJson(jsonPath);
 
-        UTF8Console::print("导入完成！");
-        UTF8Console::print("总计谱面: " + std::to_string(status.totalMaps));
-        UTF8Console::print("成功下载: " + std::to_string(status.downloadedMaps));
-        UTF8Console::print("下载失败: " + std::to_string(status.failedMaps));        
+        UTF8Console::println("导入完成！");
+        UTF8Console::println("总计谱面: " + std::to_string(status.totalMaps));
+        UTF8Console::println("成功下载: " + std::to_string(status.downloadedMaps));
+        UTF8Console::println("下载失败: " + std::to_string(status.failedMaps));        
         if (!status.errors.empty())
         {
-            UTF8Console::print("\n错误信息:");
+            UTF8Console::println("\n错误信息:");
             for (const auto& error : status.errors)
             {
-                UTF8Console::print("- " + error);
+                UTF8Console::println("- " + error);
             }
         }
         return status.failedMaps == 0;
@@ -242,15 +242,15 @@ bool listMirrors()
 {
     try {
         auto mirrors = osu::NetworkUtils::getMirrors();
-        UTF8Console::print("\n可用的镜像站:");
+        UTF8Console::println("\n可用的镜像站:");
         for (const auto& [key, mirror] : mirrors) {
             if (key != "custom") {  // 不显示自定义镜像
-                UTF8Console::print("  " + mirror.name + " (" + key + ")");
-                UTF8Console::print("    基础URL: " + mirror.baseUrl);
+                UTF8Console::println("  " + mirror.name + " (" + key + ")");
+                UTF8Console::println("    基础URL: " + mirror.baseUrl);
                 if (mirror.requiresNoskip) {
-                    UTF8Console::print("    需要noskip参数");
+                    UTF8Console::println("    需要noskip参数");
                 }
-                UTF8Console::print("");
+                UTF8Console::println("");
             }
         }
         return true;
@@ -263,9 +263,9 @@ bool listMirrors()
 
 void printVersion()
 {
-    UTF8Console::print("osu!sync(core) " + std::string(VERSION) + " (Codename " + CODENAME + ")");
-    UTF8Console::print("Copyright " + std::string(COPYRIGHT_YEAR) + " chen-shrimp");
-    UTF8Console::print("本软件基于MIT协议发布，引用/更改记得署名哦~");
+    UTF8Console::println("osu!sync(core) " + std::string(VERSION) + " (Codename " + CODENAME + ")");
+    UTF8Console::println("Copyright " + std::string(COPYRIGHT_YEAR) + " chen-shrimp");
+    UTF8Console::println("本软件基于MIT协议发布，引用/更改记得署名哦~");
 }
 
 int main(int argc, char *argv[])
