@@ -69,7 +69,8 @@
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-  </ImportGroup>  <PropertyGroup Label="UserMacros" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -133,26 +134,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="beatmap_importer.cpp" />
-    <ClCompile Include="collection_downloader.cpp" />
-    <ClCompile Include="fsutils.windows.cpp" />
+    <ClInclude Include="beatmapUtils.hpp" />
+    <ClInclude Include="systemUtils.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="beatmapUtils.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="network.utils.cpp" />
-    <ClCompile Include="stableExporter.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="beatmap_importer.h" />
-    <ClInclude Include="beatmap_types.hpp" />
-    <ClInclude Include="beatmap_types.hpp" />
-    <ClInclude Include="fsutils.windows.hpp" />
-    <ClInclude Include="network.utils.hpp" />
-    <ClInclude Include="stableExporter.hpp" />
-    <ClInclude Include="3rdpartyInclude\httplib.h" />
-    <ClInclude Include="3rdpartyInclude\nlohmann\json.hpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="vcpkg.json" />
-    <None Include="messageFiles\languagelists.json" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

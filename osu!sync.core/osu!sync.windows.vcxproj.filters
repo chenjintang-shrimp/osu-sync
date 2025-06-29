@@ -21,53 +21,22 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="beatmap_types.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="beatmapUtils.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="systemUtils.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="beatmapUtils.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="beatmap_importer.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="collection_downloader.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="fsutils.windows.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="network.utils.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="stableExporter.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="beatmap_importer.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="beatmap_types.hpp">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="beatmap_types.hpp">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="fsutils.windows.hpp">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="network.utils.hpp">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="stableExporter.hpp">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="3rdpartyInclude\httplib.h">
-      <Filter>第三方</Filter>
-    </ClInclude>
-    <ClInclude Include="3rdpartyInclude\nlohmann\json.hpp">
-      <Filter>第三方</Filter>
-    </ClInclude>
-  </ItemGroup>  <ItemGroup>
-    <None Include="messageFiles\languagelists.json">
-      <Filter>配置文件</Filter>
-    </None>
   </ItemGroup>
 </Project>

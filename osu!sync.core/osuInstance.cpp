@@ -1,0 +1,90 @@
+#include "osuInstance.hpp"
+#include "systemUtils.hpp"
+#include <cstdlib>
+#include <cstdio>
+#include <filesystem>
+namespace fs = std::filesystem;
+using namespace std;
+
+inline bool isNumber(string str)
+{
+    bool flag = true;
+    for (auto kv : str)
+        if (!isdigit(kv))
+        {
+            flag = false;
+            break;
+        }
+    return flag;
+}
+
+vector<string> osuInstance::getAllBeatmapSets(readMethod method)
+{
+    vector<string> bslists;
+    switch (method)
+    {
+    case db:
+    {
+        // 默认情况下readercore就在同一目录下
+        string command = "stdDbReaderCore --list " + (osuFolderPath / "osu!.db").generic_string();
+        string result = executeCommand(command);
+        string tmp;
+        for (auto kv : result)
+        {
+            if (kv == '\n')
+            {
+                bslists.push_back(tmp);
+                tmp = "";
+                continue;
+            }
+            tmp += kv;
+        }
+        break;
+    }
+
+    case folder:
+    {
+        fs::path songsFolderPath = osuFolderPath / "Songs";
+        for (const auto &entry : fs::directory_iterator(songsFolderPath))
+        {
+            if (entry.is_directory())
+            {
+                string bsFolderName = entry.path().filename().string();
+                // 找到第一个空格
+                string bsid = bsFolderName.substr(0, bsFolderName.find(" "));
+                if (isNumber(bsid))
+                    bslists.push_back(bsid);
+            }
+        }
+        break;
+    }
+
+    default:
+        break;
+    }
+    return bslists;
+}
+
+map<string, string> osuInstance::getBeatmapSetDetails(string bsid)
+{
+    string dbPath = (this->osuFolderPath / "osu!.db").generic_string();
+    string command = "stbDbReaderCore --details " + bsid + " " + dbPath;
+    string result = executeCommand(command);
+    vector<string> tmp;
+    string tmps;
+    for (auto kv : result)
+    {
+        if (kv == '\n')
+        {
+            tmp.push_back(tmps);
+            tmps = "";
+            continue;
+        }
+        tmps += kv;
+    }
+    map<string, string> beatmapAttr;
+    beatmapAttr["Title"] = tmp[0];
+    beatmapAttr["TitleUnicode"] = tmp[1];
+    beatmapAttr["Artist"] = tmp[2];
+    return beatmapAttr;
+}
