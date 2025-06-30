@@ -4,6 +4,7 @@
 #include<fstream>
 #include<vector>
 #include<map>
+#include"beatmapSetAttribute.hpp"
 // #include<cstdio>
 
 namespace fs=std::filesystem;
@@ -22,8 +23,8 @@ public:
     {
         this->osuFolderPath=osuFolderPath;
     }
-    std::vector<std::string> getAllBeatmapSets(readMethod method);
-    
+    std::pair<errorCode,std::vector<std::string>> getAllBeatmapSets(readMethod method);
+
     //只支持db读取
-    std::map<std::string,std::string> getBeatmapSetDetails(std::string bsid);
+    std::pair<errorCode,beatmapSetAttribte> getBeatmapSetDetails(std::string bsid);
 };

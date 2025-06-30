@@ -4,7 +4,7 @@
  * 调用方式：
  * stbDbReaderCore --list [osudbpath]
  * 如果需要一个谱面集的详细信息，就直接找到它输出，一行一个属性
- * stdDbReaderCore --details [bid] [osudbpath]
+ * stdDbReaderCore --details [bsid] [osudbpath]
  */
 using System.Collections;
 using System.Collections.Specialized;

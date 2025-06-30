@@ -3,6 +3,7 @@
 #include <cstdlib>
 #include <cstdio>
 #include <filesystem>
+#include <algorithm>
 namespace fs = std::filesystem;
 using namespace std;
 
@@ -18,7 +19,7 @@ inline bool isNumber(string str)
     return flag;
 }
 
-vector<string> osuInstance::getAllBeatmapSets(readMethod method)
+pair<errorCode, vector<string>> osuInstance::getAllBeatmapSets(readMethod method)
 {
     vector<string> bslists;
     switch (method)
@@ -27,19 +28,25 @@ vector<string> osuInstance::getAllBeatmapSets(readMethod method)
     {
         // 默认情况下readercore就在同一目录下
         string command = "stdDbReaderCore --list " + (osuFolderPath / "osu!.db").generic_string();
-        string result = executeCommand(command);
-        string tmp;
-        for (auto kv : result)
+        pair<errorCode, string> res = executeCommand(command);
+        if (res.first == ok)
         {
-            if (kv == '\n')
+            string result = res.second;
+            string tmp;
+            for (auto kv : result)
             {
-                bslists.push_back(tmp);
-                tmp = "";
-                continue;
+                if (kv == '\n')
+                {
+                    bslists.push_back(tmp);
+                    tmp = "";
+                    continue;
+                }
+                tmp += kv;
             }
-            tmp += kv;
+            break;
         }
-        break;
+        else
+            return {commandFail, vector<string>()};
     }
 
     case folder:
@@ -62,29 +69,32 @@ vector<string> osuInstance::getAllBeatmapSets(readMethod method)
     default:
         break;
     }
-    return bslists;
+    sort(bslists.begin(), bslists.end());
+    return {ok, bslists};
 }
 
-map<string, string> osuInstance::getBeatmapSetDetails(string bsid)
+pair<errorCode, beatmapSetAttribte> osuInstance::getBeatmapSetDetails(string bsid)
 {
     string dbPath = (this->osuFolderPath / "osu!.db").generic_string();
     string command = "stbDbReaderCore --details " + bsid + " " + dbPath;
-    string result = executeCommand(command);
-    vector<string> tmp;
-    string tmps;
-    for (auto kv : result)
+    pair<errorCode, string> res = executeCommand(command);
+    if (res.first == ok)
     {
-        if (kv == '\n')
+        string result=res.second;
+        vector<string> tmp;
+        string tmps;
+        for (auto kv : result)
         {
-            tmp.push_back(tmps);
-            tmps = "";
-            continue;
+            if (kv == '\n')
+            {
+                tmp.push_back(tmps);
+                tmps = "";
+                continue;
+            }
+            tmps += kv;
         }
-        tmps += kv;
+        return {ok,beatmapSetAttribte{bsid,tmp[0],tmp[1],tmp[2]}};
     }
-    map<string, string> beatmapAttr;
-    beatmapAttr["Title"] = tmp[0];
-    beatmapAttr["TitleUnicode"] = tmp[1];
-    beatmapAttr["Artist"] = tmp[2];
-    return beatmapAttr;
+    else
+        return {res.first,beatmapSetAttribte()};
 }
