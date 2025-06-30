@@ -20,18 +20,18 @@ namespace Program
         {
             if (args.Count<string>() < 2)
                 return;
-            if (args[0]=="--list")
+            if (args[0] == "--list")
             {
                 var db = OsuDb.Read(args[1]);
-                ArrayList allBsids=new ArrayList();
-                ArrayList tmpBsids=new ArrayList();
-                foreach(var beatmap in db.Beatmaps)
+                ArrayList allBsids = new ArrayList();
+                ArrayList tmpBsids = new ArrayList();
+                foreach (var beatmap in db.Beatmaps)
                     tmpBsids.Add(beatmap.BeatmapSetId.ToString());
-                foreach(var bsid in tmpBsids)
+                foreach (var bsid in tmpBsids)
                 {
                     bool flag = false;
-                    foreach(var tmp in allBsids)
-                        if(tmp.ToString() == bsid.ToString())
+                    foreach (var tmp in allBsids)
+                        if (tmp.ToString() == bsid.ToString())
                         {
                             flag = true;
                             break;
@@ -42,7 +42,7 @@ namespace Program
                 foreach (var bsid in allBsids)
                     Console.WriteLine(bsid);
             }
-            else if (args[0]=="--details")
+            else if (args[0] == "--details")
             {
                 var bid = args[1];
                 var db = OsuDb.Read(args[2]);
