@@ -1,4 +1,5 @@
 #include"archiveManager.hpp"
+#include "3rdpartyInclude/nlohmann/json.hpp"
 using namespace std;
 
 vector<beatmapSetAttribte> archiveManager::getAllBeatmaps()
@@ -75,4 +76,30 @@ set<beatmapSetAttribte> archiveManager::mergeBeatmapSets(vector<beatmapSetAttrib
         return this->beatmapSets;
 }
 
+errorCode archiveManager::writeCurSetToFile(fs::path archivePath)
+{
+    try {
+        std::ofstream outFile(archivePath, std::ios::out);
+        if (!outFile.is_open()) {
+            return errorCode::readFileFail;
+        }
 
+        nlohmann::json j = nlohmann::json::array();
+        for (const auto& beatmapSet : beatmapSets) {
+            nlohmann::json bsJson;
+            to_json(bsJson, beatmapSet);  // 使用已定义的 to_json 函数
+            j.push_back(bsJson);
+        }
+
+        outFile << j.dump(4);  // 使用4空格缩进格式化JSON
+        outFile.close();
+        return errorCode::ok;
+    } catch (...) {
+        return errorCode::readFileFail;
+    }
+}
+
+errorCode archiveManager::writeCurSetToFile()
+{
+    return writeCurSetToFile(this->archiveFile);
+}
