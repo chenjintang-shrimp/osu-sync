@@ -1,0 +1,307 @@
+cmake_minimum_required(VERSION 3.31)
+project(osu_sync)
+
+set(CMAKE_CXX_STANDARD 20)
+
+include_directories(.)
+include_directories(osu!syn.server)
+include_directories(osu!syn.server/3rdparty)
+include_directories(osu!syn.server/3rdparty/nlohmann)
+include_directories(osu!sync.core)
+include_directories(osu!sync.core/3rdpartyInclude)
+include_directories(osu!sync.core/3rdpartyInclude/nlohmann)
+include_directories(osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean)
+include_directories(osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/arch/generic)
+include_directories(osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/arch/power)
+include_directories(osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/arch/riscv)
+include_directories(osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/arch/s390)
+include_directories(osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/test)
+include_directories(osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/test/benchmarks)
+include_directories(osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/x64-windows-dbg)
+include_directories(osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/x64-windows-rel)
+include_directories(osu!sync.core/vcpkg_installed/vcpkg/pkgs)
+include_directories(osu!sync.core/vcpkg_installed/vcpkg/pkgs/curl_x64-windows)
+include_directories(osu!sync.core/vcpkg_installed/vcpkg/pkgs/curl_x64-windows/include)
+include_directories(osu!sync.core/vcpkg_installed/vcpkg/pkgs/curl_x64-windows/include/curl)
+include_directories(osu!sync.core/vcpkg_installed/vcpkg/pkgs/zlib-ng_x64-windows)
+include_directories(osu!sync.core/vcpkg_installed/vcpkg/pkgs/zlib-ng_x64-windows/include)
+include_directories(osu!sync.core/vcpkg_installed/vcpkg/pkgs/zlib_x64-windows)
+include_directories(osu!sync.core/vcpkg_installed/vcpkg/pkgs/zlib_x64-windows/include)
+include_directories(osu!sync.core/vcpkg_installed/x64-windows)
+include_directories(osu!sync.core/vcpkg_installed/x64-windows/include)
+include_directories(osu!sync.core/vcpkg_installed/x64-windows/include/curl)
+include_directories(osu!sync.core/vcpkg_installed/x64-windows-static)
+include_directories(osu!sync.core/vcpkg_installed/x64-windows-static/x64-windows-static)
+include_directories(osu!sync.core/vcpkg_installed/x64-windows-static/x64-windows-static/include)
+include_directories(osu!sync.core/vcpkg_installed/x64-windows-static/x64-windows-static/include/curl)
+include_directories(osu!sync.core/vcpkg_installed/x64-windows-static-md)
+include_directories(osu!sync.core/vcpkg_installed/x64-windows-static-md/x64-windows-static-md)
+include_directories(osu!sync.core/vcpkg_installed/x64-windows-static-md/x64-windows-static-md/include)
+include_directories(osu!sync.core/vcpkg_installed/x64-windows-static-md/x64-windows-static-md/include/curl)
+include_directories(osu.sync.CUI)
+include_directories(osu.sync.CUI/nlohmann)
+
+add_executable(osu_sync
+        osu!syn.server/3rdparty/nlohmann/json.hpp
+        osu!syn.server/3rdparty/nlohmann/json_fwd.hpp
+        osu!syn.server/3rdparty/httplib.h
+        osu!syn.server/logger.cpp
+        osu!syn.server/logger.hpp
+        osu!syn.server/main.cpp
+        osu!syn.server/server.cpp
+        osu!syn.server/server.hpp
+        osu!sync.core/3rdpartyInclude/nlohmann/json.hpp
+        osu!sync.core/3rdpartyInclude/nlohmann/json_fwd.hpp
+        osu!sync.core/3rdpartyInclude/httplib.h
+        osu!sync.core/3rdpartyInclude/realm.h
+        osu!sync.core/3rdpartyInclude/realm.hpp
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/arch/generic/adler32_c.c
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/arch/generic/adler32_fold_c.c
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/arch/generic/chunk_permute_table.h
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/arch/generic/chunkset_c.c
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/arch/generic/compare256_c.c
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/arch/generic/compare256_p.h
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/arch/generic/crc32_braid_c.c
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/arch/generic/crc32_fold_c.c
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/arch/generic/generic_functions.h
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/arch/generic/slide_hash_c.c
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/arch/power/adler32_power8.c
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/arch/power/adler32_vmx.c
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/arch/power/chunkset_power8.c
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/arch/power/compare256_power9.c
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/arch/power/crc32_constants.h
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/arch/power/crc32_power8.c
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/arch/power/fallback_builtins.h
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/arch/power/power_features.c
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/arch/power/power_features.h
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/arch/power/power_functions.h
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/arch/power/slide_hash_power8.c
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/arch/power/slide_hash_vmx.c
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/arch/power/slide_ppc_tpl.h
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/arch/riscv/adler32_rvv.c
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/arch/riscv/chunkset_rvv.c
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/arch/riscv/compare256_rvv.c
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/arch/riscv/riscv_features.c
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/arch/riscv/riscv_features.h
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/arch/riscv/riscv_functions.h
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/arch/riscv/slide_hash_rvv.c
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/arch/s390/crc32-vx.c
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/arch/s390/dfltcc_common.h
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/arch/s390/dfltcc_deflate.c
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/arch/s390/dfltcc_deflate.h
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/arch/s390/dfltcc_detail.h
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/arch/s390/dfltcc_inflate.c
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/arch/s390/dfltcc_inflate.h
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/arch/s390/s390_features.c
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/arch/s390/s390_features.h
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/arch/s390/s390_functions.h
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/cmake/detect-arch.c
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/test/add-subdirectory-project/main.c
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/test/benchmarks/benchmark_adler32.cc
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/test/benchmarks/benchmark_adler32_copy.cc
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/test/benchmarks/benchmark_compare256.cc
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/test/benchmarks/benchmark_compare256_rle.cc
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/test/benchmarks/benchmark_compress.cc
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/test/benchmarks/benchmark_crc32.cc
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/test/benchmarks/benchmark_main.cc
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/test/benchmarks/benchmark_png_decode.cc
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/test/benchmarks/benchmark_png_encode.cc
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/test/benchmarks/benchmark_png_shared.h
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/test/benchmarks/benchmark_slidehash.cc
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/test/fuzz/fuzzer_checksum.c
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/test/fuzz/fuzzer_compress.c
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/test/fuzz/fuzzer_example_dict.c
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/test/fuzz/fuzzer_example_flush.c
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/test/fuzz/fuzzer_example_large.c
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/test/fuzz/fuzzer_example_small.c
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/test/fuzz/fuzzer_minigzip.c
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/test/fuzz/standalone_fuzz_target_runner.c
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/test/example.c
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/test/gh1235.c
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/test/infcover.c
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/test/minideflate.c
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/test/minigzip.c
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/test/switchlevels.c
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/test/test_adler32.cc
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/test/test_compare256.cc
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/test/test_compare256_rle.cc
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/test/test_compress.cc
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/test/test_compress_bound.cc
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/test/test_compress_dual.cc
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/test/test_cpu_features.h
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/test/test_crc32.cc
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/test/test_cve-2003-0107.cc
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/test/test_deflate_bound.cc
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/test/test_deflate_concurrency.cc
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/test/test_deflate_copy.cc
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/test/test_deflate_dict.cc
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/test/test_deflate_hash_head_0.cc
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/test/test_deflate_header.cc
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/test/test_deflate_params.cc
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/test/test_deflate_pending.cc
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/test/test_deflate_prime.cc
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/test/test_deflate_quick_bi_valid.cc
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/test/test_deflate_quick_block_open.cc
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/test/test_deflate_tune.cc
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/test/test_dict.cc
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/test/test_gzio.cc
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/test/test_inflate_adler32.cc
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/test/test_inflate_copy.cc
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/test/test_inflate_sync.cc
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/test/test_large_buffers.cc
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/test/test_main.cc
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/test/test_raw.cc
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/test/test_shared.h
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/test/test_shared_ng.h
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/test/test_small_buffers.cc
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/test/test_small_window.cc
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/test/test_version.cc
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/tools/makecrct.c
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/tools/makefixed.c
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/tools/maketrees.c
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/adler32.c
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/adler32_p.h
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/arch_functions.h
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/chunkset_tpl.h
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/compare256_rle.h
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/compress.c
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/cpu_features.c
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/cpu_features.h
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/crc32.c
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/crc32.h
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/crc32_braid_comb.c
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/crc32_braid_comb_p.h
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/crc32_braid_p.h
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/crc32_braid_tbl.h
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/deflate.c
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/deflate.h
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/deflate_fast.c
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/deflate_huff.c
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/deflate_medium.c
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/deflate_p.h
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/deflate_quick.c
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/deflate_rle.c
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/deflate_slow.c
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/deflate_stored.c
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/fallback_builtins.h
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/functable.c
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/functable.h
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/gzguts.h
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/gzlib.c
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/gzwrite.c
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/infback.c
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/inffast_tpl.h
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/inffixed_tbl.h
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/inflate.c
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/inflate.h
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/inflate_p.h
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/inftrees.c
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/inftrees.h
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/insert_string.c
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/insert_string_roll.c
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/insert_string_tpl.h
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/match_tpl.h
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/trees.c
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/trees.h
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/trees_emit.h
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/trees_tbl.h
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/uncompr.c
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/zbuild.h
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/zendian.h
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/zmemory.h
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/zutil.c
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/zutil.h
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/src/2.2.3-b95bb615e6.clean/zutil_p.h
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/x64-windows-dbg/gzread.c
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/x64-windows-dbg/zconf-ng.h
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/x64-windows-dbg/zlib-ng.h
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/x64-windows-dbg/zlib_name_mangling-ng.h
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/x64-windows-rel/gzread.c
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/x64-windows-rel/zconf-ng.h
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/x64-windows-rel/zlib-ng.h
+        osu!sync.core/vcpkg_installed/vcpkg/blds/zlib-ng/x64-windows-rel/zlib_name_mangling-ng.h
+        osu!sync.core/vcpkg_installed/vcpkg/pkgs/curl_x64-windows/include/curl/curl.h
+        osu!sync.core/vcpkg_installed/vcpkg/pkgs/curl_x64-windows/include/curl/curlver.h
+        osu!sync.core/vcpkg_installed/vcpkg/pkgs/curl_x64-windows/include/curl/easy.h
+        osu!sync.core/vcpkg_installed/vcpkg/pkgs/curl_x64-windows/include/curl/header.h
+        osu!sync.core/vcpkg_installed/vcpkg/pkgs/curl_x64-windows/include/curl/mprintf.h
+        osu!sync.core/vcpkg_installed/vcpkg/pkgs/curl_x64-windows/include/curl/multi.h
+        osu!sync.core/vcpkg_installed/vcpkg/pkgs/curl_x64-windows/include/curl/options.h
+        osu!sync.core/vcpkg_installed/vcpkg/pkgs/curl_x64-windows/include/curl/stdcheaders.h
+        osu!sync.core/vcpkg_installed/vcpkg/pkgs/curl_x64-windows/include/curl/system.h
+        osu!sync.core/vcpkg_installed/vcpkg/pkgs/curl_x64-windows/include/curl/typecheck-gcc.h
+        osu!sync.core/vcpkg_installed/vcpkg/pkgs/curl_x64-windows/include/curl/urlapi.h
+        osu!sync.core/vcpkg_installed/vcpkg/pkgs/curl_x64-windows/include/curl/websockets.h
+        osu!sync.core/vcpkg_installed/vcpkg/pkgs/zlib-ng_x64-windows/include/zconf-ng.h
+        osu!sync.core/vcpkg_installed/vcpkg/pkgs/zlib-ng_x64-windows/include/zlib-ng.h
+        osu!sync.core/vcpkg_installed/vcpkg/pkgs/zlib-ng_x64-windows/include/zlib_name_mangling-ng.h
+        osu!sync.core/vcpkg_installed/vcpkg/pkgs/zlib_x64-windows/include/zconf.h
+        osu!sync.core/vcpkg_installed/vcpkg/pkgs/zlib_x64-windows/include/zlib.h
+        osu!sync.core/vcpkg_installed/x64-windows/include/curl/curl.h
+        osu!sync.core/vcpkg_installed/x64-windows/include/curl/curlver.h
+        osu!sync.core/vcpkg_installed/x64-windows/include/curl/easy.h
+        osu!sync.core/vcpkg_installed/x64-windows/include/curl/header.h
+        osu!sync.core/vcpkg_installed/x64-windows/include/curl/mprintf.h
+        osu!sync.core/vcpkg_installed/x64-windows/include/curl/multi.h
+        osu!sync.core/vcpkg_installed/x64-windows/include/curl/options.h
+        osu!sync.core/vcpkg_installed/x64-windows/include/curl/stdcheaders.h
+        osu!sync.core/vcpkg_installed/x64-windows/include/curl/system.h
+        osu!sync.core/vcpkg_installed/x64-windows/include/curl/typecheck-gcc.h
+        osu!sync.core/vcpkg_installed/x64-windows/include/curl/urlapi.h
+        osu!sync.core/vcpkg_installed/x64-windows/include/curl/websockets.h
+        osu!sync.core/vcpkg_installed/x64-windows/include/zconf-ng.h
+        osu!sync.core/vcpkg_installed/x64-windows/include/zconf.h
+        osu!sync.core/vcpkg_installed/x64-windows/include/zlib-ng.h
+        osu!sync.core/vcpkg_installed/x64-windows/include/zlib.h
+        osu!sync.core/vcpkg_installed/x64-windows/include/zlib_name_mangling-ng.h
+        osu!sync.core/vcpkg_installed/x64-windows-static/x64-windows-static/include/curl/curl.h
+        osu!sync.core/vcpkg_installed/x64-windows-static/x64-windows-static/include/curl/curlver.h
+        osu!sync.core/vcpkg_installed/x64-windows-static/x64-windows-static/include/curl/easy.h
+        osu!sync.core/vcpkg_installed/x64-windows-static/x64-windows-static/include/curl/header.h
+        osu!sync.core/vcpkg_installed/x64-windows-static/x64-windows-static/include/curl/mprintf.h
+        osu!sync.core/vcpkg_installed/x64-windows-static/x64-windows-static/include/curl/multi.h
+        osu!sync.core/vcpkg_installed/x64-windows-static/x64-windows-static/include/curl/options.h
+        osu!sync.core/vcpkg_installed/x64-windows-static/x64-windows-static/include/curl/stdcheaders.h
+        osu!sync.core/vcpkg_installed/x64-windows-static/x64-windows-static/include/curl/system.h
+        osu!sync.core/vcpkg_installed/x64-windows-static/x64-windows-static/include/curl/typecheck-gcc.h
+        osu!sync.core/vcpkg_installed/x64-windows-static/x64-windows-static/include/curl/urlapi.h
+        osu!sync.core/vcpkg_installed/x64-windows-static/x64-windows-static/include/curl/websockets.h
+        osu!sync.core/vcpkg_installed/x64-windows-static/x64-windows-static/include/zconf-ng.h
+        osu!sync.core/vcpkg_installed/x64-windows-static/x64-windows-static/include/zconf.h
+        osu!sync.core/vcpkg_installed/x64-windows-static/x64-windows-static/include/zlib-ng.h
+        osu!sync.core/vcpkg_installed/x64-windows-static/x64-windows-static/include/zlib.h
+        osu!sync.core/vcpkg_installed/x64-windows-static/x64-windows-static/include/zlib_name_mangling-ng.h
+        osu!sync.core/vcpkg_installed/x64-windows-static-md/x64-windows-static-md/include/curl/curl.h
+        osu!sync.core/vcpkg_installed/x64-windows-static-md/x64-windows-static-md/include/curl/curlver.h
+        osu!sync.core/vcpkg_installed/x64-windows-static-md/x64-windows-static-md/include/curl/easy.h
+        osu!sync.core/vcpkg_installed/x64-windows-static-md/x64-windows-static-md/include/curl/header.h
+        osu!sync.core/vcpkg_installed/x64-windows-static-md/x64-windows-static-md/include/curl/mprintf.h
+        osu!sync.core/vcpkg_installed/x64-windows-static-md/x64-windows-static-md/include/curl/multi.h
+        osu!sync.core/vcpkg_installed/x64-windows-static-md/x64-windows-static-md/include/curl/options.h
+        osu!sync.core/vcpkg_installed/x64-windows-static-md/x64-windows-static-md/include/curl/stdcheaders.h
+        osu!sync.core/vcpkg_installed/x64-windows-static-md/x64-windows-static-md/include/curl/system.h
+        osu!sync.core/vcpkg_installed/x64-windows-static-md/x64-windows-static-md/include/curl/typecheck-gcc.h
+        osu!sync.core/vcpkg_installed/x64-windows-static-md/x64-windows-static-md/include/curl/urlapi.h
+        osu!sync.core/vcpkg_installed/x64-windows-static-md/x64-windows-static-md/include/curl/websockets.h
+        osu!sync.core/vcpkg_installed/x64-windows-static-md/x64-windows-static-md/include/zconf-ng.h
+        osu!sync.core/vcpkg_installed/x64-windows-static-md/x64-windows-static-md/include/zconf.h
+        osu!sync.core/vcpkg_installed/x64-windows-static-md/x64-windows-static-md/include/zlib-ng.h
+        osu!sync.core/vcpkg_installed/x64-windows-static-md/x64-windows-static-md/include/zlib.h
+        osu!sync.core/vcpkg_installed/x64-windows-static-md/x64-windows-static-md/include/zlib_name_mangling-ng.h
+        osu!sync.core/archiveManager.cpp
+        osu!sync.core/archiveManager.hpp
+        osu!sync.core/beatmapSetAttribute.hpp
+        osu!sync.core/errcodes.hpp
+        osu!sync.core/main.cpp
+        osu!sync.core/osuInstance.cpp
+        osu!sync.core/osuInstance.hpp
+        osu!sync.core/systemUtils.hpp
+        osu.sync.CUI/nlohmann/json.hpp
+        osu.sync.CUI/nlohmann/json_fwd.hpp
+        osu.sync.CUI/ConfigManager.cpp
+        osu.sync.CUI/ConfigManager.h
+        osu.sync.CUI/ErrorCodes.cpp
+        osu.sync.CUI/ErrorCodes.h
+        osu.sync.CUI/main.cpp
+        osu.sync.CUI/ModuleManager.cpp
+        osu.sync.CUI/ModuleManager.h)
