@@ -1,5 +1,4 @@
-#include <iostream>
-#include <fstream>
+#pragma once
 #include <filesystem>
 #include <set>
 #include <vector>
@@ -22,23 +21,23 @@ private:
     std::set<beatmapSetAttribte> beatmapSets;
 
 public:
-    archiveManager(fs::path archivePath)
+    explicit archiveManager(const fs::path &archivePath)
     {
         archiveFile = archivePath;
     }
-    std::vector<beatmapSetAttribte> getAllBeatmaps();
+    [[nodiscard]] std::vector<beatmapSetAttribte> getAllBeatmaps() const;
 
-    bool queryBeatmapSet(std::string bsid);
+    auto queryBeatmapSet(const std::string &beatmapsetId) const -> bool;
 
     void addBeatmapSet(std::string bsid);//TODO:从osu!api取得谱面信息
-    void addBeatmapSet(beatmapSetAttribte beatmapSet);
-    void addBeatmapSet(std::set<beatmapSetAttribte> beatmapSets);
-    void addBeatmapSet(std::vector<beatmapSetAttribte> beatmapSets);
-    void replaceBeatmapSets(std::vector<beatmapSetAttribte> beatmapSets);
+    void addBeatmapSet(const beatmapSetAttribte &beatmapSet);
+    void addBeatmapSet(const std::set<beatmapSetAttribte> &beatmapSets);
+    void addBeatmapSet(const std::vector<beatmapSetAttribte> &bSet);
+    void replaceBeatmapSets(const std::vector<beatmapSetAttribte> &beatmapSets);
     void replaceBeatmapSets(std::set<beatmapSetAttribte> beatmapSets);
 
-    std::set<beatmapSetAttribte> mergeBeatmapSets(std::vector<beatmapSetAttribte> bsidlist,mergeMode mode); // 返回合并后的谱面集
+    static std::set<beatmapSetAttribte> mergeBeatmapSets(std::vector<beatmapSetAttribte> bsidlist,mergeMode mode); // 返回合并后的谱面集
 
-    errorCode writeCurSetToFile(fs::path archivePath);
-    errorCode writeCurSetToFile();
+    [[nodiscard]] errorCode writeCurSetToFile(const fs::path& archivePath) const;
+    [[nodiscard]] errorCode writeCurSetToFile() const;
 };

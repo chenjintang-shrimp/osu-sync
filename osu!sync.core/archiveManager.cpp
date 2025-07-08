@@ -1,32 +1,34 @@
 #include"archiveManager.hpp"
+#include <utility>
 #include "3rdpartyInclude/nlohmann/json.hpp"
 using namespace std;
 
-vector<beatmapSetAttribte> archiveManager::getAllBeatmaps()
-{
+vector<beatmapSetAttribte> archiveManager::getAllBeatmaps() const {
     vector<beatmapSetAttribte> ret;
-    for(auto kv:this->beatmapSets)
+    for(const auto& kv:this->beatmapSets)
         ret.emplace_back(kv);
     return ret;
 }
 
-bool archiveManager::queryBeatmapSet(string bsid)
-{
-    for(auto kv:this->beatmapSets)
-        if(kv.beatmapSetId==bsid)
+bool archiveManager::queryBeatmapSet(const string &beatmapsetId) const {
+    for(const auto& kv:this->beatmapSets)
+        if(kv.beatmapSetId==beatmapsetId)
             return true;
     return false;
 }
 
-void archiveManager::addBeatmapSet(beatmapSetAttribte bs)
+void archiveManager::addBeatmapSet(std::string bsid) {
+}
+
+void archiveManager::addBeatmapSet(const beatmapSetAttribte &beatmapSet)
 {
-    this->beatmapSets.insert(bs);
+    this->beatmapSets.insert(beatmapSet);
     return;
 }
 
-void archiveManager::addBeatmapSet(set<beatmapSetAttribte> bSet)
+void archiveManager::addBeatmapSet(const set<beatmapSetAttribte> &beatmapSets)
 {
-    for(auto kv:bSet)
+    for(const auto& kv:beatmapSets)
     {
         if(this->beatmapSets.contains(kv))
             continue;
@@ -35,9 +37,9 @@ void archiveManager::addBeatmapSet(set<beatmapSetAttribte> bSet)
     return;
 }
 
-void archiveManager::addBeatmapSet(vector<beatmapSetAttribte> bSet)
+void archiveManager::addBeatmapSet(const vector<beatmapSetAttribte> &bSet)
 {
-    for(auto kv:bSet)
+    for(const auto& kv:bSet)
     {
         if(this->beatmapSets.contains(kv))
             continue;
@@ -46,38 +48,40 @@ void archiveManager::addBeatmapSet(vector<beatmapSetAttribte> bSet)
     return;
 }
 
-void archiveManager::replaceBeatmapSets(vector<beatmapSetAttribte> bSets)
+void archiveManager::replaceBeatmapSets(const vector<beatmapSetAttribte> &bSets)
 {
     this->beatmapSets.clear();
-    for(auto kv:bSets)
+    for(const auto& kv:bSets)
         this->beatmapSets.insert(kv);
     return;
 }
 
-void archiveManager::replaceBeatmapSets(set<beatmapSetAttribte> bSets)
+void archiveManager::replaceBeatmapSets(set<beatmapSetAttribte> beatmapSets)
 {
-    this->beatmapSets=bSets;
+    this->beatmapSets=std::move(beatmapSets);
     return;
+}
+
+std::set<beatmapSetAttribte> archiveManager::mergeBeatmapSets(std::vector<beatmapSetAttribte> bsidlist, mergeMode mode) {
 }
 
 inline set<beatmapSetAttribte> convert(vector<beatmapSetAttribte> a)
 {
     set<beatmapSetAttribte> sb;
-    for(auto kv:a)
+    for(const auto& kv:a)
         sb.insert(kv);
     return sb;
 }
 
-set<beatmapSetAttribte> archiveManager::mergeBeatmapSets(vector<beatmapSetAttribte> bsidlist,mergeMode mode)
-{
-    if(mode==given)
-        return convert(bsidlist);
-    else if(mode==current)
-        return this->beatmapSets;
-}
+// set<beatmapSetAttribte> archiveManager::mergeBeatmapSets(vector<beatmapSetAttribte> bsidlist,mergeMode mode)
+// {
+//     if(mode==given)
+//         return convert(bsidlist);
+//     else if(mode==current)
+//         return this->beatmapSets;
+// }
 
-errorCode archiveManager::writeCurSetToFile(fs::path archivePath)
-{
+errorCode archiveManager::writeCurSetToFile(const fs::path& archivePath) const {
     try {
         std::ofstream outFile(archivePath, std::ios::out);
         if (!outFile.is_open()) {
@@ -99,7 +103,7 @@ errorCode archiveManager::writeCurSetToFile(fs::path archivePath)
     }
 }
 
-errorCode archiveManager::writeCurSetToFile()
+errorCode archiveManager::writeCurSetToFile() const
 {
     return writeCurSetToFile(this->archiveFile);
 }
