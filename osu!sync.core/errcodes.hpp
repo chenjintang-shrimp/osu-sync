@@ -5,5 +5,6 @@ enum errorCode
 {
     ok,
     commandFail,
-    readFileFail
+    readFileFail,
+    networkError
 };

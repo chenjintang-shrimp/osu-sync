@@ -1,5 +1,6 @@
 #include"archiveManager.hpp"
 #include <utility>
+#include <fstream>
 #include "3rdpartyInclude/nlohmann/json.hpp"
 using namespace std;
 
@@ -17,7 +18,9 @@ bool archiveManager::queryBeatmapSet(const string &beatmapsetId) const {
     return false;
 }
 
-void archiveManager::addBeatmapSet(std::string bsid) {
+void archiveManager::addBeatmapSet(std::string bsid)
+{
+
 }
 
 void archiveManager::addBeatmapSet(const beatmapSetAttribte &beatmapSet)
@@ -62,10 +65,12 @@ void archiveManager::replaceBeatmapSets(set<beatmapSetAttribte> beatmapSets)
     return;
 }
 
-std::set<beatmapSetAttribte> archiveManager::mergeBeatmapSets(std::vector<beatmapSetAttribte> bsidlist, mergeMode mode) {
+std::set<beatmapSetAttribte> archiveManager::mergeBeatmapSets(std::vector<beatmapSetAttribte> bsidlist, mergeMode mode)
+{
+
 }
 
-inline set<beatmapSetAttribte> convert(vector<beatmapSetAttribte> a)
+inline set<beatmapSetAttribte> convert(const vector<beatmapSetAttribte> &a)
 {
     set<beatmapSetAttribte> sb;
     for(const auto& kv:a)

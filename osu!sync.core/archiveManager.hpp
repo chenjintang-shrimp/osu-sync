@@ -27,7 +27,7 @@ public:
     }
     [[nodiscard]] std::vector<beatmapSetAttribte> getAllBeatmaps() const;
 
-    auto queryBeatmapSet(const std::string &beatmapsetId) const -> bool;
+    [[nodiscard]] bool queryBeatmapSet(const std::string &beatmapsetId) const;
 
     void addBeatmapSet(std::string bsid);//TODO:从osu!api取得谱面信息
     void addBeatmapSet(const beatmapSetAttribte &beatmapSet);
@@ -36,7 +36,7 @@ public:
     void replaceBeatmapSets(const std::vector<beatmapSetAttribte> &beatmapSets);
     void replaceBeatmapSets(std::set<beatmapSetAttribte> beatmapSets);
 
-    static std::set<beatmapSetAttribte> mergeBeatmapSets(std::vector<beatmapSetAttribte> bsidlist,mergeMode mode); // 返回合并后的谱面集
+    static std::set<beatmapSetAttribte> mergeBeatmapSets(std::vector<beatmapSetAttribte> bsidlist,mergeMode mode); // TODO:返回合并后的谱面集
 
     [[nodiscard]] errorCode writeCurSetToFile(const fs::path& archivePath) const;
     [[nodiscard]] errorCode writeCurSetToFile() const;
