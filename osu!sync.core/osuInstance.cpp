@@ -1,13 +1,11 @@
 #include "osuInstance.hpp"
 #include "systemUtils.hpp"
 #include <cstdlib>
-#include <cstdio>
-#include <filesystem>
 #include <algorithm>
 namespace fs = std::filesystem;
 using namespace std;
 
-inline bool isNumber(string str)
+inline bool isNumber(const string &str)
 {
     bool flag = true;
     for (auto kv : str)
@@ -19,8 +17,7 @@ inline bool isNumber(string str)
     return flag;
 }
 
-pair<errorCode, vector<string>> osuInstance::getAllBeatmapSets(readMethod method)
-{
+pair<errorCode, vector<string>> osuInstance::getAllBeatmapSets(const readMethod method) const {
     vector<string> bslists;
     switch (method)
     {
@@ -46,7 +43,7 @@ pair<errorCode, vector<string>> osuInstance::getAllBeatmapSets(readMethod method
             break;
         }
         else
-            return {commandFail, vector<string>()};
+            return (pair<errorCode, vector<string>>){commandFail, vector<string>()};
     }
 
     case folder:
@@ -58,7 +55,7 @@ pair<errorCode, vector<string>> osuInstance::getAllBeatmapSets(readMethod method
             {
                 string bsFolderName = entry.path().filename().string();
                 // 找到第一个空格
-                string bsid = bsFolderName.substr(0, bsFolderName.find(" "));
+                string bsid = bsFolderName.substr(0, bsFolderName.find(' '));
                 if (isNumber(bsid))
                     bslists.push_back(bsid);
             }
@@ -69,21 +66,20 @@ pair<errorCode, vector<string>> osuInstance::getAllBeatmapSets(readMethod method
     default:
         break;
     }
-    sort(bslists.begin(), bslists.end());
+    ranges::sort(bslists);
     return {ok, bslists};
 }
 
-pair<errorCode, beatmapSetAttribte> osuInstance::getBeatmapSetDetails(string bsid)
-{
-    string dbPath = (this->osuFolderPath / "osu!.db").generic_string();
-    string command = "stbDbReaderCore --details " + bsid + " " + dbPath;
-    pair<errorCode, string> res = executeCommand(command);
-    if (res.first == ok)
+pair<errorCode, beatmapSetAttribte> osuInstance::getBeatmapSetDetails(const string &bsid) const {
+    const string dbPath = (this->osuFolderPath / "osu!.db").generic_string();
+    const string command = "stbDbReaderCore --details " + bsid + " " + dbPath;
+    auto [fst, snd] = executeCommand(command);
+    if (fst == ok)
     {
-        string result=res.second;
+        const string result=snd;
         vector<string> tmp;
         string tmps;
-        for (auto kv : result)
+        for (const auto kv : result)
         {
             if (kv == '\n')
             {
@@ -96,5 +92,5 @@ pair<errorCode, beatmapSetAttribte> osuInstance::getBeatmapSetDetails(string bsi
         return {ok,beatmapSetAttribte{bsid,tmp[0],tmp[1],tmp[2]}};
     }
     else
-        return {res.first,beatmapSetAttribte()};
+        return {fst,beatmapSetAttribte()};
 }
