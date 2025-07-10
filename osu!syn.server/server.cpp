@@ -1,6 +1,7 @@
 #include "server.hpp"
 #include "logger.hpp"
 #include <fstream>
+#include <utility>
 #include "3rdparty/nlohmann/json.hpp"
 
 using json = nlohmann::json;
@@ -12,6 +13,8 @@ int Config::port_ = 8080;
 size_t Config::maxFileSize_ = 1024 * 1024 * 100; // 默认100MB
 fs::path Config::uploadDir_ = "uploads";
 fs::path Config::logDir_ = "logs";
+std::string Config::oauthClientID_;
+std::string Config::oauthClientSecret_;
 
 void Config::load(const std::string& configFile) {
     configPath_ = configFile;
@@ -28,6 +31,13 @@ void Config::load(const std::string& configFile) {
         if (config.contains("maxFileSize")) maxFileSize_ = config["maxFileSize"];
         if (config.contains("uploadDir")) uploadDir_ = config["uploadDir"].get<std::string>();
         if (config.contains("logDir")) logDir_ = config["logDir"].get<std::string>();
+
+        if (config.contains("oauthClientID")) oauthClientID_=config["oauthClientID"].get<std::string>();
+        else throw std::runtime_error("配置文件中不存在有效的Oauth客户端ID");
+
+        if (config.contains("oauthClientSecret")) oauthClientSecret_=config[oauthClientSecret_].get<std::string>();
+        else throw std::runtime_error("配置文件中不存在有效的Oauth客户端密钥");
+
         
     } catch (const std::exception& e) {
         std::cerr << "加载配置文件失败: " << e.what() << std::endl;
@@ -61,6 +71,7 @@ bool FileValidator::isSafePath(const fs::path& path, std::string& errorMessage) 
 
 bool FileValidator::isAllowedFileType(const std::string& filename, std::string& errorMessage) {
     // 允许所有文件类型
+    //TODO:未来确定同步内容后加入文件类型验证
     return true;
 }
 
@@ -74,7 +85,7 @@ bool FileValidator::isValidFileSize(size_t fileSize, std::string& errorMessage) 
     return true;
 }
 
-bool FileValidator::validateChecksum(const std::string& content, 
+bool FileValidator::validateChecksum(const std::string& content,
                                   const std::string& expectedHash,
                                   std::string& errorMessage) {
     if (expectedHash.empty()) {
@@ -85,8 +96,8 @@ bool FileValidator::validateChecksum(const std::string& content,
     return true;
 }
 
-FileUploadHandler::FileUploadHandler(const fs::path& baseUploadDir, std::shared_ptr<Logger> logger)
-    : baseUploadDir_(baseUploadDir)
+FileUploadHandler::FileUploadHandler(fs::path  baseUploadDir, const std::shared_ptr<Logger> &logger)
+    : baseUploadDir_(std::move(baseUploadDir))
     , logger_(logger) {}
 
 void FileUploadHandler::handleUpload(const httplib::Request& req, httplib::Response& res) {

@@ -16,6 +16,7 @@ public:
 
 class Config {
 public:
+
     static void load(const std::string& configFile);
     static bool reload();  // 重新加载配置
     
@@ -32,18 +33,20 @@ private:
     static size_t maxFileSize_;
     static fs::path uploadDir_;
     static fs::path logDir_;
+    static std::string oauthClientID_;
+    static std::string oauthClientSecret_;
 };
 
 class FileUploadHandler {
 public:
-    explicit FileUploadHandler(const fs::path& baseUploadDir, std::shared_ptr<Logger> logger);
+    explicit FileUploadHandler(fs::path  baseUploadDir, const std::shared_ptr<Logger> &logger);
     
     void handleUpload(const httplib::Request& req, httplib::Response& res);
     
 private:
     fs::path baseUploadDir_;
     std::shared_ptr<Logger> logger_;
-    
+
     bool validateRequest(const httplib::Request& req, httplib::Response& res);
     bool prepareUploadDirectory(const fs::path& path, httplib::Response& res);
     bool saveUploadedFile(const httplib::MultipartFormData& file,
