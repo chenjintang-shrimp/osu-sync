@@ -1,0 +1,3 @@
+C:/Users/jimmy/source/repos/osu!sync.cpp/osu!syn.server/cmake-build-debug/CMakeFiles/osu_syn_server.dir
+C:/Users/jimmy/source/repos/osu!sync.cpp/osu!syn.server/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/jimmy/source/repos/osu!sync.cpp/osu!syn.server/cmake-build-debug/CMakeFiles/rebuild_cache.dir

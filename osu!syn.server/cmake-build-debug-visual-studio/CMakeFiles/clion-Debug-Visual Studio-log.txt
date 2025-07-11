@@ -1,0 +1,1 @@
+在 C:\Users\jimmy\source\repos\osu!sync.cpp\osu!syn.server 中找不到 CMakeLists.txt 选择 CMakeLists.txt
