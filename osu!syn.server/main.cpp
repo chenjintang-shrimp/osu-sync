@@ -126,7 +126,22 @@ private:
                 response_json["access_token"] = token;
                 response_json["expire_in"] = expired_time;
 
-                res.set_content(response_json.dump(), "application/json");
+                std::string responseHTML;
+                std::ifstream htmlFile("./tokenCopy.html",std::ios::in);
+                if (htmlFile.is_open())
+                {
+                    std::string line;
+                    while (std::getline(htmlFile, line))
+                    {
+                        responseHTML += line;
+                    }
+                    htmlFile.close();
+                }
+                // size_t pos = responseHTML.find("{{JSON_CONTENT}}");
+                // if (pos!=std::string::npos)
+                //     responseHTML.replace(pos,16,response_json.dump(4));
+                res.set_content(responseHTML, "text/html");
+
                 return;
             }
             else

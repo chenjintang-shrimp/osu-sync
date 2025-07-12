@@ -23,9 +23,7 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a1b87254-2fc9-4970-9860-ba91896b928a" name="更改" comment="fix(server): 将一处https修改为http&#10;&#10;- 修改了main.cpp中的API请求URL，将https改为http">
-      <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
-    </list>
+    <list default="true" id="a1b87254-2fc9-4970-9860-ba91896b928a" name="更改" comment="feat(server): 添加 JSON 内容到 HTML 页面&#10;&#10;- 新增 tokenCopy.html 文件，用于显示 JSON内容&#10;- 修改 main.cpp，将 JSON 数据插入 HTML 模板中" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -109,7 +107,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1752327088475</updated>
-      <workItem from="1752327089563" duration="728000" />
+      <workItem from="1752327089563" duration="2431000" />
     </task>
     <task id="LOCAL-00001" summary="chore(server): 修改项目环境配置">
       <option name="closed" value="true" />
@@ -135,7 +133,23 @@
       <option name="project" value="LOCAL" />
       <updated>1752327692095</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="fix(server): add redirect_uri to OAuth token request">
+      <option name="closed" value="true" />
+      <created>1752327903128</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1752327903128</updated>
+    </task>
+    <task id="LOCAL-00005" summary="feat(server): 添加 JSON 内容到 HTML 页面&#10;&#10;- 新增 tokenCopy.html 文件，用于显示 JSON内容&#10;- 修改 main.cpp，将 JSON 数据插入 HTML 模板中">
+      <option name="closed" value="true" />
+      <created>1752329447042</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1752329447042</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -145,6 +159,8 @@
     <MESSAGE value="chore(server): 修改项目环境配置" />
     <MESSAGE value="style(server): 格式化代码" />
     <MESSAGE value="fix(server): 将一处https修改为http&#10;&#10;- 修改了main.cpp中的API请求URL，将https改为http" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix(server): 将一处https修改为http&#10;&#10;- 修改了main.cpp中的API请求URL，将https改为http" />
+    <MESSAGE value="fix(server): add redirect_uri to OAuth token request" />
+    <MESSAGE value="feat(server): 添加 JSON 内容到 HTML 页面&#10;&#10;- 新增 tokenCopy.html 文件，用于显示 JSON内容&#10;- 修改 main.cpp，将 JSON 数据插入 HTML 模板中" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat(server): 添加 JSON 内容到 HTML 页面&#10;&#10;- 新增 tokenCopy.html 文件，用于显示 JSON内容&#10;- 修改 main.cpp，将 JSON 数据插入 HTML 模板中" />
   </component>
 </project>
