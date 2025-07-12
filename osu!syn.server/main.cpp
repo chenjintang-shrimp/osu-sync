@@ -68,10 +68,10 @@ private:
         //oauth2请求路由
         server_.Get("/start-auth", [&](const httplib::Request &, httplib::Response &res) {
             logger_->info("收到oauth验证请求");
-            const std::string client_id = "42268";
-            const std::string redirect_uri = "http://120.26.51.57:8080/callback";
+            const std::string client_id = Config::getOauthClientID();
+            const std::string redirect_uri = Config::getOauthRedirectUri();
             const std::string scope = "public";
-            std::string auth_url = "http://osu.ppy.sh/oauth/authorize?client_id=" + client_id +
+            const std::string auth_url = "http://osu.ppy.sh/oauth/authorize?client_id=" + client_id +
                                    "&redirect_uri=" + redirect_uri +
                                    "&response_type=code&scope=" + scope;
             res.set_content(auth_url, "text/plain");
@@ -94,8 +94,8 @@ private:
             {{"Accept","application/json"},
             {"Content-Type","x-www-form-urlencoded"}});
             httplib::Params params = {
-                {"client_id", "42268"},
-                {"client_secret", "uFvl0TKclPGYGlS9K3d9RMZkadDLDEAhHX333TKI"},
+                {"client_id", Config::getOauthClientID()},
+                {"client_secret", Config::getOauthClientSecret()},
                 {"code", code},
                 {"grant_type", "authorization_code"},
                 // {"scope","public"}

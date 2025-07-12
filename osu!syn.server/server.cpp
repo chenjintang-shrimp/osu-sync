@@ -15,6 +15,7 @@ fs::path Config::uploadDir_ = "uploads";
 fs::path Config::logDir_ = "logs";
 std::string Config::oauthClientID_;
 std::string Config::oauthClientSecret_;
+std::string Config::oauthRedirectUri_;
 
 void Config::load(const std::string& configFile) {
     configPath_ = configFile;
@@ -35,8 +36,11 @@ void Config::load(const std::string& configFile) {
         if (config.contains("oauthClientID")) oauthClientID_=config["oauthClientID"].get<std::string>();
         else throw std::runtime_error("配置文件中不存在有效的Oauth客户端ID");
 
-        if (config.contains("oauthClientSecret")) oauthClientSecret_=config[oauthClientSecret_].get<std::string>();
+        if (config.contains("oauthClientSecret")) oauthClientSecret_=config["oauthClientSecret"].get<std::string>();
         else throw std::runtime_error("配置文件中不存在有效的Oauth客户端密钥");
+
+        if (config.contains("oauthRedirectUri")) oauthRedirectUri_=config["oauthRedirectUri"].get<std::string>();
+        else throw std::runtime_error("配置文件中不存在有效的Oauth回调URL");
 
         
     } catch (const std::exception& e) {

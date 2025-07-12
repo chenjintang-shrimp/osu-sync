@@ -23,10 +23,15 @@ public:
     static std::string getHost() { return host_; }
     static int getPort() { return port_; }
     static size_t getMaxFileSize() { return maxFileSize_; }
+    static std::string getOauthClientID() {return oauthClientID_;};
+    static std::string getOauthClientSecret() {return oauthClientSecret_;};
+    static std::string getOauthRedirectUri() {return oauthRedirectUri_};
     static const fs::path& getUploadDir() { return uploadDir_; }
     static const fs::path& getLogDir() { return logDir_; }
+
     
 private:
+    static std::string oauthRedirectUri_;
     static std::string configPath_;
     static std::string host_;
     static int port_;

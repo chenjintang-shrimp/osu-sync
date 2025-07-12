@@ -2,21 +2,18 @@
 // Created by chenjintang on 25-7-9.
 //
 #pragma once
-#include <3rdpartyInclude/nlohmann/json.hpp>
+#include "3rdpartyInclude/nlohmann/json.hpp"
 #include <string>
 #include "beatmapSetAttribute.hpp"
 #include "errcodes.hpp"
 
-class apiRequest //using osu!api v1
+class apiRequest //using osu!api v2(oauth)
 {
 private:
-    std::string apiKey;
+    std::string token;
 public:
-    apiRequest(std::string apiKey) {
-        this->apiKey = apiKey;
-    }
-
-    std::pair<errorCode, beatmapSetAttribte> getBeatmapSetInfo(const std::string &bsid);
+    errorCode getToken();
+    std::pair<errorCode,beatmapSetAttribte> getBeatmapSetDetails(const std::string &bsid) const;
 };
 
 
