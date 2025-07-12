@@ -23,7 +23,10 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a1b87254-2fc9-4970-9860-ba91896b928a" name="更改" comment="fix(server): 将一处https修改为http&#10;&#10;- 修改了main.cpp中的API请求URL，将https改为http">
+    <list default="true" id="a1b87254-2fc9-4970-9860-ba91896b928a" name="更改" comment="fix(server): add redirect_uri to OAuth token request">
+      <change afterPath="$PROJECT_DIR$/tokenCopy.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/osu!syn.server.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/osu!syn.server.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -109,7 +112,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1752327088475</updated>
-      <workItem from="1752327089563" duration="728000" />
+      <workItem from="1752327089563" duration="1824000" />
     </task>
     <task id="LOCAL-00001" summary="chore(server): 修改项目环境配置">
       <option name="closed" value="true" />
@@ -135,7 +138,15 @@
       <option name="project" value="LOCAL" />
       <updated>1752327692095</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="fix(server): add redirect_uri to OAuth token request">
+      <option name="closed" value="true" />
+      <created>1752327903128</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1752327903128</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -145,6 +156,7 @@
     <MESSAGE value="chore(server): 修改项目环境配置" />
     <MESSAGE value="style(server): 格式化代码" />
     <MESSAGE value="fix(server): 将一处https修改为http&#10;&#10;- 修改了main.cpp中的API请求URL，将https改为http" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix(server): 将一处https修改为http&#10;&#10;- 修改了main.cpp中的API请求URL，将https改为http" />
+    <MESSAGE value="fix(server): add redirect_uri to OAuth token request" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix(server): add redirect_uri to OAuth token request" />
   </component>
 </project>
