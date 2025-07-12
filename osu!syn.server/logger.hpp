@@ -4,9 +4,11 @@
 
 namespace fs = std::filesystem;
 
-class Logger {
+class Logger
+{
 public:
-    enum class Level {
+    enum class Level
+    {
         DEBUG,
         INFO,
         WARNING,
@@ -24,7 +26,7 @@ private:
     void log(Level level, const std::string& message);
     fs::path ensureLogDirectory();
     std::string levelToString(Level level);
-    
+
     fs::path logDir_;
     fs::path currentLogFile_;
 };
