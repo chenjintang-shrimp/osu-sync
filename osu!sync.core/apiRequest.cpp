@@ -32,4 +32,6 @@ errorCode apiRequest::getToken()
             return ok;
         }
     }
+    else
+        return networkError;
 }
