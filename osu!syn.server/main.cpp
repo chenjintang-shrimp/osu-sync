@@ -111,6 +111,7 @@ private:
                 {"client_secret", Config::getOauthClientSecret()},
                 {"code", code},
                 {"grant_type", "authorization_code"},
+                {"redirect_uri", Config::getOauthRedirectUri()}
                 // {"scope","public"}
             };
             auto result = client.Post("/oauth/token", params);

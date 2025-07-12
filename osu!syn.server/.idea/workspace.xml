@@ -23,7 +23,9 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a1b87254-2fc9-4970-9860-ba91896b928a" name="更改" comment="style(server): 格式化代码" />
+    <list default="true" id="a1b87254-2fc9-4970-9860-ba91896b928a" name="更改" comment="fix(server): 将一处https修改为http&#10;&#10;- 修改了main.cpp中的API请求URL，将https改为http">
+      <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -107,7 +109,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1752327088475</updated>
-      <workItem from="1752327089563" duration="401000" />
+      <workItem from="1752327089563" duration="728000" />
     </task>
     <task id="LOCAL-00001" summary="chore(server): 修改项目环境配置">
       <option name="closed" value="true" />
@@ -125,7 +127,15 @@
       <option name="project" value="LOCAL" />
       <updated>1752327254093</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="fix(server): 将一处https修改为http&#10;&#10;- 修改了main.cpp中的API请求URL，将https改为http">
+      <option name="closed" value="true" />
+      <created>1752327692095</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1752327692095</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -134,6 +144,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="chore(server): 修改项目环境配置" />
     <MESSAGE value="style(server): 格式化代码" />
-    <option name="LAST_COMMIT_MESSAGE" value="style(server): 格式化代码" />
+    <MESSAGE value="fix(server): 将一处https修改为http&#10;&#10;- 修改了main.cpp中的API请求URL，将https改为http" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix(server): 将一处https修改为http&#10;&#10;- 修改了main.cpp中的API请求URL，将https改为http" />
   </component>
 </project>
