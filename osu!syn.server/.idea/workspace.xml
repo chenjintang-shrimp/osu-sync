@@ -23,7 +23,7 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a1b87254-2fc9-4970-9860-ba91896b928a" name="更改" comment="feat(server): 添加 JSON 内容到 HTML 页面&#10;&#10;- 新增 tokenCopy.html 文件，用于显示 JSON内容&#10;- 修改 main.cpp，将 JSON 数据插入 HTML 模板中" />
+    <list default="true" id="a1b87254-2fc9-4970-9860-ba91896b928a" name="更改" comment="fix(main): 优化 tokenCopy.html 文件的读取方式&#10;&#10;- 移除了 std::ios::in 参数，因为 std::ifstream 默认使用该模式打开文件" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -49,13 +49,13 @@
   }
 }</component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/logger.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/logger.hpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/logger.cpp" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/logger.hpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="mock://C:/Users/jimmy/source/repos/osu!sync.cpp/osu!syn.server/main.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/main.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/main.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="mock://C:/Users/jimmy/source/repos/osu!sync.cpp/osu!syn.server/main.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/server.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/server.hpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/server.cpp" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/server.hpp" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MacroExpansionManager">
     <option name="directoryName" value="eI3wPQap" />
@@ -86,7 +86,7 @@
     "RunOnceActivity.west.config.association.type.startup.service": "true",
     "cf.first.check.clang-format": "false",
     "cidr.known.project.marker": "true",
-    "git-widget-placeholder": "正在合并 master",
+    "git-widget-placeholder": "master",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -142,7 +142,31 @@
       <option name="project" value="LOCAL" />
       <updated>1752327692095</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="feat(server): 添加 JSON 内容到 HTML 页面&#10;&#10;- 新增 tokenCopy.html 文件，用于显示 JSON内容&#10;- 修改 main.cpp，将 JSON 数据插入 HTML 模板中">
+      <option name="closed" value="true" />
+      <created>1752329885112</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1752329885112</updated>
+    </task>
+    <task id="LOCAL-00005" summary="refactor(main): 优化 tokenCopy.html 文件的读取逻辑&#10;&#10;- 替换逐行读取为直接读取到字符串&#10;- 添加文件无法打开时的异常处理- 移除未使用的代码注释">
+      <option name="closed" value="true" />
+      <created>1752330024733</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1752330024733</updated>
+    </task>
+    <task id="LOCAL-00006" summary="fix(main): 优化 tokenCopy.html 文件的读取方式&#10;&#10;- 移除了 std::ios::in 参数，因为 std::ifstream 默认使用该模式打开文件">
+      <option name="closed" value="true" />
+      <created>1752330680009</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1752330680009</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -152,6 +176,8 @@
     <MESSAGE value="chore(server): 修改项目环境配置" />
     <MESSAGE value="style(server): 格式化代码" />
     <MESSAGE value="fix(server): 将一处https修改为http&#10;&#10;- 修改了main.cpp中的API请求URL，将https改为http" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix(server): 将一处https修改为http&#10;&#10;- 修改了main.cpp中的API请求URL，将https改为http" />
+    <MESSAGE value="refactor(main): 优化 tokenCopy.html 文件的读取逻辑&#10;&#10;- 替换逐行读取为直接读取到字符串&#10;- 添加文件无法打开时的异常处理- 移除未使用的代码注释" />
+    <MESSAGE value="fix(main): 优化 tokenCopy.html 文件的读取方式&#10;&#10;- 移除了 std::ios::in 参数，因为 std::ifstream 默认使用该模式打开文件" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix(main): 优化 tokenCopy.html 文件的读取方式&#10;&#10;- 移除了 std::ios::in 参数，因为 std::ifstream 默认使用该模式打开文件" />
   </component>
 </project>
