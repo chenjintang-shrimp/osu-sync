@@ -130,7 +130,7 @@ private:
                 std::ifstream htmlFile("./tokenCopy.html");
                 if (htmlFile.is_open())
                 {
-                    htmlFile>>responseHTML;
+                    std::getline(htmlFile, responseHTML,(char)EOF);
                     htmlFile.close();
                 }
                 else
