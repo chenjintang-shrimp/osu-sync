@@ -135,10 +135,10 @@ private:
                 }
                 else
                     throw std::runtime_error("无法打开tokenCopy.html");
-                // size_t pos = responseHTML.find("{{JSON_CONTENT}}");
-                // if (pos!=std::string::npos)
-                //     responseHTML.replace(pos,16,response_json.dump(4));
-                logger_->info("成功获得token;返回html:\n"+responseHTML);
+                size_t pos = responseHTML.find("{{JSON_CONTENT}}");
+                if (pos!=std::string::npos)
+                    responseHTML.replace(pos,16,response_json.dump(4));
+                // logger_->info("成功获得token;返回html:\n"+responseHTML);
                 res.set_content(responseHTML, "text/html");
 
                 return;

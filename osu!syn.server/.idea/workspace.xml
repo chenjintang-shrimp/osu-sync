@@ -23,7 +23,7 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a1b87254-2fc9-4970-9860-ba91896b928a" name="更改" comment="fix(main): 优化 tokenCopy.html 文件的读取方式&#10;&#10;- 移除了 std::ios::in 参数，因为 std::ifstream 默认使用该模式打开文件" />
+    <list default="true" id="a1b87254-2fc9-4970-9860-ba91896b928a" name="更改" comment="fix(server): 修改读取方式为std::getline" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -166,7 +166,31 @@
       <option name="project" value="LOCAL" />
       <updated>1752330680009</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="fix(main): 加入调试信息">
+      <option name="closed" value="true" />
+      <created>1752330828134</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1752330828134</updated>
+    </task>
+    <task id="LOCAL-00008" summary="fix(server): 加入调试信息">
+      <option name="closed" value="true" />
+      <created>1752330879790</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1752330879790</updated>
+    </task>
+    <task id="LOCAL-00009" summary="fix(server): 修改读取方式为std::getline">
+      <option name="closed" value="true" />
+      <created>1752331064430</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1752331064430</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -178,6 +202,9 @@
     <MESSAGE value="fix(server): 将一处https修改为http&#10;&#10;- 修改了main.cpp中的API请求URL，将https改为http" />
     <MESSAGE value="refactor(main): 优化 tokenCopy.html 文件的读取逻辑&#10;&#10;- 替换逐行读取为直接读取到字符串&#10;- 添加文件无法打开时的异常处理- 移除未使用的代码注释" />
     <MESSAGE value="fix(main): 优化 tokenCopy.html 文件的读取方式&#10;&#10;- 移除了 std::ios::in 参数，因为 std::ifstream 默认使用该模式打开文件" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix(main): 优化 tokenCopy.html 文件的读取方式&#10;&#10;- 移除了 std::ios::in 参数，因为 std::ifstream 默认使用该模式打开文件" />
+    <MESSAGE value="fix(main): 加入调试信息" />
+    <MESSAGE value="fix(server): 加入调试信息" />
+    <MESSAGE value="fix(server): 修改读取方式为std::getline" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix(server): 修改读取方式为std::getline" />
   </component>
 </project>
