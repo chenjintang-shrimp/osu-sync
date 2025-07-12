@@ -100,7 +100,7 @@ private:
             }
             //向ppy请求token
             logger_->info("开始请求token");
-            httplib::Client client("https://osu.ppy.sh");
+            httplib::Client client("http://osu.ppy.sh");
             client.set_default_headers(
                 {
                     {"Accept", "application/json"},
