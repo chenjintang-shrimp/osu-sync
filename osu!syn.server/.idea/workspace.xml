@@ -23,7 +23,9 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a1b87254-2fc9-4970-9860-ba91896b928a" name="更改" comment="fix(server): 修改读取方式为std::getline" />
+    <list default="true" id="a1b87254-2fc9-4970-9860-ba91896b928a" name="更改" comment="feat(server): 将实际token内容加入现实的网页中">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -190,7 +192,31 @@
       <option name="project" value="LOCAL" />
       <updated>1752331064430</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="feat(server): 将实际token内容加入现实的网页中">
+      <option name="closed" value="true" />
+      <created>1752331150498</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1752331150498</updated>
+    </task>
+    <task id="LOCAL-00011" summary="feat(server): 将实际token内容加入现实的网页中">
+      <option name="closed" value="true" />
+      <created>1752331179831</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1752331179831</updated>
+    </task>
+    <task id="LOCAL-00012" summary="feat(server): 将实际token内容加入现实的网页中">
+      <option name="closed" value="true" />
+      <created>1752331192668</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1752331192668</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -205,6 +231,8 @@
     <MESSAGE value="fix(main): 加入调试信息" />
     <MESSAGE value="fix(server): 加入调试信息" />
     <MESSAGE value="fix(server): 修改读取方式为std::getline" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix(server): 修改读取方式为std::getline" />
+    <MESSAGE value="feat(server): 将实际token内容加入显示的网页中" />
+    <MESSAGE value="feat(server): 将实际token内容加入现实的网页中" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat(server): 将实际token内容加入现实的网页中" />
   </component>
 </project>

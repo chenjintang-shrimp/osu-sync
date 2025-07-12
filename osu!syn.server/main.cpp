@@ -121,10 +121,12 @@ private:
                 nlohmann::json json_response = nlohmann::json::parse(result->body);
                 std::string token = json_response["access_token"].get<std::string>();
                 int expired_time = json_response["expires_in"].get<int>();
+                std::string refresh_token=json_response["refresh_token"];
 
                 nlohmann::json response_json;
                 response_json["access_token"] = token;
                 response_json["expire_in"] = expired_time;
+                response_json["refresh_token"]=refresh_token;
 
                 std::string responseHTML;
                 std::ifstream htmlFile("./tokenCopy.html");
