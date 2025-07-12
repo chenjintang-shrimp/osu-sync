@@ -25,3 +25,4 @@ add_executable(osu_sync_core
         systemUtils.hpp
         Logger.cpp
         Logger.h)
+target_link_libraries(osu_sync_core PRIVATE ws2_32)
