@@ -130,13 +130,11 @@ private:
                 std::ifstream htmlFile("./tokenCopy.html",std::ios::in);
                 if (htmlFile.is_open())
                 {
-                    std::string line;
-                    while (std::getline(htmlFile, line))
-                    {
-                        responseHTML += line;
-                    }
+                    htmlFile>>responseHTML;
                     htmlFile.close();
                 }
+                else
+                    throw std::runtime_error("无法打开tokenCopy.html");
                 // size_t pos = responseHTML.find("{{JSON_CONTENT}}");
                 // if (pos!=std::string::npos)
                 //     responseHTML.replace(pos,16,response_json.dump(4));
