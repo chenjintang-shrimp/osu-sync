@@ -121,25 +121,25 @@ private:
                 nlohmann::json json_response = nlohmann::json::parse(result->body);
                 std::string token = json_response["access_token"].get<std::string>();
                 int expired_time = json_response["expires_in"].get<int>();
-                std::string refresh_token=json_response["refresh_token"];
+                std::string refresh_token = json_response["refresh_token"];
 
                 nlohmann::json response_json;
                 response_json["access_token"] = token;
                 response_json["expire_in"] = expired_time;
-                response_json["refresh_token"]=refresh_token;
+                response_json["refresh_token"] = refresh_token;
 
                 std::string responseHTML;
                 std::ifstream htmlFile("./tokenCopy.html");
                 if (htmlFile.is_open())
                 {
-                    std::getline(htmlFile, responseHTML,(char)EOF);
+                    std::getline(htmlFile, responseHTML, (char)EOF);
                     htmlFile.close();
                 }
                 else
                     throw std::runtime_error("无法打开tokenCopy.html");
                 size_t pos = responseHTML.find("{{JSON_CONTENT}}");
-                if (pos!=std::string::npos)
-                    responseHTML.replace(pos,16,response_json.dump(4));
+                if (pos != std::string::npos)
+                    responseHTML.replace(pos, 16, response_json.dump(4));
                 // logger_->info("成功获得token;返回html:\n"+responseHTML);
                 res.set_content(responseHTML, "text/html");
 
@@ -152,6 +152,53 @@ private:
                 res.status = 500;
                 res.set_content("无法从osu!api拿到token，你被ppy做局了！", "text/plain");
             }
+        });
+        server_.Get("/refresh-auth", [&](const httplib::Request& req, httplib::Response& res)
+        {
+            auto refresh_token = req.get_param_value("refresh_token");
+            logger_->info("收到刷新token请求");
+            httplib::Client cli("http://osu.ppy.sh");
+            cli.set_default_headers({
+                {"Accept", "application/json"},
+                {"Content-Type", "application/x-www-form-urlencoded"}
+            });
+            httplib::Params params = {
+                {"client_id", Config::getOauthClientID()},
+                {"client_secret", Config::getOauthClientSecret()},
+                {"grant_type", "refresh_token"},
+                {"refresh_token", refresh_token}
+            };
+            auto result = cli.Post("/oauth/token", params);
+            if (result && result->status == 200)
+            {
+                nlohmann::json json_response = nlohmann::json::parse(result->body);
+                auto access_token=json_response["access_token"];
+                auto expired_time=json_response["expires_in"];
+                auto refresh_token=json_response["refresh_token"];
+                nlohmann::json response_json;
+                response_json["access_token"] = access_token;
+                response_json["expire_in"] = expired_time;
+                response_json["refresh_token"] = refresh_token;
+                std::string responseHTML;
+                std::ifstream htmlFile("./tokenCopy.html");
+                if (htmlFile.is_open())
+                {
+                    std::getline(htmlFile,responseHTML,(char)EOF);
+                    htmlFile.close();
+                }
+                else
+                {
+                    logger_->error("无法打开tokenCopy.html");
+                    throw std::runtime_error("无法打开tokenCopy.html");
+                }
+                size_t pos = responseHTML.find("{{JSON_CONTENT}}");
+                if (pos != std::string::npos)
+                    responseHTML.replace(pos, 16, response_json.dump(4));
+                res.set_content(responseHTML, "text/html");
+                return;
+            }
+            else
+                logger_->error("无法从osu!api拿到token，你被ppy做局了！");
         });
     }
 
