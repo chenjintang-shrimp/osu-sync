@@ -22,4 +22,6 @@ add_executable(osu_sync_core
         main.cpp
         osuInstance.cpp
         osuInstance.hpp
-        systemUtils.hpp)
+        systemUtils.hpp
+        Logger.cpp
+        Logger.h)
