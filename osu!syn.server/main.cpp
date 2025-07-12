@@ -127,7 +127,7 @@ private:
                 response_json["expire_in"] = expired_time;
 
                 std::string responseHTML;
-                std::ifstream htmlFile("./tokenCopy.html",std::ios::in);
+                std::ifstream htmlFile("./tokenCopy.html");
                 if (htmlFile.is_open())
                 {
                     htmlFile>>responseHTML;
