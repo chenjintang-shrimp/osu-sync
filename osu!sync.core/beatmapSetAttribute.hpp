@@ -1,6 +1,6 @@
 #pragma once
 #include <string>
-#include "3rdparty/nlohmann/json.hpp"
+#include "nlohmann/json.hpp"
 
 struct beatmapSetAttribte
 {
@@ -10,7 +10,7 @@ struct beatmapSetAttribte
     std::string artist;
 };
 
-void to_json(nlohmann::json& j, const beatmapSetAttribte& bsa) {
+inline void to_json(nlohmann::json& j, const beatmapSetAttribte& bsa) {
     j = nlohmann::json{
         {"beatmapSetId", bsa.beatmapSetId},
         {"title", bsa.title},
@@ -19,7 +19,7 @@ void to_json(nlohmann::json& j, const beatmapSetAttribte& bsa) {
     };
 }
 
-bool operator<(beatmapSetAttribte a, beatmapSetAttribte b)
+inline bool operator<(beatmapSetAttribte a, beatmapSetAttribte b)
 {
     return a.beatmapSetId < b.beatmapSetId;
 }
