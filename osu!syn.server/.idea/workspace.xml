@@ -3,11 +3,6 @@
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
-  <component name="BackendCodeEditorMiscSettings">
-    <option name="/Default/Housekeeping/FeatureSuggestion/FeatureSuggestionManager/DisabledSuggesters/=SwitchToGoToActionSuggester/@EntryIndexedValue" value="true" type="bool" />
-    <option name="/Default/Housekeeping/GlobalSettingsUpgraded/IsUpgraded/@EntryValue" value="true" type="bool" />
-    <option name="/Default/RiderDebugger/RiderRestoreDecompile/RestoreDecompileSetting/@EntryValue" value="false" type="bool" />
-  </component>
   <component name="CMakePresetLoader">{
   &quot;useNewFormat&quot;: true
 }</component>
@@ -18,16 +13,19 @@
     <option name="reloaded" value="true" />
   </component>
   <component name="CMakeRunConfigurationManager">
-    <generated />
+    <generated>
+      <config projectName="osu_syn_server" targetName="osu_syn_server" />
+    </generated>
   </component>
-  <component name="CMakeSettings" AUTO_RELOAD="true">
+  <component name="CMakeSettings">
     <configurations>
-      <configuration PROFILE_NAME="Debug-Visual Studio" ENABLED="true" CONFIG_NAME="Debug" TOOLCHAIN_NAME="Visual Studio" />
+      <configuration PROFILE_NAME="Debug" ENABLED="true" CONFIG_NAME="Debug" />
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cb3c9af6-2340-4f92-8d0b-3a0ce0ae7db3" name="更改" comment="">
-      <change beforePath="$PROJECT_DIR$/../osu!sync.core/apiRequest.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../osu!sync.core/apiRequest.cpp" afterDir="false" />
+    <list default="true" id="a1b87254-2fc9-4970-9860-ba91896b928a" name="更改" comment="feat(server): 将实际 token内容加入显示的网页中- 在主程序中解析 JSON响应，获取 refresh_token&#10;- 将 access_token、expire_in 和 refresh_token 添加到响应 JSON 中- 更新 HTML 文件以显示实际的 token 内容">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,6 +35,7 @@
   <component name="ClangdSettings">
     <option name="formatViaClangd" value="false" />
   </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
@@ -52,19 +51,35 @@
     &quot;accountId&quot;: &quot;feb46ba1-f91d-4745-9667-a84d8ecebfe2&quot;
   }
 }</component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/logger.cpp" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/logger.hpp" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/jimmy/source/repos/osu!sync.cpp/osu!syn.server/main.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/main.cpp" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/jimmy/source/repos/osu!sync.cpp/osu!syn.server/main.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/server.cpp" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/server.hpp" root0="FORCE_HIGHLIGHTING" />
+  </component>
   <component name="MacroExpansionManager">
-    <option name="directoryName" value="HudrmGt3" />
+    <option name="directoryName" value="eI3wPQap" />
+  </component>
+  <component name="ProjectApplicationVersion">
+    <option name="ide" value="CLion" />
+    <option name="majorVersion" value="2025" />
+    <option name="minorVersion" value="1.3" />
+    <option name="productBranch" value="Classic" />
   </component>
   <component name="ProjectColorInfo">{
-  &quot;associatedIndex&quot;: 1
+  &quot;associatedIndex&quot;: 2
 }</component>
-  <component name="ProjectId" id="2zjcf8SWEqtFmHLmTA6DV3gACGj" />
+  <component name="ProjectId" id="2zmCv5sOoHYcHkWeb8DoP6RCSni" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
+    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.RadMigrateCodeStyle&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
@@ -75,35 +90,166 @@
     &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
     &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/jimmy/CLionProjects/osu-sync/osu!syn.server&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
     &quot;org.rust.cargo.project.model.impl.CargoExternalSystemProjectAware.subscribe.first.balloon&quot;: &quot;&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;CMakeSettings&quot;,
+    &quot;org.rust.first.attach.projects&quot;: &quot;true&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
+  <component name="RunManager">
+    <configuration name="osu_syn_server" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="osu_syn_server" TARGET_NAME="osu_syn_server" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="osu_syn_server" RUN_TARGET_NAME="osu_syn_server">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+  </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="默认任务">
-      <changelist id="cb3c9af6-2340-4f92-8d0b-3a0ce0ae7db3" name="更改" comment="" />
-      <created>1752248022311</created>
+      <changelist id="a1b87254-2fc9-4970-9860-ba91896b928a" name="更改" comment="" />
+      <created>1752327088475</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1752248022311</updated>
-      <workItem from="1752248023516" duration="102000" />
-      <workItem from="1752248146277" duration="228000" />
-      <workItem from="1752248768490" duration="27000" />
-      <workItem from="1752326757322" duration="40000" />
-      <workItem from="1752327026511" duration="25000" />
+      <updated>1752327088475</updated>
+      <workItem from="1752327089563" duration="728000" />
+      <workItem from="1752360074437" duration="659000" />
     </task>
+    <task id="LOCAL-00001" summary="chore(server): 修改项目环境配置">
+      <option name="closed" value="true" />
+      <created>1752327131291</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1752327131291</updated>
+    </task>
+    <task id="LOCAL-00002" summary="style(server): 格式化代码">
+      <option name="closed" value="true" />
+      <created>1752327254093</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1752327254093</updated>
+    </task>
+    <task id="LOCAL-00003" summary="fix(server): 将一处https修改为http&#10;&#10;- 修改了main.cpp中的API请求URL，将https改为http">
+      <option name="closed" value="true" />
+      <created>1752327692095</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1752327692095</updated>
+    </task>
+    <task id="LOCAL-00004" summary="feat(server): 添加 JSON 内容到 HTML 页面&#10;&#10;- 新增 tokenCopy.html 文件，用于显示 JSON内容&#10;- 修改 main.cpp，将 JSON 数据插入 HTML 模板中">
+      <option name="closed" value="true" />
+      <created>1752329885112</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1752329885112</updated>
+    </task>
+    <task id="LOCAL-00005" summary="refactor(main): 优化 tokenCopy.html 文件的读取逻辑&#10;&#10;- 替换逐行读取为直接读取到字符串&#10;- 添加文件无法打开时的异常处理- 移除未使用的代码注释">
+      <option name="closed" value="true" />
+      <created>1752330024733</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1752330024733</updated>
+    </task>
+    <task id="LOCAL-00006" summary="fix(main): 优化 tokenCopy.html 文件的读取方式&#10;&#10;- 移除了 std::ios::in 参数，因为 std::ifstream 默认使用该模式打开文件">
+      <option name="closed" value="true" />
+      <created>1752330680009</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1752330680009</updated>
+    </task>
+    <task id="LOCAL-00007" summary="fix(main): 加入调试信息">
+      <option name="closed" value="true" />
+      <created>1752330828134</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1752330828134</updated>
+    </task>
+    <task id="LOCAL-00008" summary="fix(server): 加入调试信息">
+      <option name="closed" value="true" />
+      <created>1752330879790</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1752330879790</updated>
+    </task>
+    <task id="LOCAL-00009" summary="fix(server): 修改读取方式为std::getline">
+      <option name="closed" value="true" />
+      <created>1752331064430</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1752331064430</updated>
+    </task>
+    <task id="LOCAL-00010" summary="feat(server): 将实际token内容加入现实的网页中">
+      <option name="closed" value="true" />
+      <created>1752331150498</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1752331150498</updated>
+    </task>
+    <task id="LOCAL-00011" summary="feat(server): 将实际token内容加入现实的网页中">
+      <option name="closed" value="true" />
+      <created>1752331179831</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1752331179831</updated>
+    </task>
+    <task id="LOCAL-00012" summary="feat(server): 将实际token内容加入现实的网页中">
+      <option name="closed" value="true" />
+      <created>1752331192668</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1752331192668</updated>
+    </task>
+    <task id="LOCAL-00013" summary="feat(server): 将实际 token内容加入显示的网页中- 在主程序中解析 JSON响应，获取 refresh_token&#10;- 将 access_token、expire_in 和 refresh_token 添加到响应 JSON 中- 更新 HTML 文件以显示实际的 token 内容">
+      <option name="closed" value="true" />
+      <created>1752332626918</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1752332626918</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
-  <component name="VCPKGProject">
-    <isAutomaticCheckingOnLaunch value="false" />
-    <isAutomaticFoundErrors value="true" />
-    <isAutomaticReloadCMake value="true" />
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="chore(server): 修改项目环境配置" />
+    <MESSAGE value="style(server): 格式化代码" />
+    <MESSAGE value="fix(server): 将一处https修改为http&#10;&#10;- 修改了main.cpp中的API请求URL，将https改为http" />
+    <MESSAGE value="refactor(main): 优化 tokenCopy.html 文件的读取逻辑&#10;&#10;- 替换逐行读取为直接读取到字符串&#10;- 添加文件无法打开时的异常处理- 移除未使用的代码注释" />
+    <MESSAGE value="fix(main): 优化 tokenCopy.html 文件的读取方式&#10;&#10;- 移除了 std::ios::in 参数，因为 std::ifstream 默认使用该模式打开文件" />
+    <MESSAGE value="fix(main): 加入调试信息" />
+    <MESSAGE value="fix(server): 加入调试信息" />
+    <MESSAGE value="fix(server): 修改读取方式为std::getline" />
+    <MESSAGE value="feat(server): 将实际token内容加入显示的网页中" />
+    <MESSAGE value="feat(server): 将实际token内容加入现实的网页中" />
+    <MESSAGE value="feat(server): 将实际 token内容加入显示的网页中- 在主程序中解析 JSON响应，获取 refresh_token&#10;- 将 access_token、expire_in 和 refresh_token 添加到响应 JSON 中- 更新 HTML 文件以显示实际的 token 内容" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat(server): 将实际 token内容加入显示的网页中- 在主程序中解析 JSON响应，获取 refresh_token&#10;- 将 access_token、expire_in 和 refresh_token 添加到响应 JSON 中- 更新 HTML 文件以显示实际的 token 内容" />
   </component>
 </project>
