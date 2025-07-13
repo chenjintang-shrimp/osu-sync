@@ -28,3 +28,4 @@ add_executable(osu_sync_core
 target_link_libraries(osu_sync_core PRIVATE
         ws2_32  # 添加这行以支持Windows平台上的socket通信
 )
+add_compile_options(/source-charset:utf-8 /execution-charset:utf-8)

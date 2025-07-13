@@ -1,4 +1,4 @@
-#include<iostream>
+﻿#include<iostream>
 #include"osuInstance.hpp"
 #include "apiRequest.hpp"
 using namespace std;

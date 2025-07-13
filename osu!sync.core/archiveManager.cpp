@@ -1,4 +1,4 @@
-#include"archiveManager.hpp"
+﻿#include"archiveManager.hpp"
 #include <utility>
 #include <fstream>
 #include "3rdpartyInclude/nlohmann/json.hpp"
@@ -65,10 +65,10 @@ void archiveManager::replaceBeatmapSets(set<beatmapSetAttribte> beatmapSets)
     return;
 }
 
-std::set<beatmapSetAttribte> archiveManager::mergeBeatmapSets(std::vector<beatmapSetAttribte> bsidlist, mergeMode mode)
-{
-
-}
+// std::set<beatmapSetAttribte> archiveManager::mergeBeatmapSets(std::vector<beatmapSetAttribte> bsidlist, mergeMode mode)
+// {
+//
+// }
 
 inline set<beatmapSetAttribte> convert(const vector<beatmapSetAttribte> &a)
 {

@@ -1,4 +1,4 @@
-//
+﻿//
 // Created by chenjintang on 25-7-9.
 //
 
@@ -122,6 +122,7 @@ errorCode apiRequest::getToken()
         getline(cin, jsonCode, (char)EOF);
         try
         {
+            // cout<<jsonCode<<endl;
             json j = json::parse(jsonCode);
             if (j.contains("access_token"))
             {
@@ -146,16 +147,16 @@ errorCode apiRequest::getToken()
 
 pair<errorCode, beatmapSetAttribte> apiRequest::getBeatmapSetDetails(const std::string& bsid)
 {
-    string endpoint = "/api/v2/beatmapsets" + bsid;
+    string endpoint = "/api/v2/beatmapsets/" + bsid;
     auto result = requestApi(endpoint);
     if (result.first == ok)
     {
         beatmapSetAttribte ret;
         json bsj = json::parse(result.second);
+        // logger_.debug("apiRequest", "成功获取beatmapSetDetails: " + result.second);
+        ret.artist= bsj["artist"];
+        ret.beatmapSetId = to_string(bsj["id"].get<int>());
         ret.title = bsj["title"];
-        ret.artist = bsj["artist"];
-        ret.beatmapSetId = bsj["id"];
-        ret.titleUnicode = bsj["title_unicode"];
         return make_pair(ok, ret);
     }
     else

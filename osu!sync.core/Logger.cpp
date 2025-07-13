@@ -1,4 +1,4 @@
-//
+﻿//
 // Created by jimmy on 25-7-12.
 //
 
@@ -12,7 +12,7 @@ string Logger::logLevelToString(logLevel level)
     switch (level)
     {
     case DEBUG:
-        return "\033[47m[DEBUG]\033[0m";
+        return "\033[47m\033[97m[DEBUG]\033[0m";
     case logLevel::INFO:
         return "\033[42m[INFO]\033[0m";
     case logLevel::WARNING:

@@ -1,4 +1,4 @@
-#include "osuInstance.hpp"
+﻿#include "osuInstance.hpp"
 #include "systemUtils.hpp"
 #include <cstdlib>
 #include <algorithm>
@@ -43,7 +43,7 @@ pair<errorCode, vector<string>> osuInstance::getAllBeatmapSets(const readMethod 
             break;
         }
         else
-            return (pair<errorCode, vector<string>>){commandFail, vector<string>()};
+            return {commandFail, vector<string>()};
     }
 
     case folder:
