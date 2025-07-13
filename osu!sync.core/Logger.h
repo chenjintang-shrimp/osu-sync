@@ -1,6 +1,9 @@
 //
 // Created by jimmy on 25-7-12.
 //
+#pragma once
+
+#include <cmath>
 #include <filesystem>
 namespace fs=std::filesystem;
 
@@ -14,10 +17,14 @@ public:
         WARNING,
         ERROR
     };
-    explicit Logger(const fs::path& logFilePath)
+    Logger(const fs::path logFilePath)
     {
         this->logFile=logFilePath;
     }
+    Logger()
+    {
+
+    };
 
     void debug(const std::string& module, const std::string& msg);
     void info(const std::string& module, const std::string& msg);
