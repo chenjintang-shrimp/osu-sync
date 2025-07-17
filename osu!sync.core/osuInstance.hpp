@@ -3,6 +3,8 @@
 #include <filesystem>
 #include <vector>
 #include <map>
+#include <set>
+
 #include "errcodes.hpp"
 #include "beatmapSetAttribute.hpp"
 
@@ -24,6 +26,8 @@ public:
     }
     std::pair<errorCode,std::vector<std::string>> getAllBeatmapSets(readMethod method) const;
 
+    errorCode downloadBeatmaps(const std::vector<beatmapSetAttribte>& beatmaps);
+    errorCode downloadBeatmaps(std::vector<beatmapSetAttribte> beatmaps,fs::path downloadPath);
     //只支持db读取
     std::pair<errorCode,beatmapSetAttribte> getBeatmapSetDetails(const std::string &bsid) const;
 };

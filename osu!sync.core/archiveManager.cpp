@@ -2,6 +2,7 @@
 #include <utility>
 #include <fstream>
 #include "3rdpartyInclude/nlohmann/json.hpp"
+#include "apiRequest.hpp"
 using namespace std;
 
 vector<beatmapSetAttribte> archiveManager::getAllBeatmaps() const {
@@ -18,9 +19,13 @@ bool archiveManager::queryBeatmapSet(const string &beatmapsetId) const {
     return false;
 }
 
-void archiveManager::addBeatmapSet(std::string bsid)
+errorCode archiveManager::addBeatmapSet(std::string bsid, apiRequest& apiHandle)
 {
-
+    pair<errorCode,beatmapSetAttribte> res=apiHandle.getBeatmapSetDetails(bsid);
+    if (res.first!=ok)
+        return networkError;
+    else
+        this->beatmapSets.insert(res.second);
 }
 
 void archiveManager::addBeatmapSet(const beatmapSetAttribte &beatmapSet)
@@ -65,11 +70,6 @@ void archiveManager::replaceBeatmapSets(set<beatmapSetAttribte> beatmapSets)
     return;
 }
 
-// std::set<beatmapSetAttribte> archiveManager::mergeBeatmapSets(std::vector<beatmapSetAttribte> bsidlist, mergeMode mode)
-// {
-//
-// }
-
 inline set<beatmapSetAttribte> convert(const vector<beatmapSetAttribte> &a)
 {
     set<beatmapSetAttribte> sb;
@@ -77,14 +77,6 @@ inline set<beatmapSetAttribte> convert(const vector<beatmapSetAttribte> &a)
         sb.insert(kv);
     return sb;
 }
-
-// set<beatmapSetAttribte> archiveManager::mergeBeatmapSets(vector<beatmapSetAttribte> bsidlist,mergeMode mode)
-// {
-//     if(mode==given)
-//         return convert(bsidlist);
-//     else if(mode==current)
-//         return this->beatmapSets;
-// }
 
 errorCode archiveManager::writeCurSetToFile(const fs::path& archivePath) const {
     try {

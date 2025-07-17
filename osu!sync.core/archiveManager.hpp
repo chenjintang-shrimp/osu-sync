@@ -2,6 +2,8 @@
 #include <filesystem>
 #include <set>
 #include <vector>
+
+#include "apiRequest.hpp"
 #include "beatmapSetAttribute.hpp"
 #include "errcodes.hpp"
 
@@ -29,14 +31,12 @@ public:
 
     [[nodiscard]] bool queryBeatmapSet(const std::string &beatmapsetId) const;
 
-    void addBeatmapSet(std::string bsid);//TODO:从osu!api取得谱面信息
+    errorCode addBeatmapSet(std::string bsid, apiRequest& apiHandle);
     void addBeatmapSet(const beatmapSetAttribte &beatmapSet);
     void addBeatmapSet(const std::set<beatmapSetAttribte> &beatmapSets);
     void addBeatmapSet(const std::vector<beatmapSetAttribte> &bSet);
     void replaceBeatmapSets(const std::vector<beatmapSetAttribte> &beatmapSets);
     void replaceBeatmapSets(std::set<beatmapSetAttribte> beatmapSets);
-
-    static std::set<beatmapSetAttribte> mergeBeatmapSets(std::vector<beatmapSetAttribte> bsidlist,mergeMode mode); // TODO:返回合并后的谱面集
 
     [[nodiscard]] errorCode writeCurSetToFile(const fs::path& archivePath) const;
     [[nodiscard]] errorCode writeCurSetToFile() const;
