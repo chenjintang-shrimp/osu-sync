@@ -1,4 +1,4 @@
-﻿//
+//
 // Created by jimmy on 25-7-12.
 //
 
@@ -20,6 +20,7 @@ string Logger::logLevelToString(logLevel level)
     case logLevel::ERROR:
         return "\033[101m[ERROR]\033[0m";
     }
+    return "[UNKNOWN]"; // 默认返回值
 }
 
 
@@ -31,10 +32,11 @@ void Logger::log(const logLevel level, const std::string& module, const std::str
     {
         ofstream logFile;
         if (exists(this->logFile))
-            logFile.open(this->logFile, ios::out);
+            logFile.open(this->logFile, ios::app); // 存在时应该追加而不是覆盖
         else
-            logFile.open(this->logFile, ios::app);
+            logFile.open(this->logFile, ios::out); // 不存在时创建新文件
         logFile << lvlString << " " << module << " : " << msg << endl;
+        logFile.close(); // 确保文件被正确关闭
     }
 }
 

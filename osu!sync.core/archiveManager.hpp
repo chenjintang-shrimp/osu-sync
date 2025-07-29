@@ -35,6 +35,7 @@ public:
     void addBeatmapSet(const beatmapSetAttribte &beatmapSet);
     void addBeatmapSet(const std::set<beatmapSetAttribte> &beatmapSets);
     void addBeatmapSet(const std::vector<beatmapSetAttribte> &bSet);
+    errorCode addBeatmapSets(std::vector<std::string> bsidlist, apiRequest& apiHandle);
     void replaceBeatmapSets(const std::vector<beatmapSetAttribte> &beatmapSets);
     void replaceBeatmapSets(std::set<beatmapSetAttribte> beatmapSets);
 

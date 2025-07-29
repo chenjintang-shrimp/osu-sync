@@ -2,12 +2,19 @@
 #include "systemUtils.hpp"
 #include <cstdlib>
 #include <algorithm>
-#include<thread>
+#include <thread>
 #include <mutex>
 #include <queue>
+#include "Logger.h"
 
 namespace fs = std::filesystem;
 using namespace std;
+
+// 新增 logger 的互斥锁
+static std::mutex logger_mutex;
+
+// 全局Logger实例
+static Logger logger("osuInstance.log");
 
 inline bool isNumber(const string& str)
 {
@@ -77,24 +84,23 @@ pair<errorCode, vector<string>> osuInstance::getAllBeatmapSets(const readMethod 
 
 static pair<errorCode, string> downloadBeatmapSet(const string& bsid, const fs::path& downloadPath)
 {
-    const string command = "wget -P " + downloadPath.generic_string() +
-        "https://txy1.sayobot.cn/beatmaps/download/novideo/" + bsid + "?server=auto";
-    auto res = executeCommand(command);
+    const string command = "powershell.exe -Command \"Invoke-WebRequest -OutFile '" + 
+        (downloadPath / (bsid + ".osz")).string() + "' " +
+        "https://txy1.sayobot.cn/beatmaps/download/novideo/" + bsid + "?server=auto\"";
+    return executeCommand(command);
 }
 
-errorCode osuInstance::downloadBeatmaps(const std::vector<beatmapSetAttribte>& beatmaps)
+errorCode osuInstance::downloadBeatmaps(const std::vector<std::string>& beatmaps,fs::path downloadpath)
 {
     std::mutex queue_mutex;
     std::queue<std::string> bsid_queue;
 
     // 将 beatmap ID 加入队列
-    for (const auto& beatmap : beatmaps)
-    {
-        bsid_queue.push(beatmap.beatmapSetId);
-    }
+    for (const auto& bsid : beatmaps)
+        bsid_queue.push(bsid);
 
     // 下载路径
-    const fs::path downloadPath = this->osuFolderPath / "Songs";
+    // const fs::path downloadPath = this->osuFolderPath / "Songs";
 
     // 线程函数
     auto download_worker = [&]()
@@ -112,12 +118,22 @@ errorCode osuInstance::downloadBeatmaps(const std::vector<beatmapSetAttribte>& b
             }
 
             // 下载该 beatmap
-            downloadBeatmapSet(bsid, downloadPath);
+            {
+                std::lock_guard<std::mutex> lock(logger_mutex);
+                logger.info("DownloadWorker", "Downloading beatmap set: " + bsid);
+            }
+
+            auto result = downloadBeatmapSet(bsid, downloadpath);
+            if (result.first != ok) {
+                std::lock_guard<std::mutex> lock(logger_mutex);
+                logger.error("DownloadWorker", "Failed to download beatmap set: " + bsid + 
+                    " Error: " + result.second);
+            }
         }
     };
 
     // 创建 4 个线程
-    const int thread_count = 4;
+    constexpr int thread_count = 4;
     std::vector<std::thread> threads;
 
     for (int i = 0; i < thread_count; ++i)

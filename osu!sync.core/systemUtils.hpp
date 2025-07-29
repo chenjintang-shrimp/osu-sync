@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #include <array>
 #include <iostream>
@@ -20,6 +20,7 @@ pair<errorCode, string> executeCommand(string command)
             throw runtime_error("命令执行失败");
         while (fgets(buf.data(), buf.size(), pipe) != nullptr)
             result += buf.data();
+        _pclose(pipe); // 关闭管道
         return {ok, result};
     }
     catch (const runtime_error &e)

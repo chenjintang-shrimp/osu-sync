@@ -56,6 +56,17 @@ void archiveManager::addBeatmapSet(const vector<beatmapSetAttribte> &bSet)
     return;
 }
 
+errorCode archiveManager::addBeatmapSets(const std::vector<std::string> bsidlist,apiRequest &apiHandle)
+{
+    for (auto kv:bsidlist)
+    {
+        auto res=this->addBeatmapSet(kv,apiHandle);
+        if (res!=ok)
+            return res;
+    }
+    return ok;
+}
+
 void archiveManager::replaceBeatmapSets(const vector<beatmapSetAttribte> &bSets)
 {
     this->beatmapSets.clear();
