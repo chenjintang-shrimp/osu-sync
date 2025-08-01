@@ -11,22 +11,30 @@ Logger::Logger(const fs::path& logDir) : logDir_(logDir)
 
 void Logger::debug(const std::string& message)
 {
-    log(Level::DEBUG, message);
+    if (shouldLog(Level::DEBUG)) {
+        log(Level::DEBUG, message);
+    }
 }
 
 void Logger::info(const std::string& message)
 {
-    log(Level::INFO, message);
+    if (shouldLog(Level::INFO)) {
+        log(Level::INFO, message);
+    }
 }
 
 void Logger::warning(const std::string& message)
 {
-    log(Level::WARNING, message);
+    if (shouldLog(Level::WARNING)) {
+        log(Level::WARNING, message);
+    }
 }
 
 void Logger::error(const std::string& message)
 {
-    log(Level::ERROR, message);
+    if (shouldLog(Level::ERROR)) {
+        log(Level::ERROR, message);
+    }
 }
 
 void Logger::log(Level level, const std::string& message)

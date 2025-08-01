@@ -10,6 +10,7 @@ g++ -std=c++17 \
     main.cpp \
     logger.cpp \
     server.cpp \
+    controllers.cpp \
     -o build/osu_sync_server \
     -pthread
 

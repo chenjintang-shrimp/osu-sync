@@ -3,5 +3,7 @@
     "port": 8080,
     "maxFileSize": 104857600,
     "uploadDir": "uploads",
-    "logDir": "logs"
+    "logDir": "logs",
+    "logLevel": 0,
+    "debugMode": false
 }

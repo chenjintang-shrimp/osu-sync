@@ -1,4 +1,16 @@
-C:\Users\jimmy\AppData\Local\Programs\CLion\bin\cmake\win\x64\bin\cmake.exe -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=C:/Users/jimmy/AppData/Local/Programs/CLion/bin/ninja/win/x64/ninja.exe -G Ninja -S C:\Users\jimmy\source\repos\osu!sync.cpp\osu!syn.server -B C:\Users\jimmy\source\repos\osu!sync.cpp\osu!syn.server\cmake-build-debug
--- Configuring done (0.2s)
+/home/chenjintang/.local/share/JetBrains/Toolbox/apps/clion/bin/cmake/linux/x64/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=/home/chenjintang/.local/share/JetBrains/Toolbox/apps/clion/bin/ninja/linux/x64/ninja -G Ninja -S /home/chenjintang/osu-sync/osu!syn.server -B /home/chenjintang/osu-sync/osu!syn.server/cmake-build-debug
+-- The C compiler identification is GNU 14.2.0
+-- The CXX compiler identification is GNU 14.2.0
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Configuring done (0.7s)
 -- Generating done (0.0s)
--- Build files have been written to: C:/Users/jimmy/source/repos/osu!sync.cpp/osu!syn.server/cmake-build-debug
+-- Build files have been written to: /home/chenjintang/osu-sync/osu!syn.server/cmake-build-debug

@@ -16,6 +16,8 @@ fs::path Config::logDir_ = "logs";
 std::string Config::oauthClientID_;
 std::string Config::oauthClientSecret_;
 std::string Config::oauthRedirectUri_;
+int Config::logLevel_ = 0;  // 默认DEBUG级别
+bool Config::debugMode_ = false;
 
 void Config::load(const std::string& configFile)
 {
@@ -44,6 +46,10 @@ void Config::load(const std::string& configFile)
 
         if (config.contains("oauthRedirectUri")) oauthRedirectUri_ = config["oauthRedirectUri"].get<std::string>();
         else throw std::runtime_error("配置文件中不存在有效的Oauth回调URL");
+        
+        // 新增配置项
+        if (config.contains("logLevel")) logLevel_ = config["logLevel"];
+        if (config.contains("debugMode")) debugMode_ = config["debugMode"];
     }
     catch (const std::exception& e)
     {

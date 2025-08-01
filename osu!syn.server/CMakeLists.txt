@@ -15,4 +15,6 @@ add_executable(osu_syn_server
         logger.hpp
         main.cpp
         server.cpp
-        server.hpp)
+        server.hpp
+        controllers.cpp
+        controllers.hpp)
